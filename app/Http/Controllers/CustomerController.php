@@ -47,15 +47,16 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
 
+
         $this->validate($request, [
             'shop' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:customers',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|unique:customers',
+            'phone' => array('required','regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
             'city' => 'required',
-            'zip' => 'required',
+            'zip' => array('required','regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
             'locality' => 'required',
             'full_address' => 'required',
             'password' => 'required|string',
@@ -80,7 +81,12 @@ class CustomerController extends Controller
             $password = "";
             $profile_pic = $request->file('profile_pic');
             $certificate = $request->file('certificate');
-            $success_message = 'New account has been created successfully to shopify, Account activation link has been sent to your email account!';
+            $success_message = "";
+            if ($request->tag == "role:customer") {
+                $success_message = "Account created successfully!";
+            }else{
+                $success_message = 'New account has been created successfully to shopify, Account activation link has been sent to your email account!';
+            }
             //$error_message = "";
 
 
@@ -218,11 +224,12 @@ class CustomerController extends Controller
             ];
 
 
-            $result = $api->rest('POST', '/admin/customers.json', $data)['body']['customer'];
+                $result = $api->rest('POST', '/admin/customers.json', $data)['body'];
 
             Log::info("result " . json_encode($result));
+            Log::info("customer " . json_encode($result['customer']));
 
-            if ($result) {
+            if (($result['customer'])) {
                 $customer = Customer::create([
                     'username' => $request->username,
                     'first_name' => $request->first_name,
@@ -241,19 +248,16 @@ class CustomerController extends Controller
                     'profile_picture' => $imgFileName,
                     'designer_certificate' => $fileName,
                     'communication_channels' => $communication_channel,
+                    'tag' => $request->tag,
                 ]);
 
-                if ($request->tag == "role:customer") {
-                    $success_message = "Account created successfully!";
-                }
-
-                return response()->json(['data' => $customer, 'message' => $success_message])->setStatusCode(201);
+                return response()->json(['status'=>201,'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
             } else {
-                return response()->json(['status' => 500, 'message' => 'something went wrong!'])->setStatusCode(500);
+                return response()->json(['status'=>500, 'message' => $result])->setStatusCode(500);
             }
         } catch (\Exception $e) {
             Log::info($e->getMessage());
-            return response()->json([$e->getMessage()])->setStatusCode(422);
+            return response()->json(['status'=>422, "message"=>$e->getMessage()])->setStatusCode(422);
         }
     }
 
@@ -287,6 +291,38 @@ class CustomerController extends Controller
             //Log::info("email not exist". json_encode($customer));
         } else {
             return response()->json(["errors" => ["email" => "Email has already taken"]])->setStatusCode(422);
+        }
+        Log::info("customer" . json_encode($customer));
+    }
+
+    public function verifyPhone(Request $request){
+        $this->validate($request, [
+            'phone' => array('required','regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
+        ]);
+
+        $customer = Customer::where('phone', $request->phone)->get();
+        if ($customer->isEmpty()) {
+            return response()->json(["success" => ["phone" => "Phone verified successfully"]])->setStatusCode(200);
+
+            //Log::info("email not exist". json_encode($customer));
+        } else {
+            return response()->json(["errors" => ["phone" => "Phone has already taken"]])->setStatusCode(422);
+        }
+        Log::info("customer" . json_encode($customer));
+    }
+
+    public function verifyZip(Request $request){
+        $this->validate($request, [
+            'zip' => array('required','regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
+        ]);
+
+        $customer = Customer::where('zip', $request->phone)->get();
+        if ($customer->isEmpty()) {
+            return response()->json(["success" => ["zip" => "Zip verified successfully"]])->setStatusCode(200);
+
+            //Log::info("email not exist". json_encode($customer));
+        } else {
+            return response()->json(["errors" => ["zip" => "Zip has already taken"]])->setStatusCode(422);
         }
         Log::info("customer" . json_encode($customer));
     }

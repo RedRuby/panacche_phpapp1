@@ -31,15 +31,19 @@ Route::get('/', function () {
 Route::resource('customer', 'CustomerController');
 Route::post('verify_email', 'CustomerController@verifyEmail');
 Route::post('verify_username', 'CustomerController@verifyUsername');
+Route::post('verify_phone', 'CustomerController@verifyPhone');
+Route::post('verify_zip', 'CustomerController@verifyZip');
 
 //Route::resource('design', 'DesignController');
 
 Route::post('design', 'DesignController@store');
+Route::get('design', 'DesignController@index');
 Route::get('designer/approval/{id}', 'CustomerController@designerApproval');
 Route::get('designer/rejection/{id}', 'CustomerController@designerRejection');
 
 Route::get('/design/collection/exist/{title}', 'DesignController@collectionExist');
-Route::post('/design/add/products', 'DesignController@addProducts');
+//Route::post('/design/add/products', 'DesignController@addProducts');
+
 
 Route::get('/admin/dashboard', 'AdminController@index');
 
