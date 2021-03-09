@@ -118,44 +118,7 @@
                 </h4>
               </div>
               <div class="col-12 px-0">
-                    <div class="row px-0 designersApproveCards">
-                        @foreach($customers as $customer)
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="card">
-                                    <p class="cardChekbox">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    </p>
-                                    <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
-                                        <img src="{{ asset('uploads/profile_pic/$customer->profile_pic') }}" class="card-img cover-photo" alt="Cover">
-                                    </p>
-                                    <div class="card-body p-1">
-                                        <div class="align-items-center mb-2">
-                                            <div class="author-info text-center">
-                                                <p class="mb-0">{{ $customer->first_name }} {{ $customer->last_name }}</p>
-                                                <p class="mb-0">12 year experience</p>
-                                                <p class="mb-0">
-                                                    <span class="mr-1">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </span>
-                                                    <span>Highly Rated</span>
-                                                </p>
-                                                <p class="mb-0 d-inline">
-                                                    <span class="mr-1">Design Styles</span>
-                                                    <span>Modern. |. Rustic</span>
-                                                </p>
-                                                <p class="mb-0 mt-3"><button type="button" class="btn btn-primary" id="view-profile-btn" data="{{ $customer->id }}">View Profile</button></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      @endforeach
 
-                    </div>
               </div>
             </div>
 
@@ -167,71 +130,7 @@
                 </h4>
               </div>
               <div class="col-12 px-0">
-                    <div class="row px-0 designCards">
-                      <div class="col-sm-4">
-                        <div class="card">
-                            <img src="images/design1.jpg" class="card-img cover-photo" alt="Cover">
-                            <div class="card-body p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="author-img">
-                                        <img src="images/person-2.jpg" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
-                                    </div>
-                                    <div class="author-info">
-                                        <p class="mb-0">Beautiful Boy’s Den</p>
-                                    </div>
-                                </div>
-                                <p class="card-text">$ 300.00</p>
-                            </div>
-                            <div class="card-footer d-flex">
-                                <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social social-pinterest mr-3"><i class="fab fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-4 mt-4 mt-sm-0">
-                        <div class="card">
-                            <img src="images/design1.jpg" class="card-img cover-photo" alt="Cover">
-                            <div class="card-body p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="author-img">
-                                        <img src="images/person-2.jpg" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
-                                    </div>
-                                    <div class="author-info">
-                                        <p class="mb-0">Rockstar Room</p>
-                                    </div>
-                                </div>
-                                <p class="card-text">$ 300.00</p>
-                            </div>
-                            <div class="card-footer d-flex">
-                                <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social social-pinterest mr-3"><i class="fab fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-4 mt-4 mt-sm-0">
-                        <div class="card">
-                            <img src="images/design1.jpg" class="card-img cover-photo" alt="Cover">
-                            <div class="card-body p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="author-img">
-                                        <img src="images/person-2.jpg" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
-                                    </div>
-                                    <div class="author-info">
-                                        <p class="mb-0">Beautiful Boy’s Den</p>
-                                    </div>
-                                </div>
-                                <p class="card-text">$ 300.00</p>
-                            </div>
-                            <div class="card-footer d-flex">
-                                <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social social-pinterest mr-3"><i class="fab fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
+
               </div>
             </div>
 
