@@ -13,6 +13,7 @@ use Osiset\BasicShopifyAPI\Options;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use App\User;
+use View;
 
 
 class CustomerController extends Controller
@@ -222,14 +223,23 @@ class CustomerController extends Controller
                 ]
             ];
 
+            $result = '';
 
+            try{
                 $result = $api->rest('POST', '/admin/customers.json', $data)['body'];
+            }catch(\Exception $e){
+                Log::info($e->getMessage());
+                return response()->json(['status'=>422, "errors"=>$e->getMessage()])->setStatusCode(422);
+            }
 
-            Log::info("result " . json_encode($result));
-            Log::info("customer " . json_encode($result['customer']));
+            //$result = json_decode($result);
+           // Log::info("result " . json_encode($result));
+            //Log::info("customer " . json_encode($result['customer']));
 
-            if (($result['customer'])) {
+
+            if (array_key_exists('customer',$result)) {
                 $customer = Customer::create([
+                    'id' => $result['customer']['id'],
                     'username' => $request->username,
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
@@ -252,7 +262,7 @@ class CustomerController extends Controller
 
                 return response()->json(['status'=>201,'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
             } else {
-                return response()->json(['status'=>500, 'message' => $result])->setStatusCode(500);
+                return response()->json(['status'=>500, 'errors' => $result])->setStatusCode(500);
             }
         } catch (\Exception $e) {
             Log::info($e->getMessage());
@@ -326,20 +336,22 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }
 
-    public function designerApproval($id)
+    public function approveDesigner($id)
     {
 
         $customer = Customer::find($id);
-        // $customer->status = "active";
+        $customer->status = "active";
         $customer->save();
+
+        //update api run
 
         return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
     }
 
-    public function designerRejection($id)
+    public function rejectDesigner($id)
     {
         $customer = Customer::find($id);
-        // $customer->status = "disabled";
+        $customer->status = "disabled";
         $customer->save();
 
         return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);

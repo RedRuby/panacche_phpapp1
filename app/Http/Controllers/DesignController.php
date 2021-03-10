@@ -84,9 +84,10 @@ class DesignController extends Controller
         //Log::info("data " . json_encode($request));
         $this->validate($request, [
             'design_name' => 'required',
+            'design_price' => 'required',
             'room_budget' => 'required|string',
-            'room_type' => 'required',
-            'room_style' => 'required',
+            'room_type' => 'required|not_in:0',
+            'room_style' => 'required|not_in:0',
             'implementation_guide_description' => 'required',
             'product_name.*' => 'required',
         ]);

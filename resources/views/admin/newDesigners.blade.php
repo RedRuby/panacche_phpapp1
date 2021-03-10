@@ -4,9 +4,9 @@
     @foreach($customers as $customer)
         <div class="col-lg-3 col-md-6 col-sm-6 col-6">
             <div class="card">
-                <p class="cardChekbox">
+                {{-- <p class="cardChekbox">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                </p>
+                </p> --}}
                 <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
                     <img src="{{ asset('uploads/profile_pic/$customer->profile_pic') }}" class="card-img cover-photo" alt="Cover">
                 </p>

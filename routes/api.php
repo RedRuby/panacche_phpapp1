@@ -40,8 +40,8 @@ Route::post('design', 'DesignController@store');
 Route::get('design', 'DesignController@index');
 Route::get('design/search', 'DesignController@searchDesign');
 Route::get('our/designs', 'DesignController@ourDesigns');
-Route::get('designer/approval/{id}', 'CustomerController@designerApproval');
-Route::get('designer/rejection/{id}', 'CustomerController@designerRejection');
+Route::get('designer/profile/approve/{id}', 'CustomerController@approveDesigner');
+Route::get('designer/profile/reject/{id}', 'CustomerController@rejectDesigner');
 
 Route::get('/design/collection/exist/{title}', 'DesignController@collectionExist');
 //Route::post('/design/add/products', 'DesignController@addProducts');
