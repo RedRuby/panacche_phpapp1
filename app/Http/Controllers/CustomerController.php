@@ -54,9 +54,9 @@ class CustomerController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|unique:customers',
-            'phone' => array('required','regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
+            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
             'city' => 'required',
-            'zip' => array('required','regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
+            'zip' => array('required', 'regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
             'locality' => 'required',
             'full_address' => 'required',
             'password' => 'required|string',
@@ -84,7 +84,7 @@ class CustomerController extends Controller
             $success_message = "";
             if ($request->tag == "role:customer") {
                 $success_message = "Account created successfully!";
-            }else{
+            } else {
                 $success_message = 'New account has been created successfully to shopify, Account activation link has been sent to your email account!';
             }
             //$error_message = "";
@@ -223,21 +223,18 @@ class CustomerController extends Controller
                 ]
             ];
 
-            $result = '';
 
-            try{
+            try {
                 $result = $api->rest('POST', '/admin/customers.json', $data)['body'];
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 Log::info($e->getMessage());
-                return response()->json(['status'=>422, "errors"=>$e->getMessage()])->setStatusCode(422);
+                return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
             }
 
-            //$result = json_decode($result);
-           // Log::info("result " . json_encode($result));
-            //Log::info("customer " . json_encode($result['customer']));
+            Log::info("result " . json_encode($result));
 
 
-            if (array_key_exists('customer',$result)) {
+            if (isset($result['customer'])) {
                 $customer = Customer::create([
                     'id' => $result['customer']['id'],
                     'username' => $request->username,
@@ -260,13 +257,13 @@ class CustomerController extends Controller
                     'tag' => $request->tag,
                 ]);
 
-                return response()->json(['status'=>201,'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
+                return response()->json(['status' => 201, 'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
             } else {
-                return response()->json(['status'=>500, 'errors' => $result])->setStatusCode(500);
+                return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
             }
         } catch (\Exception $e) {
             Log::info($e->getMessage());
-            return response()->json(['status'=>422, "message"=>$e->getMessage()])->setStatusCode(422);
+            return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
         }
     }
 
@@ -304,9 +301,10 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }
 
-    public function verifyPhone(Request $request){
+    public function verifyPhone(Request $request)
+    {
         $this->validate($request, [
-            'phone' => array('required','regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
+            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
         ]);
 
         $customer = Customer::where('phone', $request->phone)->get();
@@ -320,9 +318,10 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }
 
-    public function verifyZip(Request $request){
+    public function verifyZip(Request $request)
+    {
         $this->validate($request, [
-            'zip' => array('required','regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
+            'zip' => array('required', 'regex:/(^\d{5}$)|(^\d{5}-\d{4}$)/'),
         ]);
 
         $customer = Customer::where('zip', $request->phone)->get();
@@ -336,25 +335,106 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }
 
-    public function approveDesigner($id)
+    public function approveDesigner($id, $shop)
     {
+        Log::info('profile id'. $id);
+        try {
+            $customer = Customer::find($id);
+            $customer->status = "active";
+            $customer->save();
 
-        $customer = Customer::find($id);
-        $customer->status = "active";
-        $customer->save();
+            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
+        }
 
-        //update api run
+        /*try {
+            //run update api
+            $shop = User::where('name', $shop)->first();
+            $options = new Options();
+            $options->setVersion('2021-01');
+            $api = new BasicShopifyAPI($options);
+            $api->setSession(new Session($shop->name, $shop->password));
 
-        return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
+            $data = [
+                'customer' => [
+                    'id' => $id,
+                    'metafields' => [
+                        [
+                            "key" => "status",
+                            "value" => "active",
+                            "value_type" => "string",
+                            "namespace" => "global"
+
+                        ],
+                    ]
+                ]
+            ];
+
+            $result = $api->rest('PUT', '/admin/customers/' . $id . '.json', $data)['body'];
+
+            Log::info('$result '. json_encode($result));
+            if (isset($result['customer'])) {
+                $customer = Customer::find($id);
+                $customer->status = "active";
+                $customer->save();
+            }
+
+            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
+        }*/
     }
 
-    public function rejectDesigner($id)
+    public function rejectDesigner($id, $shop)
     {
-        $customer = Customer::find($id);
-        $customer->status = "disabled";
-        $customer->save();
 
-        return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);
+        try {
+            $customer = Customer::find($id);
+            $customer->status = "disabled";
+            $customer->save();
+
+            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
+        }
+
+        /*try {
+            //run update api
+            $shop = User::where('name', $shop)->first();
+            $options = new Options();
+            $options->setVersion('2021-01');
+            $api = new BasicShopifyAPI($options);
+            $api->setSession(new Session($shop->name, $shop->password));
+
+            $data = [
+                'customer' => [
+                    'id' => $id,
+                    'metafields' => [
+                        [
+                            "key" => "status",
+                            "value" => "disabled",
+                            "value_type" => "string",
+                            "namespace" => "global"
+
+                        ],
+                    ]
+                ]
+            ];
+
+            $result = $api->rest('PUT', '/admin/customers/' . $id . '.json', $data)['body'];
+
+
+            if (isset($result['customer'])) {
+                $customer = Customer::find($id);
+                $customer->status = "disabled";
+                $customer->save();
+            }
+
+            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
+        }*/
     }
 
 
@@ -403,5 +483,11 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getCustomer($id)
+    {
+        $customer = Customer::find($id);
+        return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully", "data" => $customer]);
     }
 }

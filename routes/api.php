@@ -33,6 +33,7 @@ Route::post('verify_email', 'CustomerController@verifyEmail');
 Route::post('verify_username', 'CustomerController@verifyUsername');
 Route::post('verify_phone', 'CustomerController@verifyPhone');
 Route::post('verify_zip', 'CustomerController@verifyZip');
+Route::get('/get/customer/{id}', 'CustomerController@getCustomer');
 
 //Route::resource('design', 'DesignController');
 
@@ -40,8 +41,8 @@ Route::post('design', 'DesignController@store');
 Route::get('design', 'DesignController@index');
 Route::get('design/search', 'DesignController@searchDesign');
 Route::get('our/designs', 'DesignController@ourDesigns');
-Route::get('designer/profile/approve/{id}', 'CustomerController@approveDesigner');
-Route::get('designer/profile/reject/{id}', 'CustomerController@rejectDesigner');
+Route::get('designer/profile/approve/{id}/{shop}', 'CustomerController@approveDesigner');
+Route::get('designer/profile/reject/{id}/{shop}', 'CustomerController@rejectDesigner');
 
 Route::get('/design/collection/exist/{title}', 'DesignController@collectionExist');
 //Route::post('/design/add/products', 'DesignController@addProducts');
@@ -58,3 +59,6 @@ Route::get('shopify', 'ShopifyController@index')->middleware(['auth.shopify']);
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);
 
+Route::get('/designer/users/{id}', 'DesignerController@users');
+Route::get('/designer/designs/{id}', 'DesignerController@designs');
+Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
