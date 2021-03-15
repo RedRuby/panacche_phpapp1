@@ -20,6 +20,7 @@ use Osiset\BasicShopifyAPI\Session;
 use App\User;
 use App\Customer;
 use View;
+use App\CollectionColorPallettes;
 
 
 class DesignController extends Controller
@@ -81,50 +82,69 @@ class DesignController extends Controller
      */
     public function store(Request $request)
     {
-        //Log::info("data " . json_encode($request));
+        //Log::info("data " . json_encode($request->all()));
+
+
         $this->validate($request, [
-            'design_name' => 'required',
+            'design_name' => 'required|unique:collections',
             'design_price' => 'required',
             'room_budget' => 'required|string',
             'room_type' => 'required|not_in:0',
             'room_style' => 'required|not_in:0',
             'implementation_guide_description' => 'required',
-            'product_name.*' => 'required',
+            'customer_id' => 'required',
         ]);
 
         try {
+
+            $customer = Customer::find($request->customer_id);
+            if (!($customer->status)) {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
+            }
+
+            if ($customer->status == 'pending' || $customer->status == 'disabled') {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "AYour account is not approved yet to create design, contact Admin!"]])->setStatusCode(422);
+            }
+
+
+
             $shop = User::where('name', $request->shop)->first();
             $options = new Options();
             $options->setVersion('2021-01');
             $api = new BasicShopifyAPI($options);
             $api->setSession(new Session($shop->name, $shop->password));
 
+            $collectionImages = $request->file('collection_images');
+            $collectionBluePrints = $request->file('collection_blue_prints');
+            $colorNames = $request->color_name;
+            $colorBrand = $request->brand;
+            $colorFinish = $request->finish;
+            $colorApplication = $request->application;
 
-            $collectionImages = count($request->collection_image);
-            $collectionBluePrints = count($request->collection_blue_print);
-            $colorPlates = count($request->color_plates);
-            $collectionImage = $request->room_image;
-            $products = count($request->product_name);
-            $productImages = count($request->product_images);
-            $productTags = count($request->product_tag);
-            $productVariant = count($request->product_tag);
-            $collectiomImageName = "";
-            $collectiomImageSrc = "";
+            $room_width = $request->width_in_feet. "' ". $request->width_in_inches;
+            $room_height = $request->height_in_feet. "' ". $request->height_in_inches;
 
+
+            //Log::info("collectionImages count ---". json_encode($collectionImages));
 
             $collectionRule = [
                 "column" => "tag",
                 "relation" => "equals",
                 "condition" => $request->design_name,
             ];
+            $designGuideFileName = "";
+
+            $design_implementation_guide = $request->design_implementation_guide;
+            if (!empty($design_implementation_guide)) {
+                //Display File Name
+                $designGuideFileName = $design_implementation_guide->getClientOriginalName();
+
+                //Move Uploaded File
+                $destinationPath = public_path() . '/uploads/collection/design_implementation_guide/';
+                $design_implementation_guide->move($destinationPath, $design_implementation_guide->getClientOriginalName());
+            }
 
             $collectionMetafields = [
-                [
-                    "key" => "description",
-                    "value" => $request->location,
-                    "value_type" => "string",
-                    "namespace" => "gloabal",
-                ],
                 [
                     "key" => "room_budget",
                     "value" => $request->room_budget,
@@ -144,8 +164,14 @@ class DesignController extends Controller
                     "namespace" => "gloabal",
                 ],
                 [
-                    "key" => "description",
+                    "key" => "dig_description",
                     "value" => $request->implementation_guide_description,
+                    "value_type" => "string",
+                    "namespace" => "gloabal",
+                ],
+                [
+                    "key" => "dig",
+                    "value" => $designGuideFileName,
                     "value_type" => "string",
                     "namespace" => "gloabal",
                 ],
@@ -153,200 +179,104 @@ class DesignController extends Controller
             ];
 
 
-            if ($collectionImage) {
-                $imgFileName = $collectionImage->getClientOriginalName();
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/collection/images/';
-                $collectionImage->move($destinationPath, $collectionImage->getClientOriginalName());
-
-                $collectiomImageName = $imgFileName;
-                $collectiomImageSrc = $destinationPath;
-            }
-
-            $collectionImage = [
-                "src" => $collectiomImageSrc,
-                "alt" => $collectiomImageName
-            ];
-
             $data = [
                 "smart_collection" => [
                     "title" => $request->design_name,
                     "published" => false,
-                    "metafields" => [
-                        $collectionMetafields
-                    ],
+                    "metafields" => $collectionMetafields,
                     "rules" => [
                         $collectionRule
                     ],
-                    "image" => $collectionImage,
                 ]
 
             ];
 
+            $result = $api->rest('POST', '/admin/smart_collections.json', $data)['body'];
 
-
-            $result = $api->rest('POST', '/admin/smart_collections.json', $data)['body']['smart_collection'];
-
-            if ($result) {
-
-
-
+            if (isset($result['smart_collection'])) {
 
                 $collection = Collection::create([
-                    'title' => $request->design_name,
-                    'description' => $request->description,
+                    'id' => $result['smart_collection']['id'],
+                    'design_name' => $request->design_name,
+                    'customer_id' => $request->customer_id,
+                    'implementation_guide_description' => $request->implementation_guide_description,
                     'image_src' => $request->image_src,
                     'image_alt' => $request->image_alt,
                     'room_type' => $request->room_type,
                     'room_style' => $request->room_style,
                     'room_budget' => $request->room_budget,
+                    'design_implementation_guide' => $designGuideFileName,
+                    'room_width' => $room_width,
+                    'room_height' => $room_height
                 ]);
 
-                if ($collectionImages) {
-                    $collectiomImagesData = [];
-                    for ($i = 0; $i < count($collectionImages); $i++) {
-                        $imgFileName = $collectionImages[$i]->getClientOriginalName();
+                Log::info('collection ' . json_encode($collection));
+
+
+                if ($request->hasfile('collection_images')) {
+                    Log::info("has file collection images");
+                    foreach ($collectionImages as $collectionImage) {
+                        Log::info("single collection img");
+                        $collectionImageFileName = $collectionImage->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/images/';
-                        $collectionImages[$i]->move($destinationPath, $collectionImages[$i]->getClientOriginalName());
-                        $data = [
+                        $collectionImage->move($destinationPath, $collectionImageFileName);
+                        CollectionImages::create([
                             'collection_id' => $collection->id,
-                            'img_src' => $destinationPath,
-                            'img_alt' => $imgFileName,
-                        ];
-                        array_push($collectiomImagesData, $data);
-                        if ($i == count($collectionImages) - 1) {
-                            Log::info("collectiomImagesData -----" . json_encode($collectiomImagesData));
-                            CollectionImages::insert($collectiomImagesData);
-                        }
+                            'img_src' => $collectionImageFileName,
+                            'img_alt' => $collectionImageFileName,
+                        ]);
                     }
                 }
 
-                if ($collectionBluePrints) {
-                    $collectionBluePrintsData = [];
-                    for ($j = 0; $j < count($collectionBluePrints); $j++) {
-                        $imgFileName = $collectionBluePrints[$j]->getClientOriginalName();
+                if ($request->hasfile('collection_blue_prints')) {
+                    Log::info("has file collection blue prints");
+                    foreach ($collectionBluePrints as $collectionBluePrint) {
+                        Log::info("single blue print img");
+                        $collectionBluePrintFileName = $collectionBluePrint->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/images/';
-                        $collectionBluePrints[$j]->move($destinationPath, $collectionBluePrints[$j]->getClientOriginalName());
-                        $data = [
+                        $destinationPath = public_path() . '/uploads/collection/blueprints/';
+                        $collectionBluePrint->move($destinationPath, $collectionBluePrintFileName);
+                        CollectionBluePrints::create([
                             'collection_id' => $collection->id,
-                            'img_src' => $destinationPath,
-                            'img_alt' => $imgFileName,
-                        ];
-                        array_push($collectionBluePrintsData, $data);
-                        if ($i == count($collectionBluePrints) - 1) {
-                            Log::info("collectionBluePrintsData -----" . json_encode($collectionBluePrintsData));
-                            CollectionBluePrints::insert($collectionBluePrintsData);
-                        }
+                            'img_src' => $collectionBluePrintFileName,
+                            'img_alt' => $collectionBluePrintFileName,
+                        ]);
                     }
                 }
 
 
-                if ($products) {
-                    for ($k = 0; $k < count($products); $k++) {
-
-
-                        $variants = $products[$k]['variants'];
-                        if ($variants) {
-                            $productVariants = [];
-                            for ($a = 0; $a < count($variants); $a++) {
-                                $variantData = [
-                                    "option$a" => $variants[$a]["option"],
-                                    "price" => $variants[$a]["price"],
-                                    "sku" => $variants[$a]["sku"]
-                                ];
-                                array_push($productVariants, $variantData);
-                            }
-                        }
-
-
-                        $images = $products[$k]['variants'];
-                        if ($variants) {
-                            $productImages = [];
-                            for ($a = 0; $a < count($images); $a++) {
-                                $imaeData = [
-                                    "src" => $images[$a]["src"],
-                                    "alt" => $images[$a]["alt"],
-                                ];
-                                array_push($productImages, $imaeData);
-                            }
-                        }
-
-
-                        $productData = [
-                            "product" => [
-                                "title" => $products[$k]['title'],
-                                "body_html" => '',
-                                "vendor" => '',
-                                "product_type" => '',
-                                "published" => false,
-                                "tags" => [
-                                    $request->design_name,
-                                ],
-                                "variants" => [
-                                    $productVariants
-                                ],
-                                "image" => $productImages,
-                            ]
-                        ];
-
-                        $productResult = $api->rest('POST', '/admin/products.json', $data)['body']['product'];
-                        if ($productResult) {
-                            $product = Product::create([
-                                'title' => $products[$k]['title'],
-                                'description' => $products[$k]['description'],
-                                'body' => $products[$k]['body'],
-                                'vendor' => $products[$k]['vendor'],
-                                'product_type' => $products[$k]['product_type'],
-                                'room_type' => $products[$k]['room_type'],
-                                'room_style' => $products[$k]['room_style'],
-                                'room_budget' => $products[$k]['room_budget'],
-                            ]);
-
-                            //$productImages = $products[$i]['images'];
-                            if ($productImages) {
-                                $productImagesData = [];
-                                for ($l = 0; $l < count($productImages); $l++) {
-                                    $imgFileName = $productImages[$i]->getClientOriginalName();
-                                    //Move Uploaded File
-                                    $destinationPath = public_path() . '/uploads/collection/images/';
-                                    $productImages[$l]->move($destinationPath, $productImages[$l]->getClientOriginalName());
-                                    $data = [
-                                        'product_id' => $product->id,
-                                        'img_src' => $destinationPath,
-                                        'img_alt' => $imgFileName
-                                    ];
-                                    array_push($productImagesData, $data);
-                                    if ($l == count($productImages) - 1) {
-                                        Log::info("productImagesData -----" . json_encode($productImagesData));
-                                        ProductImages::insert($productImagesData);
-                                    }
-                                }
-                            }
-
-                            if ($productVariant) {
-                                $productVariantsData = [];
-                                for ($m = 0; $m < count($productVariant); $m++) {
-
-                                    $data = [
-                                        'product_id' => $product->id,
-                                        'option_name' => $productVariant[$m]['option_name'],
-                                        'option_value' => $productVariant[$m]['option_value'],
-                                        'price' => $productVariant[$m]['price'],
-                                    ];
-                                    array_push($productVariantsData, $data);
-                                    if ($i == count($productVariant) - 1) {
-                                        Log::info("productImagesData -----" . json_encode($productImagesData));
-                                        ProductVariant::insert($productImagesData);
-                                    }
-                                }
-                            }
+                if ($colorNames) {
+                    $colorImgArr = [];
+                    if ($request->hasfile('color_img')) {
+                        foreach ($request->file('color_img') as $file) {
+                            $imgFileName = $file->getClientOriginalName();
+                            $destinationPath = public_path() . '/uploads/collection/color_pallates/';
+                            $file->move($destinationPath, $imgFileName);
+                            array_push($colorImgArr, $imgFileName);
                         }
                     }
+
+                    for ($i = 0; $i < count($colorNames); $i++) {
+                        $imgFileName = "";
+                        $color_img_value = "";
+                        if (isset($colorImgArr[$i])) {
+                            $color_img_value = $colorImgArr[$i];
+                        }
+                        CollectionColorPallettes::create([
+                            'collection_id' => $collection->id,
+                            'color_img' => $color_img_value,
+                            'color_name' => $colorNames[$i],
+                            'brand' => $colorBrand[$i],
+                            'finish' => $colorFinish[$i],
+                            'application' => $colorApplication[$i]
+                        ]);
+                    }
                 }
+
+                return response()->json(['status' => 201, 'message' => "Room details saved successfully", "data" => $result])->setStatusCode(201);
             } else {
-                return response()->json(['status' => 500, 'message' => 'something went wrong!']);
+                return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }
         } catch (\Exception $e) {
             Log::info($e->getMessage());
@@ -354,18 +284,300 @@ class DesignController extends Controller
         }
     }
 
-    public function collectionExist($title)
+    public function uploadProducts(Request $request)
     {
-        $collection = Collection::where('title', $title)->get();
-        if ($collection) {
-            return response()->json(["status" => 422, "message" => "Design name already taken"]);
-        } else {
 
-            return response()->json(["status" => 200, "message" => "Collection not found"]);
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'collection_id' => 'required',
+            'merchandise' => 'required',
+            'size_specification' => 'required',
+            'product_description' => 'required',
+            'product_url' => 'required',
+            'product_price' => 'required',
+            'quantity' => 'required',
+            //product_images.* => 'required',
+            //'design_implementation_guide' => 'required',
+            // 'color_name.*' => 'required',
+        ]);
+
+        $productImages = $request->file('product_images');
+
+        try {
+            $customer = Customer::find($request->customer_id);
+            if (!($customer->status)) {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
+            }
+
+            if ($customer->status == 'pending' || $customer->status == 'disabled') {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "AYour account is not approved yet to create design, contact Admin!"]])->setStatusCode(422);
+            }
+
+            $collection = Collection::find($request->collection_id);
+            if (!($collection)) {
+                return response()->json(['status' => 500, 'errors' => ["design" => "Design or Room not found"]])->setStatusCode(422);
+            }
+
+
+            $shop = User::where('name', $request->shop)->first();
+            $options = new Options();
+            $options->setVersion('2021-01');
+            $api = new BasicShopifyAPI($options);
+            $api->setSession(new Session($shop->name, $shop->password));
+
+            $productImagesArr = [];
+            if ($request->hasfile('products_images')) {
+                Log::info("has file collection images");
+                foreach ($productImages as $productImage) {
+                    Log::info("single collection img");
+                    $productImageFileName = $productImage->getClientOriginalName();
+                    //Move Uploaded File
+                    $destinationPath = public_path() . '/uploads/collection/product_images';
+                    $productImage->move($destinationPath, $productImageFileName);
+
+                    $data = [
+                        "src" => $productImageFileName
+                    ];
+                    array_push($productImagesArr, $data);
+                }
+            }
+
+
+            $data = [
+                "product" => [
+                    "title" => $request->merchandise,
+                    "product_type" => '',
+                    "description" => $request->product_description,
+                    "published" => false,
+                    "inventory_quantity"=> $request->quantity,
+                    "tags" => [
+                        $collection->design_name,
+                    ],
+                    "presentment_prices" => [
+                        [
+                            "price" => [
+                                "currency_code" => "USD",
+                                "amount" => $request->product_price
+                            ],
+                            "compare_at_price" => $request->compare_at_price
+                        ]
+                    ],
+                    "images" => $productImagesArr
+                ]
+            ];
+
+            $result = $api->rest('POST', '/admin/products.json', $data)['body'];
+            Log::info('result' . json_encode($result));
+            if (isset($result['product'])) {
+
+                $product = Product::create([
+                    'id' => $result['product']['id'],
+                    'collection_id' => $collection->id,
+                    'title' => $request->merchandise,
+                    'description' => $request->product_description,
+                    'size_specification' => $request->size_specification,
+                    'product_url' => $request->product_url,
+                    'product_price' => $request->product_price,
+                    'product_compare_at_price' => $request->compare_at_price,
+                    'product_quantity' => $request->quantity,
+                    'status' => "draft"
+                ]);
+
+                foreach ($productImagesArr as $productImage) {
+                    ProductImages::create([
+                        'product_id' => $product->id,
+                        'img_src' => $productImage['src'],
+                        'img_alt' => $productImage['src'],
+                    ]);
+                }
+
+
+
+                $product = Product::find($product->id);
+                Log::info('final product' . json_encode($product));
+
+                $returnHTML = view('designer.newProduct')->with('product', $product)->render();
+                return response()->json(['status'=>201, 'success' => true, 'data'=>$returnHTML, 'message'=>'Product added successfully'])->setStatusCode(201);
+
+                return View::make('designer.newProduct')->with('product', $product);
+
+               // return response()->json(['statu' => 201, "data" => $result, "message" => "Product added successfully"])->setStatusCode(201);
+            } else {
+                return response()->json(['status' => 500, 'errors' => $result]);
+            }
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
         }
     }
 
+    public function bulkUpload(Request $request){
+        $this->validate($request, [
+            'upload_product_csv' => 'required',
+            'customer_id' => 'required',
+            'collection_id' => 'required',
+        ]);
+        $customer = Customer::find($request->customer_id);
+            if (!($customer->status)) {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
+            }
 
+            if ($customer->status == 'pending' || $customer->status == 'disabled') {
+                return response()->json(['status' => 500, 'errors' => ["designer" => "AYour account is not approved yet to create design, contact Admin!"]])->setStatusCode(422);
+            }
+
+            $collection = Collection::find($request->collection_id);
+            if (!($collection)) {
+                return response()->json(['status' => 500, 'errors' => ["design" => "Design or Room not found"]])->setStatusCode(422);
+            }
+            $shop = User::where('name', $request->shop)->first();
+            $options = new Options();
+            $options->setVersion('2021-01');
+            $api = new BasicShopifyAPI($options);
+            $api->setSession(new Session($shop->name, $shop->password));
+
+        $file = $request->file('upload_product_csv');
+
+        // File Details
+      $filename = $file->getClientOriginalName();
+      $extension = $file->getClientOriginalExtension();
+      $tempPath = $file->getRealPath();
+      $fileSize = $file->getSize();
+      $mimeType = $file->getMimeType();
+
+      // Valid File Extensions
+      $valid_extension = array("csv");
+
+      // 2MB in Bytes
+      $maxFileSize = 2097152;
+
+      // Check file extension
+      if(in_array(strtolower($extension),$valid_extension)){
+
+        // Check file size
+        if($fileSize <= $maxFileSize){
+
+          // File upload location
+          $location = 'uploads';
+
+          // Upload file
+          $file->move($location,$filename);
+
+          // Import CSV to Database
+          $filepath = public_path($location."/".$filename);
+
+          // Reading file
+          $file = fopen($filepath,"r");
+
+          $importData_arr = array();
+          $i = 0;
+
+          while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+             $num = count($filedata );
+
+
+             for ($c=0; $c < $num; $c++) {
+                $importData_arr[$i][] = $filedata [$c];
+             }
+             $i++;
+          }
+          fclose($file);
+
+          // Insert to MySQL database
+
+          $productIds = [];
+
+          foreach($importData_arr as $importData){
+
+
+          /*  $productImagesArr = [];
+            if ($request->hasfile('products_images')) {
+                Log::info("has file collection images");
+                foreach ($productImages as $productImage) {
+                    Log::info("single collection img");
+                    $productImageFileName = $productImage->getClientOriginalName();
+                    //Move Uploaded File
+                    $destinationPath = public_path() . '/uploads/collection/product_images';
+                    $productImage->move($destinationPath, $productImageFileName);
+
+                    $data = [
+                        "src" => $productImageFileName
+                    ];
+                    array_push($productImagesArr, $data);
+                }
+            }
+            */
+
+            Log::info("import Data". json_encode($importData));
+            $data = [
+                "product" => [
+                    "title" => $importData[0],
+                    "product_type" => '',
+                    "description" => $importData[1],
+                    "published" => false,
+                    "inventory_quantity"=> $importData[6],
+                    "tags" => [
+                        $collection->design_name,
+                    ],
+                    "presentment_prices" => [
+                        [
+                            "price" => [
+                                "currency_code" => "USD",
+                                "amount" => $importData[4]
+                            ],
+                            "compare_at_price" => $importData[5]
+                        ]
+                    ],
+
+                ]
+            ];
+
+            $result = $api->rest('POST', '/admin/products.json', $data)['body'];
+            Log::info('result' . json_encode($result));
+
+            if (isset($result['product'])) {
+
+                $product = Product::create([
+                    'id' => $result['product']['id'],
+                    'collection_id' => $collection->id,
+                    'title' => $importData[0],
+                    'description' => $importData[1],
+                    'size_specification' => $importData[2],
+                    'product_url' => $importData[3],
+                    'product_price' => $importData[4],
+                    'product_compare_at_price' => $importData[5],
+                    'product_quantity' => $importData[6],
+                    'status' => "draft"
+                ]);
+
+                array_push($productIds, $product->id);
+
+            }
+        }
+
+        if($productIds){
+
+            $products = Product::whereIn('id', $productIds )->get();
+
+            $returnHTML = view('designer.productBulkUpload')->with('products', $products)->render();
+            return response()->json(['status'=>201, 'success' => true, 'data'=>$returnHTML, 'message'=>'Bulk Product added successfully'])->setStatusCode(201);
+
+        }else{
+
+               return response()->json(['status' => 500, 'errors' => $result]);
+            }
+
+         // Session::flash('message','Import Successful.');
+        }else{
+            return response()->json(['status' => 500, 'errors' => "data"]);
+          //Session::flash('message','File too large. File must be less than 2MB.');
+        }
+
+      }else{
+        return response()->json(['status' => 500, 'errors' => ["upload_product_csv" => "Invalid file extension"]]);
+      }
+
+    }
 
     /**
      * Display the specified resource.
@@ -410,5 +622,48 @@ class DesignController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function verifyDesignName(Request $request)
+    {
+        $this->validate($request, [
+            'design_name' => 'required',
+        ]);
+
+        $design = Collection::where('design_name', $request->design_name)->get();
+        if ($design->isEmpty()) {
+            return response()->json(["success" => ["design_name" => "design_name verified successfully"]])->setStatusCode(200);
+
+            //Log::info("email not exist". json_encode($customer));
+        } else {
+            return response()->json(["errors" => ["design_name" => "design_name has already taken"]])->setStatusCode(422);
+        }
+        Log::info("design" . json_encode($design));
+    }
+
+    public function verifyProductName(Request $request)
+    {
+        $this->validate($request, [
+            'merchandise' => 'required',
+        ]);
+    }
+
+    public function submitDesign(Request $request){
+        $this->validate($request, [
+            'collection_id' => 'required',
+        ]);
+
+        $collection = Collection::find($request->collection_id);
+        $collection->status = 'active';
+        $collection->save();
+
+        $products = Product::where('collection_id', $collection->id)->get();
+        foreach($products as $product){
+            $product->status = "active";
+            $product->save();
+        }
+
+        return response()->json(["status"=>200, "message"=>"design submitted successfully"])->setStatusCode(200);
+
     }
 }

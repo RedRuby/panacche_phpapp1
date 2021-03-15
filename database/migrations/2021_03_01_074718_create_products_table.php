@@ -18,15 +18,14 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('collection_id');
 
             $table->string('title');
-            $table->string('description')->nullable();
-            $table->text('body')->nullable();
-            $table->string('vendor')->nullable();
-            $table->string('product_type')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('published')->default(false);
-            $table->string('room_type')->nullable();
-            $table->string('room_style')->nullable();
-            $table->string('room_budget')->nullable();
-            $table->string('status')->nullable();
+            $table->string('size_specification')->nullable();
+            $table->string('product_url')->nullable();
+            $table->string('product_price')->nullable();
+            $table->string('product_compare_at_price')->nullable();
+            $table->string('product_quantity')->nullable();
+            $table->enum('status', ['draft', 'active', 'disabled']);
 
             $table->foreign('collection_id')->references('id')->on('collections');
             $table->timestamps();

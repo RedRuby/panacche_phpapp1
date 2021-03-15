@@ -488,6 +488,6 @@ class CustomerController extends Controller
     public function getCustomer($id)
     {
         $customer = Customer::find($id);
-        return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully", "data" => $customer]);
+        return response()->json(["status" => "success", "statusCode" => 200, "message" => "Customer profile data", "data" => $customer]);
     }
 }

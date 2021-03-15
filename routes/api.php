@@ -35,17 +35,22 @@ Route::post('verify_phone', 'CustomerController@verifyPhone');
 Route::post('verify_zip', 'CustomerController@verifyZip');
 Route::get('/get/customer/{id}', 'CustomerController@getCustomer');
 
-//Route::resource('design', 'DesignController');
+Route::resource('design', 'DesignController');
+//Route::get('/design/collection/exist/{title}', 'DesignController@collectionExist');
+//Route::post('/design/add/products', 'DesignController@addProducts');
+Route::post('verify_design_name', 'DesignController@verifyDesignName');
+Route::post('/design/products', 'DesignController@uploadProducts');
+Route::post('/design/products/bulk_upload', 'DesignController@bulkUpload');
+Route::post('/design/submit', 'DesignController@submitDesign');
 
-Route::post('design', 'DesignController@store');
+//Route::post('/design', 'DesignController@store');
 Route::get('design', 'DesignController@index');
 Route::get('design/search', 'DesignController@searchDesign');
 Route::get('our/designs', 'DesignController@ourDesigns');
 Route::get('designer/profile/approve/{id}/{shop}', 'CustomerController@approveDesigner');
 Route::get('designer/profile/reject/{id}/{shop}', 'CustomerController@rejectDesigner');
 
-Route::get('/design/collection/exist/{title}', 'DesignController@collectionExist');
-//Route::post('/design/add/products', 'DesignController@addProducts');
+
 
 
 //Route::get('/admin/dashboard', 'AdminController@index');
@@ -62,3 +67,5 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 Route::get('/designer/users/{id}', 'DesignerController@users');
 Route::get('/designer/designs/{id}', 'DesignerController@designs');
 Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+
+
