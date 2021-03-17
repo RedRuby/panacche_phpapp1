@@ -17,4 +17,8 @@ class CollectionColorPallettes extends Model
         'finish',
         'application',
     ];
+
+    public function collection(){
+        return $this->belongsTo('App\Collection');
+    }
 }

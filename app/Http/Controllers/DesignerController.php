@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Collection;
+use App\Customer;
 use View;
 
 class DesignerController extends Controller
@@ -19,14 +20,14 @@ class DesignerController extends Controller
 
     public function designs($id)
     {
-        $designs = Collection::where('customer_id', $id)->with('collectionImages')->get();
+        $designs = Collection::where('customer_id', $id)->with('customer')->with('collectionImages')->get();
         //return $designs;
         return View::make("designer.mydesigns")->with("designs", $designs);
     }
 
     public function statistics($id){
         $activeDesigns = Collection::where('customer_id', $id)->where('published', true)->count();
-        $designsUnderReview = Collection::where('customer_id', $id)->where('published', false)->count();
+        $designsUnderReview = Collection::where('customer_id', $id)->where('published', false)->where('status', 'active')->count();
         $updateRequest = Collection::where('published', true)->count();
         $notifications = Collection::where('published', true)->count();
 

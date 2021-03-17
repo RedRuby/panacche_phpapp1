@@ -9,6 +9,7 @@ use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use View;
 use App\Collection;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -23,11 +24,13 @@ class AdminController extends Controller
             ->get();
 
         return View::make("admin.newDesigners")->with("customers", $customers);
-    }
+    }//
 
     public function designs()
     {
-        $designs = Collection::where('published', false)->get();
+        $designs = Collection::where('published', false)->where('status', 'active')->with('customer')->with('collectionImages')->get();
+
+        //return $designs;
 
         return View::make("admin.newDesigns")->with("designs", $designs);
     }
@@ -44,5 +47,14 @@ class AdminController extends Controller
     {
         $customer = Customer::find($id);
         return View::make('customer.view')->with("customer", $customer);
+    }
+
+    public function viewDesign($id){
+        Log::info('collection id'. $id);
+        $design = Collection::where('id', $id)->with('customer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
+
+       //return  $design;
+       return View::make('admin.viewDesign')->with("design", $design);
+
     }
 }

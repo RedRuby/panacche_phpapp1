@@ -587,7 +587,13 @@ class DesignController extends Controller
      */
     public function show($id)
     {
-        //
+        //return "show design". $id;
+        Log::info('collection id'. $id);
+        $design = Collection::where('id', $id)->with('customer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
+
+       //return  $design;
+       return View::make('designer.viewDesign')->with("design", $design);
+
     }
 
     /**

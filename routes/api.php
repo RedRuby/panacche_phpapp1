@@ -57,6 +57,7 @@ Route::get('designer/profile/reject/{id}/{shop}', 'CustomerController@rejectDesi
 Route::get('/admin/designers', 'AdminController@designers');
 Route::get('/admin/designs', 'AdminController@designs');
 Route::get('/admin/statistics', 'AdminController@statistics');
+Route::get('/admin/design/{id}', 'AdminController@viewDesign');
 
 
 Route::get('shopify', 'ShopifyController@index')->middleware(['auth.shopify']);

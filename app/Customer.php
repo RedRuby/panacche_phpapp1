@@ -15,4 +15,9 @@ class Customer extends Model
     protected $fillable = [
         'id', 'username', 'email', 'first_name', 'last_name', 'username', 'password', 'status', 'phone', 'address','locality', 'city', 'zip', 'state', 'country', 'profile_type', 'profile_picture', 'designer_certificate', 'communication_channels', 'tag'
     ];
+
+    public function collections()
+    {
+        return $this->hasMany('App\Collection');
+    }
 }

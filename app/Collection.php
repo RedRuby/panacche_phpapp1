@@ -13,4 +13,24 @@ class Collection extends Model
     {
         return $this->hasMany('App\CollectionImages');
     }
+
+    public function customer(){
+        return $this->belongsTo('App\Customer');
+    }
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
+
+    public function bluePrintImages()
+    {
+        return $this->hasMany('App\CollectionBluePrints');
+    }
+
+    public function colorPallettes()
+    {
+        return $this->hasMany('App\CollectionColorPallettes');
+    }
+
 }
