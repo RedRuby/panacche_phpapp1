@@ -1,21 +1,7 @@
-
-		<div class="row galleryHead py-2">
-			<div class="text-center col-12">
-				OUR DESIGNS
-			</div>
-		</div>
-        @if(count($designGroups))
-        @foreach($designGroups as $key => $designGroup)
-		<div class="row px-5 mt-5">
-					  <div class="col-12 px-0 galleryHeading">
-						<h4 class="mb-4">
-							<span>{{ strtoupper($key) }}</span>
-						</h4>
-                      </div>
-                      @if(count($designGroup))
+@if($designs->count() !=0 )
 					  <div class="col-12 px-0">
 							<div class="row px-0 designCards">
-                                @foreach($designGroup as $design)
+                                @foreach($designs as $design)
 							  <div class="col-lg-3 col-md-6 col-sm-6">
 								<div class="card">
                                     @if($design->collectionImages()->count() == 0)
@@ -43,17 +29,14 @@
                               </div>
                               @endforeach
 
-							</div>
-							<div class="row mt-4 mb-0">
-								<p class="col-12 viewMorebtn text-right"><a href="https://panacchebeta.myshopify.com/pages/view-all?type={{$key}}" type="button" class="btn btn-primary">View More</a></p>
-							</div>
+                            </div>
+
+
                       </div>
 
-            @else <h1>Traditional Designs are not available</h1>
+            @else <h1>This Type of designs are not available</h1>
             @endif
-        </div>
-        @endforeach
-        @endif
+
 
 		<div class="row meetDesigners py-2">
 			<div class="text-center col-12">

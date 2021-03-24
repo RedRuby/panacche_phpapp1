@@ -7,6 +7,7 @@
     <div class="card">
         @if($design->collectionImages()->count() == 0)
 
+        <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
         @else
         <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}">
 

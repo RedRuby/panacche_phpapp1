@@ -42,13 +42,15 @@ Route::post('verify_design_name', 'DesignController@verifyDesignName');
 Route::post('/design/products', 'DesignController@uploadProducts');
 Route::post('/design/products/bulk_upload', 'DesignController@bulkUpload');
 Route::post('/design/submit', 'DesignController@submitDesign');
+Route::get('/design/view_all/{type}', 'DesignController@viewAllByType');
 
 //Route::post('/design', 'DesignController@store');
 Route::get('design', 'DesignController@index');
-Route::get('design/search', 'DesignController@searchDesign');
+Route::post('design/search', 'DesignController@searchDesign');
 Route::get('our/designs', 'DesignController@ourDesigns');
 Route::get('designer/profile/approve/{id}/{shop}', 'CustomerController@approveDesigner');
 Route::get('designer/profile/reject/{id}/{shop}', 'CustomerController@rejectDesigner');
+Route::get('/designer/{id}', 'CustomerController@viewDesignerProfile');
 
 
 
@@ -68,5 +70,6 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 Route::get('/designer/users/{id}', 'DesignerController@users');
 Route::get('/designer/designs/{id}', 'DesignerController@designs');
 Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+
 
 

@@ -6,7 +6,7 @@
         <div class="col-sm-4">
             <div class="card">
                 @if($design->collectionImages()->count() == 0)
-                <img src="" class="card-img cover-photo" alt="Cover">
+                <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                 @else
                 <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">

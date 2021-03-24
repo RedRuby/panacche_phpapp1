@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Collection;
 use App\Customer;
 use View;
+use Mail;
+use App\Helpers\Helper;
 
 class DesignerController extends Controller
 {
@@ -22,6 +24,16 @@ class DesignerController extends Controller
     {
         $designs = Collection::where('customer_id', $id)->with('customer')->with('collectionImages')->get();
         //return $designs;
+        $data = ['abc',"xyz","lmn"];
+        $template = "emails.mail";
+        $subject = "just for testing";
+        $fromEmail = "panacchebeta@gmail.com";
+        $fromName = "Panacche Team";
+        $toEmail = "nileshbari.8085@gmail.com";
+        $emailTitle = "Account Creation";
+
+        Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+
         return View::make("designer.mydesigns")->with("designs", $designs);
     }
 
@@ -31,7 +43,6 @@ class DesignerController extends Controller
         $updateRequest = Collection::where('published', true)->count();
         $notifications = Collection::where('published', true)->count();
 
-        //return "Hello";
         return View::make("designer.dashboardStatistics")->with('activeDesigns', $activeDesigns)->with("designsUnderReview", $designsUnderReview)->with("updateRequest", $updateRequest)->with("notifications", $notifications);
     }
 }

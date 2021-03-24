@@ -21,6 +21,7 @@ use App\User;
 use App\Customer;
 use View;
 use App\CollectionColorPallettes;
+use Illuminate\Support\Facades\DB;
 
 
 class DesignController extends Controller
@@ -32,26 +33,61 @@ class DesignController extends Controller
      */
     public function index()
     {
-        //$designs = Collection::get('published', true);
+        $designs = Collection::with('collectionImages')->get();
+        $grouped = $designs->groupBy('room_type');
 
-        $traditionalDesigns = Collection::get('room_type', 'traditional')->get();
+       // return $grouped->all();
 
         $designers = Customer::where('tag', 'role:designer')
             ->where('status', 'active')
             ->get();
 
-        // Group by types
 
-        return View::make('design.gallery')->with("traditionalDesigns", $traditionalDesigns)
+        return View::make('design.gallery')->with("designGroups", $grouped->all())
+            ->with("designers", $designers);
+    }
+
+    public function viewAllByType($type){
+        $designs = Collection::with('collectionImages')->where('room_type', $type)->get();
+       // return $designs;
+
+        $designers = Customer::where('tag', 'role:designer')
+            ->where('status', 'active')
+            ->get();
+
+
+            return View::make('design.view_all')->with("designs", $designs)
             ->with("designers", $designers);
     }
 
     public function searchDesign(Request $request)
     {
-        $traditionalDesigns = Collection::get('room_type', 'traditional')->get();
-        $designers = Customer::where('tag', 'role:designer')
-            ->where('status', 'active')
-            ->get();
+
+        $sort = 'asc';
+        if($request->Input("params.sorts")){
+            $sort = $request->Input("params.sorts");
+        }
+
+        $designs = Collection::with(['customer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages'])->whereHas('customer', function($q) use($request)
+        {
+            if($request->Input("customer_id")){
+                $q->whereIn('customer.id', $request->Input("param.customer_id"));
+            }
+            if($request->Input("room_style")){
+                $q->whereIn('collections.room_style', $request->Input("param.room_style"));
+            }
+            if($request->Input("room_type")){
+                $q->whereIn('collections.room_type', $request->Input("param.room_type"));
+            }
+            if($request->Input("room_budget")){
+                $q->whereBetween('collections.room_budget', $request->Input("param.room_budget_min", "room_budget_max"));
+            }
+
+        })->orderBy('created_at', $sort)
+        ->where('published', true)
+        ->where('status', 'approved')
+        ->get();
+        //paginate(10);
 
         return View::make('design.gallery')->with("traditionalDesigns", $traditionalDesigns)
             ->with("designers", $designers);

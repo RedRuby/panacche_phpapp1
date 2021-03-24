@@ -83,7 +83,7 @@
 							<form class="mx-0">
 							  <div class="col-12 px-0 float-left mb-3">
 								<label for="">Design Name</label>
-								<p>{{ $design->name }}</p>
+								<p>{{ $design->design_name }}</p>
 							  </div>
 
 							  <div class="col-12 px-0 float-left mb-3">
@@ -145,11 +145,13 @@
 					<p>3D rendered Images</p>
 					<div class="col-md-12 col-xs-12 float-left px-0 mb-3">
 						<div class="row">
-							@if($design->collectionImages()->count() == 0)
-                            <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"></p>
+							@if($design->collectionImages->count() == 0)
+                            <p class="col-md-3 col-sm-6 col-6 uploadedImagesView">
+                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
+                            </p>
                             @else
 
-                            @foreach($design->collectionImages() as $collectionImage)
+                            @foreach($design->collectionImages as $collectionImage)
 							    <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid" src="{{  asset('uploads/collection/images/'.$collectionImage->img_src) }}"></p>
                             @endforeach
                             @endif
@@ -159,11 +161,11 @@
 					<p>Concept Board</p>
 					<div class="col-md-12 col-xs-12 float-left px-0 mb-3">
 						<div class="row">
-                            @if($design->bluePrintImages()->count() == 0)
+                            @if($design->bluePrintImages->count() == 0)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"></p>
                             @else
 
-                            @foreach($design->bluePrintImages() as $bluePrintImage)
+                            @foreach($design->bluePrintImages as $bluePrintImage)
 							<p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid" src="{{  asset('uploads/collection/blue_prints/'.$bluePrintImage->img_src) }}"></p>
                             @endforeach
                             @endif
@@ -183,11 +185,11 @@
 								</tr>
 							  </thead>
 							  <tbody>
-								@if($design->colorPallettes()->count() == 0)
+								@if($design->colorPallettes->count() == 0)
                                 <tr></tr>
                                 @else
 
-                                @foreach($design->colorPallettes() as $colorPallette)
+                                @foreach($design->colorPallettes as $colorPallette)
 
 								<tr>
 								  <td>
@@ -216,11 +218,11 @@
 			<div class="col-md-12 float-left mb-5 pl-5">
 				<label for="" class="col-12 px-0 font14">Added Merchandise</label>
 				<div class="addRefWrap col-12 float-left py-3 mb-3">
-                    @if($design->products()->count() == 0)
+                    @if($design->products->count() == 0)
                     <div class="col-12 float-left px-0 addmerchBoxWrap"></div>
                     @else
 
-                    @foreach($design->products() as $product)
+                    @foreach($design->products as $product)
 					<div class="col-12 float-left px-0 addmerchBoxWrap">
 						<label for="" class="col-12 px-0 mb-0">1</label>
 
@@ -257,11 +259,11 @@
 								<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>
 								<div class="row uploadedImage px-0">
 
-                                    @if($design->productImages()->count() == 0)
+                                    @if($product->productImages->count() == 0)
 
                                     @else
 
-                                    @foreach($design->productImages() as $product)
+                                    @foreach($product->productImages as $product)
                                         <div class="col-4 float-left">
                                             <p><img src="{{  asset('uploads/collection/product/images/'.$product->img_src) }}"></p>
                                         </div>

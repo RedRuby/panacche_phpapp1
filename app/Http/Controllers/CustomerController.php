@@ -14,6 +14,9 @@ use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use App\User;
 use View;
+use Mail;
+use App\Helpers\Helper;
+use Spatie\Activitylog\Models\Activity;
 
 
 class CustomerController extends Controller
@@ -82,13 +85,14 @@ class CustomerController extends Controller
             $profile_pic = $request->file('profile_pic');
             $certificate = $request->file('certificate');
             $success_message = "";
+            $emailTemplate = "";
+            $emailSubject = "";
+            $role = "";
             if ($request->tag == "role:customer") {
                 $success_message = "Account created successfully!";
             } else {
                 $success_message = 'New account has been created successfully to shopify, Account activation link has been sent to your email account!';
             }
-            //$error_message = "";
-
 
             $communication_channel['cc_email'] = $request->cc_email;
             $communication_channel['cc_phone'] = $request->cc_phone;
@@ -109,10 +113,16 @@ class CustomerController extends Controller
             if ($request->tag == 'role:designer') {
                 $status = 'pending';
                 $success_message = "Designer Account Created successfully";
+                $emailTemplate = "emails.designerAccount";
+                $emailSubject = "Designer Account Created successfully!";
+                $role = "designer";
             } else {
                 $status = 'active';
                 $password = $request->password;
                 $success_message = "Customer Account Created successfully";
+                $emailTemplate = "emails.customerAccount";
+                $emailSubject = "Customer Account Created successfully!";
+                $role = "customer";
             }
 
             if (!empty($profile_pic)) {
@@ -257,7 +267,43 @@ class CustomerController extends Controller
                     'tag' => $request->tag,
                 ]);
 
+                $temp = $customer;
+                $data = $temp->toArray();
+                $template = $emailTemplate;
+                $subject = $emailSubject;
+                $fromEmail = "panacchebeta@gmail.com";
+                $fromName = "Panacche Team";
+                $toEmail = $request->email;
+                $emailTitle = "Account Creation";
+
+                if (! empty($customer->id)) {
+                    // Model has been successfully inserted
+                $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                if(empty($myEmail)){
+                    Log::info("mail has been sent because empty no error " . $myEmail);
+
+                    $log_message = "Account creation email has been sent to ". $role;
+
+                    Helper::log_activity($customer, $customer, $customer, $log_message);
+                }else{
+                    $log_message = "Due to some error account creation email has not sent to ". $role;
+                    Helper::log_activity($customer, $customer, $customer, $log_message);
+                }
+
+                Helper::log_activity($customer, $customer, $customer, $success_message);
+
                 return response()->json(['status' => 201, 'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
+                }else{
+                    $data = $request->all();
+                    $template = "emails.accountNotCreated";
+                    $subject = "Record is created in shopify but not is App due to some error";
+                    $toEmail = "admin@admin.com" ; // or admin@panacche.com
+                    $emailTitle = "Record is not created in app";
+                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                    $log_message = "Record is created in shopify but not is App due to some error";
+                    $newCustomer = new Customer();
+                    Helper::log_activity($newCustomer, $customer, $data, $log_message);
+                }
             } else {
                 return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
             }
@@ -489,5 +535,10 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         return response()->json(["status" => "success", "statusCode" => 200, "message" => "Customer profile data", "data" => $customer]);
+    }
+
+    public function viewDesignerProfile($id){
+        $designer  = Customer::find($id);
+        return $designer;
     }
 }

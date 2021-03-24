@@ -1,14 +1,7 @@
-@foreach ($design as $design )
-
-
-
+@foreach ($design as $mydesign )
 		<div class="row align-items-center h-100">
-
-
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
-
-				<div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="images/panacche_logo.png"></div>
-
+				<div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="https://cdn.shopify.com/s/files/1/0529/0255/9930/t/3/assets/panacche_logo.png?v=14350055876468133888"></div>
 				<div class="col-12 px-3 landingHeading float-left">
 					<h4 class="mb-4">
 						<span class="float-left mr-4">New Design Approval</span>
@@ -16,7 +9,7 @@
 				</div>
 				<div class="col-12 px-3 float-left">
 					<h6 class="mb-4">
-						<span class="float-left mr-4 mt-3 mb-3"><strong>Design Name:</strong> {{ $design->design_name }}</span>
+						<span class="float-left mr-4 mt-3 mb-3"><strong>Design Name:</strong> {{ $mydesign->design_name }}</span>
 						<div class="float-left float-sm-right float-md-right mb-4 mb-mb-0 d-block d-sm-flex">
 							<a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<button type="button" class="btn btn-primary cancelBtn float-none float-sm-left float-md-right mr-0 mr-sm-3 pr-3 mb-3">Remarks for the Designer
@@ -99,46 +92,45 @@
 							<form class="mx-0">
 							  <div class="col-12 px-0 float-left mb-3">
 								<label for="">Design Name</label>
-								<p>{{ $design->name }}</p>
+								<p>{{ $mydesign->design_name }}</p>
 							  </div>
 
 							  <div class="col-12 px-0 float-left mb-3">
 								<div class="form-group col-6 float-left pl-0">
 									<label for="">Design Price</label>
-									<p class="mb-0">$ {{ $design->design_price }}</p>
+									<p class="mb-0">$ {{ $mydesign->design_price }}</p>
 								</div>
 								<div class="form-group col-6 float-left pr-0">
 									<label for="">Room Budget</label>
-									<p class="mb-0">$ {{ $design->room_budget }}</p>
+									<p class="mb-0">$ {{ $mydesign->room_budget }}</p>
 								</div>
 							  </div>
 
 							  <div class="col-12 px-0 float-left mb-3">
 								<div class="form-group col-6 float-left pl-0">
 									<label for="">Room Type</label>
-									<p class="mb-0">{{ $design->room_type }}</p>
+									<p class="mb-0">{{ $mydesign->room_type }}</p>
 								</div>
 								<div class="form-group col-6 float-left pr-0">
 									<label for="">Room Style</label>
-									<p class="mb-0">{{ $design->room_style }}</p>
+									<p class="mb-0">{{ $mydesign->room_style }}</p>
 								</div>
 							  </div>
-
 
 							  <div class="col-12 px-0 float-left mb-3">
 								<label for="" class="w-100">Approximate Room Size </label>
 								<div class="form-group col-12 float-left px-0 mb-0">
 									<p class="col-12 float-left pl-0">
-										<span>{{ $design->width_in_feet }} feet {{ $design->width_in_inches }} inches </span>
+										<span>{{ $mydesign->width_in_feet }} feet {{ $mydesign->width_in_inches }} inches </span>
 										<span class="mx-4 pt-2"><i class="fas fa-times"></i></span>
-										<span>{{ $design->height_in_feet }} feet {{ $design->height_in_inches }} inches </span>
+										<span>{{ $mydesign->height_in_feet }} feet {{ $mydesign->height_in_inches }} inches </span>
 									</p>
 								</div>
 							  </div>
 
 							  <div class="col-12 px-0 float-left mb-3">
 								<label for="">Design Description</label>
-								<p>{{ $design->implementation_guide_description }}</p>
+								<p>{{ $mydesign->implementation_guide_description }}</p>
 							  </div>
 
 							  <div class="col-12 px-0 mb-3 float-left mb-3">
@@ -148,39 +140,37 @@
 
 							  <div class="col-12 px-0 float-left">
 								<label for="" class="w-100">Design Implementation Guide</label>
-								<span>{{ $design->design_implementation_guide }}</span>
+								<span>{{ $mydesign->design_implementation_guide }}</span>
 							  </div>
 
 							</form>
 						</div>
 
 				</div>
-
 				<div class="rightPart col-md-7 col-xs-12 float-left px-sm-3 mt-md-0 mt-4">
 					<label for="" class="col-12 px-0">Media</label>
 					<p>3D rendered Images</p>
 					<div class="col-md-12 col-xs-12 float-left px-0 mb-3">
 						<div class="row">
-                            @if($design->collectionImages()->count() == 0)
-                            <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"></p>
+                            @if($mydesign->collectionImages->count() == 0)
+                            <p class="col-md-3 col-sm-6 col-6 uploadedImagesView">
+                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
+                            </p>
                             @else
-
-                            @foreach($design->collectionImages() as $collectionImage)
+                            @foreach($mydesign->collectionImages as $collectionImage)
 							    <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid" src="{{  asset('uploads/collection/images/'.$collectionImage->img_src) }}"></p>
                             @endforeach
                             @endif
-
 						</div>
 					</div>
 
 					<p>Concept Board</p>
 					<div class="col-md-12 col-xs-12 float-left px-0 mb-3">
 						<div class="row">
-                            @if($design->bluePrintImages()->count() == 0)
+                            @if($mydesign->bluePrintImages->count() == 0)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"></p>
                             @else
-
-                            @foreach($design->bluePrintImages() as $bluePrintImage)
+                            @foreach($mydesign->bluePrintImages as $bluePrintImage)
 							<p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid" src="{{  asset('uploads/collection/blue_prints/'.$bluePrintImage->img_src) }}"></p>
                             @endforeach
                             @endif
@@ -200,12 +190,10 @@
 								</tr>
 							  </thead>
 							  <tbody>
-                                @if($design->colorPallettes()->count() == 0)
+                                @if($mydesign->colorPallettes->count() == 0)
                                 <tr></tr>
                                 @else
-
-                                @foreach($design->colorPallettes() as $colorPallette)
-
+                                @foreach($mydesign->colorPallettes as $colorPallette)
 								<tr>
 								  <td>
 									<div class="col-12 float-left px-0">
@@ -224,22 +212,19 @@
 							  </tbody>
 							</table>
 					</div>
-
 				</div>
 			</div>
-
-
 		</div>
 
 		<div class="row mt-4 px-3">
 			<div class="col-md-12 float-left mb-5 pl-5">
 				<label for="" class="col-12 px-0 font14">Added Merchandise</label>
 				<div class="addRefWrap col-12 float-left py-3 mb-3">
-                    @if($design->products()->count() == 0)
+                    @if($mydesign->products->count() == 0)
                     <div class="col-12 float-left px-0 addmerchBoxWrap"></div>
                     @else
 
-                    @foreach($design->products() as $product)
+                    @foreach($mydesign->products as $product)
 					<div class="col-12 float-left px-0 addmerchBoxWrap">
 						<label for="" class="col-12 px-0 mb-0">1</label>
 
@@ -276,15 +261,12 @@
 								<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>
 								<div class="row uploadedImage px-0">
 
-                                    @if($design->productImages()->count() == 0)
-
+                                    @if($product->productImages->count() == 0)
                                     @else
-
-                                    @foreach($design->productImages() as $product)
+                                    @foreach($product->productImages as $productImage)
                                         <div class="col-4 float-left">
-                                            <p><img src="{{  asset('uploads/collection/product/images/'.$product->img_src) }}"></p>
+                                            <p><img src="{{  asset('uploads/collection/product/images/'.$productImage->img_src) }}"></p>
                                         </div>
-
                                     @endforeach
                                     @endif
 

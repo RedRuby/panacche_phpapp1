@@ -53,6 +53,10 @@ class AdminController extends Controller
         Log::info('collection id'. $id);
         $design = Collection::where('id', $id)->with('customer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
 
+        // foreach($design as $design){
+        //     return $design->products();
+        // /}
+
        //return  $design;
        return View::make('admin.viewDesign')->with("design", $design);
 
