@@ -13,8 +13,7 @@ class Customer extends Model
     //use Notifiable;
 
     protected $fillable = [
-        'id', 'username', 'email', 'first_name', 'last_name', 'username', 'password', 'status', 'phone', 'address','locality', 'city', 'zip', 'state', 'country', 'profile_type', 'profile_picture', 'designer_certificate', 'communication_channels', 'tag'
-    ];
+        'id', 'email', 'first_name', 'last_name', 'password', 'status', 'phone', 'display_picture', 'how_did_you_hear_about_us'];
 
     public function collections()
     {

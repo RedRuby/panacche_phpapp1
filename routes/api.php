@@ -29,10 +29,12 @@ Route::get('/', function () {
 
 
 Route::resource('customer', 'CustomerController');
+Route::post('/customer/registration', 'CustomerController@customerRegistration');
+
 Route::post('verify_email', 'CustomerController@verifyEmail');
-Route::post('verify_username', 'CustomerController@verifyUsername');
+//Route::post('verify_username', 'CustomerController@verifyUsername');
 Route::post('verify_phone', 'CustomerController@verifyPhone');
-Route::post('verify_zip', 'CustomerController@verifyZip');
+//Route::post('verify_zip', 'CustomerController@verifyZip');
 Route::get('/get/customer/{id}', 'CustomerController@getCustomer');
 
 Route::resource('design', 'DesignController');
@@ -51,7 +53,6 @@ Route::get('our/designs', 'DesignController@ourDesigns');
 Route::get('designer/profile/approve/{id}/{shop}', 'CustomerController@approveDesigner');
 Route::get('designer/profile/reject/{id}/{shop}', 'CustomerController@rejectDesigner');
 Route::get('/designer/{id}', 'CustomerController@viewDesignerProfile');
-
 
 
 
