@@ -13,10 +13,7 @@ class Customer extends Model
     //use Notifiable;
 
     protected $fillable = [
-        'id', 'email', 'first_name', 'last_name', 'password', 'status', 'phone', 'display_picture', 'how_did_you_hear_about_us'];
+        'id', 'email', 'first_name', 'last_name', 'password', 'status', 'phone', 'display_picture', 'how_did_you_hear_about_us', 'tag'];
 
-    public function collections()
-    {
-        return $this->hasMany('App\Collection');
-    }
+
 }

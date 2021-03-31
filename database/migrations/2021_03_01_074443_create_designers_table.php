@@ -30,6 +30,7 @@ class CreateDesignersTable extends Migration
             $table->string('website_url')->nullable();
             $table->text('resume');
             $table->text('portfolio');
+            $table->string('tag');
             $table->timestamps();
         });
     }

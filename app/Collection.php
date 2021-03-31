@@ -14,8 +14,8 @@ class Collection extends Model
         return $this->hasMany('App\CollectionImages');
     }
 
-    public function customer(){
-        return $this->belongsTo('App\Customer');
+    public function designer(){
+        return $this->belongsTo('App\Designer');
     }
 
     public function products()

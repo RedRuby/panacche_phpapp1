@@ -24,6 +24,7 @@ class CreateCustomersTable extends Migration
             $table->enum('status', ['pending', 'active', 'disabled']);
             $table->string('phone');
             $table->text('display_picture')->nullable();
+            $table->string('tag');
             $table->timestamps();
         });
     }

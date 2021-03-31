@@ -2,7 +2,7 @@
     <div class="row">
         <div class="form-group col-md-4 col-xs-12 float-left px-0 px-3">
             <label for="Username">Username/Profile Name</label>
-            <input required type="text" name="username" id="Username" class="form-control" value="{{ $customer->username }}" readonly="readonly">
+            <input required type="text" name="username" id="Username" class="form-control" value="" readonly="readonly">
         </div>
 
         <div class="form-group col-md-4 col-xs-12 float-left px-0 px-3">

@@ -20,6 +20,12 @@ class Designer extends Model
         'business_address',
         'website_url',
         'resume',
-        'portfolio'
+        'portfolio',
+        'tag'
     ];
+
+    public function collections()
+    {
+        return $this->hasMany('App\Collection');
+    }
 }

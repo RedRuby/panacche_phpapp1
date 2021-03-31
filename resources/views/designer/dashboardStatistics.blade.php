@@ -1,32 +1,40 @@
 <div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
-    <div class="card-body">
+    <a href="pages/in-progress-designs" class="pb-3">
+      <div class="card-body">
         <h5 class="card-title mb-0">
-            <span>Active Designs</span>
-            <span>{{ $activeDesigns }}</span>
-        </h5>Login
-    </div>
-</div>
-<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
-    <div class="card-body">
+            <span>In Progress</span>
+            <span>{{ $inprogressDesigns }}</span>
+        </h5>
+      </div>
+     </a>
+  </div>
+  <div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
+    <a href="pages/draft-designs" class="pb-3">
+      <div class="card-body">
+        <h5 class="card-title mb-0">
+            <span>Draft Design</span>
+            <span>{{ $draftDesigns }}</span>
+        </h5>
+      </div>
+     </a>
+  </div>
+  <div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
+    <a href="pages/published-designs" class="pb-3">
+      <div class="card-body">
+        <h5 class="card-title mb-0">
+            <span>Published Design</span>
+            <span>{{ $publishedDesigns }}</span>
+        </h5>
+      </div>
+     </a>
+  </div>
+  <div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
+    <a href="pages/designs-under-review" class="pb-3">
+      <div class="card-body">
         <h5 class="card-title mb-0">
             <span>Designs Under Review</span>
-            <span>{{ $designsUnderReview }}</span>
+            <span>{{ $underReviewDesigns }}</span>
         </h5>
-    </div>
-</div>
-<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
-    <div class="card-body">
-        <h5 class="card-title mb-0">
-            <span>Update Requests</span>
-            <span>{{ $updateRequest }}</span>
-        </h5>
-    </div>
-</div>
-<div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
-    <div class="card-body">
-        <h5 class="card-title mb-0">
-            <span>Notifications</span>
-            <span>{{ $notifications }}</span>
-        </h5>
-    </div>
-</div>
+      </div>
+     </a>
+  </div>
