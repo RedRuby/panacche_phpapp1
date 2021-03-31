@@ -75,6 +75,7 @@ Route::get('/designer/designs/inprogress', 'DesignerController@inProgress');
 Route::get('/designer/designs/draft', 'DesignerController@draft');
 Route::get('/designer/designs/published', 'DesignerController@published');
 Route::get('/designer/designs/under_review', 'DesignerController@under_review');
+Route::get('/designer/designs/all', 'DesignerController@allDesigns');
 
 
 Route::get('view', 'FileController@view');

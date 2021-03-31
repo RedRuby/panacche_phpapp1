@@ -279,28 +279,36 @@ class DesignerController extends Controller
         $designs  = Collection::where('status', 'disabled')->get();
         $designCards = view('designer.inprogress')->with('designs', $designs)->render();
 
-        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Inprogress designs loaded successfully'])->setStatusCode(200);
     }
 
     public function draft(){
         $designs  = Collection::where('status', 'disabled')->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
 
-        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);
     }
 
     public function published(){
         $designs  = Collection::where('status', 'disabled')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
 
-        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'published designs loaded successfully'])->setStatusCode(200);
     }
 
     public function under_review(){
         $designs  = Collection::where('status', 'disabled')->get();
         $designCards = view('designer.under_review')->with('designs', $designs)->render();
 
-        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designs under review loaded successfully'])->setStatusCode(200);
+    }
+
+    public function allDesigns(){
+        $designs  = Collection::all();
+        $designCards = view('designer.mydesigns')->with('designs', $designs)->render();
+
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
+
     }
 
 }
