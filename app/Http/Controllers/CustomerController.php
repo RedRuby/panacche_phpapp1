@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Spatie\Activitylog\Models\Activity;
+use App\Http\Requests\CustomerStoreRequest;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 
 class CustomerController extends Controller
@@ -47,198 +48,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerStoreRequest $request)
     {
-
-
-        $this->validate($request, [
-            'shop' => 'required',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|unique:customers',
-            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
-            'password' => 'required|string',
-            'confirm_password' => 'required|same:password',
-            // 'resume' => 'required',
-            // 'portfolio' => 'required'
-        ]);
-
-
-        $shop = User::where('name', $request->shop)->first();
-        $options = new Options();
-        $options->setVersion('2021-01');
-        $api = new BasicShopifyAPI($options);
-        $api->setSession(new Session($shop->name, $shop->password));
-
-        try {
-            $communication_channel = [];
-            $displayPictureFileName = "";
-            $resumeFileName = "";
-            $portfolioFileName = "";
-            $password = "";
-            $display_picture = $request->file('display_picture');
-            $resume = $request->file('resume');
-            $portfolio = $request->file('portfolio');
-            $status = 'pending';
-            $success_message = "Designer Account Created successfully";
-            $emailTemplate = "emails.designerAccount";
-            $emailSubject = "Designer Account Created successfully!";
-            $role = "designer";
-            //$success_message = 'New account has been created successfully to shopify, Account activation link has been sent to your email account!';
-
-            if (!empty($display_picture)) {
-                //Display File Name
-                $displayPictureFileName = $display_picture->getClientOriginalName();
-
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/designer/display_picture/';
-                $display_picture->move($destinationPath, $display_picture->getClientOriginalName());
-            }
-
-
-            if (!empty($resume)) {
-                //Display File Name
-                $resumeFileName = $resume->getClientOriginalName();
-
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/designer/resume/';
-                $resume->move($destinationPath, $resume->getClientOriginalName());
-            }
-
-            if (!empty($portfolio)) {
-                //Display File Name
-                $portfolioFileName = $portfolio->getClientOriginalName();
-
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/designer/portfolio/';
-                $portfolio->move($destinationPath, $portfolio->getClientOriginalName());
-            }
-
-            $data = [
-                'customer' => [
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'verified_email' => true,
-                    'password' => $password,
-                    'password_confirmation' => $password,
-                    'send_email_invite' => true,
-                    'metafields' => [
-                        [
-                            "key" => "display_picture",
-                            "value" => "uploads/user/display_picture/" . $displayPictureFileName,
-                            "value_type" => "string",
-                            "namespace" => "global"
-
-                        ],
-                        [
-                            "key" => "resume",
-                            "value" => "uploads/user/resume/" . $resumeFileName,
-                            "value_type" => "string",
-                            "namespace" => "global"
-
-                        ], [
-                            "key" => "portfolio",
-                            "value" => "uploads/user/portfolio/" . $portfolioFileName,
-                            "value_type" => "string",
-                            "namespace" => "global"
-
-                        ],[
-                            "key" => "status",
-                            "value" => $status,
-                            "value_type" => "string",
-                            "namespace" => "global"
-
-                        ],
-                        [
-                            "key" => "tag",
-                            "value" => $request->tag,
-                            "value_type" => "string",
-                            "namespace" => "global"
-
-                        ]
-                    ]
-                ]
-            ];
-
-
-            try {
-                $result = $api->rest('POST', '/admin/customers.json', $data)['body'];
-            } catch (\Exception $e) {
-                Log::info($e->getMessage());
-                return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
-            }
-
-            Log::info("result " . json_encode($result));
-
-            if (isset($result['customer'])) {
-                $designer = Designer::create([
-                    'id' => $result['customer']['id'],
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'phone' => $request->phone,
-                    'status' => $status,
-                    'display_picture' => $displayPictureFileName,
-                    'resume' => $resumeFileName,
-                    'portfolio' => $portfolioFileName,
-                    'tag' => $request->tag,
-                ]);
-
-                $temp = $designer;
-                $data = $temp->toArray();
-                $template = $emailTemplate;
-                $subject = $emailSubject;
-                $fromEmail = "panacchebeta@gmail.com";
-                $fromName = "Panacche Team";
-                $toEmail = $request->email;
-                $emailTitle = "Account Creation";
-
-                if (!empty($designer->id)) {
-                    // Model has been successfully inserted
-                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
-                    if (empty($myEmail)) {
-                        Log::info("mail has been sent because empty no error " . $myEmail);
-
-                        $log_message = "Account creation email has been sent to " . $role;
-
-                        Helper::log_activity($designer, $designer, $designer, $log_message);
-                    } else {
-                        $log_message = "Due to some error account creation email has not sent to " . $role;
-                        Helper::log_activity($designer, $designer, $designer, $log_message);
-                    }
-
-                    Helper::log_activity($designer, $designer, $designer, $success_message);
-
-                    return response()->json(['status' => 201, 'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
-                } else {
-                    $data = $request->all();
-                    $template = "emails.accountNotCreated";
-                    $subject = "Record is created in shopify but not is App due to some error";
-                    $toEmail = "admin@admin.com"; // or admin@panacche.com
-                    $emailTitle = "Record is not created in app";
-                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
-                    $log_message = "Record is created in shopify but not is App due to some error";
-                    $newCustomer = new Customer();
-                    Helper::log_activity($newCustomer, $designer, $data, $log_message);
-                }
-            } else {
-                return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
-            }
-        } catch (\Exception $e) {
-            Log::info($e->getMessage());
-            return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
-        }
-    }
-
-
-    public function customerRegistration(Request $request)
-    {
-
-
-        $this->validate($request, [
+        /*$this->validate($request, [
             'shop' => 'required',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -247,7 +59,7 @@ class CustomerController extends Controller
             'how_did_you_hear_about_us' => 'required',
             'password' => 'required|string',
             'confirm_password' => 'required|same:password',
-        ]);
+        ]);*/
 
         $shop = User::where('name', $request->shop)->first();
         $options = new Options();
@@ -324,7 +136,8 @@ class CustomerController extends Controller
                     'phone' => $request->phone,
                     'status' => $status,
                     'display_picture' => $imgFileName,
-                    'how_did_you_hear_about_us' => $request->how_did_you_hear_about_us
+                    'how_did_you_hear_about_us' => $request->how_did_you_hear_about_us,
+                    'tag' => $request->tag
                 ]);
 
                 $temp = $customer;
@@ -372,6 +185,8 @@ class CustomerController extends Controller
             return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
         }
     }
+
+
 
     /*public function verifyUsername(Request $request)
     {
@@ -441,34 +256,7 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }*/
 
-    public function approveDesigner($id, $shop)
-    {
-        Log::info('profile id' . $id);
-        try {
-            $customer = Customer::find($id);
-            $customer->status = "active";
-            $customer->save();
 
-            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
-        }
-
-    }
-
-    public function rejectDesigner($id, $shop)
-    {
-
-        try {
-            $customer = Customer::find($id);
-            $customer->status = "disabled";
-            $customer->save();
-
-            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
-        }
-    }
 
 
 
@@ -524,9 +312,5 @@ class CustomerController extends Controller
         return response()->json(["status" => "success", "statusCode" => 200, "message" => "Customer profile data", "data" => $customer]);
     }
 
-    public function viewDesignerProfile($id)
-    {
-        $designer  = Customer::find($id);
-        return $designer;
-    }
+
 }

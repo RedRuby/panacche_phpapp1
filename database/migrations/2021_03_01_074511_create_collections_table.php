@@ -15,7 +15,7 @@ class CreateCollectionsTable extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('designer_id');
 
             $table->string('design_name');
             $table->text('implementation_guide_description')->nullable();
@@ -30,7 +30,7 @@ class CreateCollectionsTable extends Migration
             $table->string('room_width')->nullable();
             $table->string('room_height')->nullable();
 
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('designer_id')->references('id')->on('designers');
             $table->timestamps();
         });
     }
