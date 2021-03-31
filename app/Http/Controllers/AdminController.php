@@ -86,7 +86,7 @@ class AdminController extends Controller
         try {
             $customer = Designer::find($id);
             $customer->status = "active";
-           // $customer->save();
+            $customer->save();
 
             return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
         } catch (\Exception $e) {
@@ -101,7 +101,7 @@ class AdminController extends Controller
         try {
             $customer = Designer::find($id);
             $customer->status = "disabled";
-            //$customer->save();
+            $customer->save();
 
             return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been rejected successfully"]);
         } catch (\Exception $e) {
