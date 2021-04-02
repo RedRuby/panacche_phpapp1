@@ -308,6 +308,14 @@ class DesignerController extends Controller
         $designCards = view('designer.mydesigns')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
+    }
+
+    public function createDesign($id){
+        $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages'])->find($id);
+        return $design->collectionImages;
+
+        $design = view('designer.createDesign')->with('design', $design)->render();
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
 
     }
 

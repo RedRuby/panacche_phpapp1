@@ -97,7 +97,6 @@ class AdminController extends Controller
 
     public function rejectDesigner($id)
     {
-
         try {
             $customer = Designer::find($id);
             $customer->status = "disabled";
