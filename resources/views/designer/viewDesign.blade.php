@@ -45,8 +45,13 @@
 						<div class="col-lg-2 col-md-3 col-sm-6 float-left">
 							<p class="stepsCount mb-1 pl-4 ml-1">Step 2</p>
 							<p class="stepsName">
-								<span class="notComplated mr-2 greenActive"></span>
-								<span class="greenActiveText">Add Merchandise</span>
+                                @if($design->products->count() == 0)
+								<span class="notComplated mr-2 "></span>
+                                <span class="">Add Merchandise</span>
+                                @else
+                                <span class="notComplated mr-2 greenActive"></span>
+                                <span class="greenActiveText">Add Merchandise</span>
+                                @endif
 							</p>
 						</div>
 						<div class="col-lg-1 float-left px-0 d-none d-lg-block">
@@ -58,8 +63,13 @@
 						<div class="col-lg-3 col-md-3 col-sm-6 float-left">
 							<p class="stepsCount mb-1 pl-4 ml-1">Step 3</p>
 							<p class="stepsName">
-								<span class="notComplated mr-2 greenActive"></span>
-								<span class="greenActiveText">Submit Design For Approval</span>
+                                @if($design->status == 'draft')
+								<span class="notComplated mr-2 "></span>
+                                <span class="">Submit Design For Approval</span>
+                                @else
+                                <span class="notComplated mr-2 greenActive"></span>
+                                <span class="greenActiveText">Submit Design For Approval</span>
+                                @endif
 							</p>
 						</div>
 						<div class="col-lg-1 float-left px-0 d-none d-lg-block">
@@ -71,8 +81,13 @@
 						<div class="col-lg-2 col-md-3 col-sm-6 float-left">
 							<p class="stepsCount mb-1 pl-4 ml-1">Step 4</p>
 							<p class="stepsName">
-								<span class="notComplated mr-2 greenActive"></span>
-								<span class="greenActiveText">Publish Design</span>
+                                @if($design->published == false || $design->published == 0)
+								<span class="notComplated mr-2"></span>
+                                <span class="">Publish Design</span>
+                                @else
+                                <span class="notComplated mr-2 greenActive"></span>
+                                <span class="greenActiveText">Publish Design</span>
+                                @endif
 							</p>
 						</div>
 					</div>
@@ -113,9 +128,9 @@
 								<label for="" class="w-100">Approximate Room Size </label>
 								<div class="form-group col-12 float-left px-0 mb-0">
 									<p class="col-12 float-left pl-0">
-										<span>{{ $design->width_in_feet }} feet {{ $design->width_in_inches }} inches </span>
+										<span>{{ $design->room_width_in_feet }} feet {{ $design->room_width_in_inches }} inches </span>
 										<span class="mx-4 pt-2"><i class="fas fa-times"></i></span>
-										<span>{{ $design->height_in_feet }} feet {{ $design->height_in_inches }} inches </span>
+										<span>{{ $design->room_height_in_feet }} feet {{ $design->room_height_in_inches }} inches </span>
 									</p>
 								</div>
 							  </div>
@@ -194,8 +209,8 @@
 								<tr>
 								  <td>
 									<div class="col-12 float-left px-0">
-										<p class="custom-file addColor brownColor">
-                                            <img src="{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}" />
+										<p class="custom-file addColor brownColor" style="background-image: url('{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}'); background-size:cover; background-position:center;">
+                                            {{-- <img src="{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}" /> --}}
                                         </p>
 									</div>
 								  </td>

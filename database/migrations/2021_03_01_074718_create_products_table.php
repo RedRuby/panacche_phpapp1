@@ -25,11 +25,15 @@ class CreateProductsTable extends Migration
             $table->string('product_price')->nullable();
             $table->string('product_compare_at_price')->nullable();
             $table->string('product_quantity')->nullable();
-            $table->enum('status', ['draft', 'active', 'disabled']);
+            $table->enum('status', ['draft', 'submitted', 'approved', 'rejected']);
+            $table->unsignedBigInteger('vendor_id')->nullable();
 
             $table->foreign('collection_id')->references('id')->on('collections');
+            $table->foreign('vendor_id')->references('id')->on('vendors');
             $table->timestamps();
         });
+
+
     }
 
     /**

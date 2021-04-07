@@ -1,15 +1,73 @@
 <div class="row align-items-center h-100 nilesh">
-    {% include 'dashboard-sidebar' %}
+    <div class="leftSideNav h-100 position-fixed">
+        <ul class="drawer-menu px-3 pb-5 mb-5 text-center" data-children=".drawer-submenu" id="dasboardMenu">
+            <li class="drawer-menu-item mt-2">
+                <a href="#">
+                    <i class="fas fa-bars" data-placement="right" data-toggle="tooltip" title="Menu"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-4">
+                <a href="{{ env('Shop_URL') }}/account/myaccount">
+                    <i class="fas fa-th" data-placement="right" data-toggle="tooltip" title="Dashboard"></i>
+                    <!--<span class="drawer-menu-text">Dashboard</span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="{{ env('Shop_URL') }}">
+                    <i class="fas fa-home" data-placement="right" data-toggle="tooltip" title="Home"></i>
+                    <!--<span class="drawer-menu-text">Home</span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="{{ env('Shop_URL') }}/pages/gallery">
+                    <i class="fas fa-images" data-placement="right" data-toggle="tooltip" title="Gallery"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="#">
+                    <i class="fas fa-phone-alt" data-placement="right" data-toggle="tooltip" title="Contact"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="#">
+                    <i class="fas fa-crosshairs" data-placement="right" data-toggle="tooltip" title="Our Mission"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item active mt-3">
+                <a href="#">
+                    <i class="fas fa-file-invoice-dollar" data-placement="right" data-toggle="tooltip" title="Payment"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="#">
+                    <i class="fas fa-cog" data-placement="right" data-toggle="tooltip" title="Settings"></i>
+                    <!--<span class="drawer-menu-text">Setting</span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3 mb-5 pb-5">
+                <a href="login.html">
+                    <i class="fas fa-sign-out-alt" data-placement="right" data-toggle="tooltip" title="Logout"></i>
+                    <!--<span class="drawer-menu-text">Logout</span>-->
+                </a>
+            </li>
+        </ul>
+    </div>
+
 
     <div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm">
 
-        <div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="panacche_logo.png"></div>
+    <div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="https://cdn.shopify.com/s/files/1/0529/0255/9930/t/3/assets/panacche_logo.png?v=14350055876468133888"></div>
 
         <div class="col-12 px-3 landingHeading float-left">
             <h4 class="mb-4">
                 <span class="float-left mr-4">Create New Design</span>
                 <div class="form-group float-left">
-                    <select class="custom-select selectDropdown">
+                    <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
                           <option selected>Draft</option>
                           <option value="1">Published</option>
                           <option value="2">Inactive</option>
@@ -57,10 +115,16 @@
                         <p class="stepLine mb-0 mt-4"></p>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 float-left">
+
                         <p class="stepsCount mb-1 pl-4 ml-1">Step 2</p>
                         <p class="stepsName">
-                            <span class="notComplated merchandise-progress mr-2"></span>
+                            @if($design->products->count()== 0)
+                            <span class="notComplated merchandise-progress  mr-2"></span>
                             <span>Add Merchandise</span>
+                            @else
+                            <span class="notComplated merchandise-progress greenActive mr-2"></span>
+                            <span class="greenActiveText">Add Merchandise</span>
+                            @endif
                         </p>
                     </div>
                     <div class="col-lg-1 float-left px-0 d-none d-lg-block">
@@ -72,8 +136,13 @@
                     <div class="col-lg-3 col-md-3 col-sm-6 float-left">
                         <p class="stepsCount mb-1 pl-4 ml-1">Step 3</p>
                         <p class="stepsName">
+                            @if($design->status== 'submitted')
+                            <span class="notComplated submit-design-progress  greenActive mr-2"></span>
+                            <span class="greenActive">Submit Design For Approval</span>
+                            @else
                             <span class="notComplated submit-design-progress mr-2"></span>
                             <span>Submit Design For Approval</span>
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -119,9 +188,21 @@
                             <label for="">Room Style</label>
                             <select class="custom-select selectDropdown" name="room_style" id="room_style">
                           <option value="0">Select Room Style</option>
-                          <option value="Bedroom" @if($design->room_style == 'Bedroom') selected="selected" @endif>Bedroom</option>
-                          <option value="Kitchen" @if($design->room_style == 'Kitchen') selected="selected" @endif>Kitchen</option>
-                          <option value="Living Room" @if($design->room_style == 'Living Room') selected="selected" @endif>Living Room</option>
+                          <option value="Modern" @if($design->room_style == 'Modern') selected="selected" @endif>Modern</option>
+                          <option value="Traditional" @if($design->room_style == 'Traditional') selected="selected" @endif>Traditional</option>
+                          <option value="Transitional" @if($design->room_style == 'Transitional') selected="selected" @endif>Transitional</option>
+                          <option value="Glamorous" @if($design->room_style == 'Glamorous') selected="selected" @endif>Glamorous</option>
+
+                          <option value="Vintage" @if($design->room_style == 'Vintage') selected="selected" @endif>Vintage</option>
+                          <option value="Rustic" @if($design->room_style == 'Rustic') selected="selected" @endif>Rustic</option>
+                          <option value="Farmhouse" @if($design->room_style == 'Farmhouse') selected="selected" @endif>Farmhouse</option>
+                          <option value="Beach" @if($design->room_style == 'Beach') selected="selected" @endif>Beach</option>
+                          <option value="Minimal" @if($design->room_style == 'Minimal') selected="selected" @endif>Minimal</option>
+
+                          <option value="Mid-century" @if($design->room_style == 'Mid-century') selected="selected" @endif>Mid-century</option>
+                          <option value="Industrial" @if($design->room_style == 'Industrial') selected="selected" @endif>Industrial</option>
+                          <option value="Eclectic" @if($design->room_style == 'Eclectic') selected="selected" @endif>Eclectic</option>
+                          <option value="Bohemian" @if($design->room_style == 'Bohemian') selected="selected" @endif>Bohemian</option>
                         </select>
                             <span class="validation_error"></span>
                         </div>
@@ -143,11 +224,11 @@
                             <div class="form-group col-5 float-left px-0 mb-0">
                                 <p class="italicLabel">Width</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Feet" name="widht_in_feet" id="widht_in_feet">
+                                    <input type="text" class="form-control" placeholder="Feet" name="width_in_feet" id="width_in_feet" value="{{ $design->room_width_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Inches" name="width_in_inches" id="width_in_inches">
+                                    <input type="text" class="form-control" placeholder="Inches" name="width_in_inches" id="width_in_inches" value="{{ $design->room_width_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -157,11 +238,11 @@
                             <div class="form-group col-6 float-left pr-0 mb-0">
                                 <p class="italicLabel">Height</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Feet" name="height_in_feet" id="height_in_feet">
+                                    <input type="text" class="form-control" placeholder="Feet" name="height_in_feet" id="height_in_feet" value="{{ $design->room_height_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Inches" name="height_in_inches" id="height_in_inches">
+                                    <input type="text" class="form-control" placeholder="Inches" name="height_in_inches" id="height_in_inches" value="{{ $design->room_height_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -244,6 +325,20 @@
                                 <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                                     <div class="carousel-inner collection_blue_prints row w-100 mx-auto" role="listbox">
                                     </div>
+
+                                    @foreach ($design->bluePrintImages as $bluePrintImage)
+                                    <div class="carousel-item col-md-3 active">
+                                        <div class="panel panel-default">
+                                            <div class="panel-thumbnail">
+                                                <p class="uploadedFile">
+                                                    <img src="{{  asset('uploads/collection/images/'.$bluePrintImage->img_src) }}" title="image 1" class="thumb"/>' +
+                                                    <span class="imageClose"><i class="fas fa-times-circle"></i></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+
                                     <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
@@ -272,6 +367,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($design->colorPallettes as $colorPallette)
                             <tr>
                                 <td>
                                     <div class="col-12 float-left px-0">
@@ -283,16 +379,17 @@
                                         </p>
                                     </div>
                                 </td>
-                                <td><input type="text" class="form-control" placeholder="" name="color_name[0]" id="color_name.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control" placeholder="" name="color_name[0]" id="color_name.0" value="{{ $colorPallette->color_name }}"><span class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="brand[0]" id="brand_name.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control" placeholder="" name="brand[0]" id="brand_name.0" value="{{ $colorPallette->brand }}"><span class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="finish[0]" id="finish.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control" placeholder="" name="finish[0]" id="finish.0" value="{{ $colorPallette->finish }}"><span class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="application[0]" id="application.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control" placeholder="" name="application[0]" id="application.0" value="{{ $colorPallette->application }}"><span class="validation_error"></span></td>
 
                                 <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -315,7 +412,8 @@
                 <p class="text-right pt-2">Note: Save to upload merchandise for this design </p>
                 <p>
                     <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right disbaleBtn">Cancel don't Save</a>
-                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn" id="save-room-details-btn">Save Room Details</button>
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide" id="save-room-details-btn">Save Room Details</button>
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn" id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
                 </p>
             </div>
         </form>
@@ -350,7 +448,7 @@
                     </div>
                 </div>
                 <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
-                    <a href="">Download a Blank Sample Template CSV file for Bulk upload</a>
+                    <a href="{{ asset('/uploads/product_bulk_upload.csv') }}">Download a Blank Sample Template CSV file for Bulk upload</a>
                 </div>
             </div>
 
@@ -463,16 +561,17 @@
                 <button type="button" class="btn btn-primary loginBtn float-right mr-3" id="save-merchandise-section-btn">Save Merchandise</button>
             </div>
 
-            <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap">
+            <!--<div class="col-12 float-left mt-1 px-0 addmerchBoxWrap">
                 <label for="" class="col-12 px-0 mt-3 mb-0">1</label>
 
-            </div>
+            </div>-->
 
             <div id="upload-products-sec">
 
-                @foreach ($design->products as $product)
-                <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap">
-                    <label for="" class="col-12 px-0 mt-3 mb-0">1</label>
+             @foreach ($design->products as $product)
+
+                <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap product-preview-section">
+                    <!--<label for="" class="col-12 px-0 mt-3 mb-0">1</label>-->
 
                     <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
                         <div class="col-md-4 float-left">
@@ -483,7 +582,7 @@
 
                             <div class="col-6 px-0 float-left colorVariants">
                                 <p class="mb-1">Quantity</p>
-                                <p>{{ $product->quantity }}</p>
+                                <p>{{ $product->product_quantity }}</p>
                             </div>
                         </div>
                         <div class="col-md-4 float-left">
@@ -515,11 +614,90 @@
 
                             </div>
 
-                            <p class="text-right"><button type="submit" class="btn btn-primary loginBtn">Edit</button></p>
+                            <p class="text-right"><button type="submit" class="btn btn-primary loginBtn edit-product-btn">Edit</button></p>
                         </div>
                     </div>
+
+                    <div class="col-12 addMearchForm py-3 px-0 update-product-section hide">
+                        <form class="mx-0 update-product-form">
+                            <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
+                            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
+                            <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id">
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                <div class="form-group">
+                                    <label for="">Merchandise</label>
+                                    <input type="text" class="form-control" placeholder="" name="merchandise" id="merchandise" value="{{ $product->title }}">
+                                    <span class="validation_error"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Vendor</label>
+                                    <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                    <datalist id="vendor-datalist"><option value="1">java</option>
+                                    <option value="2">php</option>
+                                    <option value="3">html</option>
+                                    Add Vendor
+                                    </datalist>
+
+                                    <button type="button" class="btn btn-secondary mr-3 w-100" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="">Quantity</label>
+                                    <input type="number" class="form-control" name="quantity" id="quantity" step="3" value="{{ $product->product_quantity }}">
+                                    <span class="validation_error"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                <div class="form-group">
+                                    <label for="">Specification</label>
+                                    <input type="text" class="form-control" placeholder="" name="size_specification" id="size_specification" value="{{ $product->size_specification }}">
+                                    <span class="validation_error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">URL</label>
+                                    <input type="text" class="form-control" placeholder="" name="product_url" id="product_url" value="{{ $product->product_url }}">
+                                    <span class="validation_error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Retail Price</label>
+                                    <input type="text" class="form-control" placeholder="$" name="compare_at_price" id="compare_at_price" value="{{ $product->product_compare_at_price }}">
+                                    <span class="validation_error"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                <div class="form-group">
+                                    <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i class="fas fa-times-circle" aria-hidden="true"></i></span></label>
+                                    <div class="imageRefUpload p-3 col-12 float-left">
+
+                                        <div class="col-12 float-left px-0">
+                                            <p>Drag and Drop Image/ Browse Files</p>
+                                            <p class="custom-file mb-0 addImage" style="background-image: url(&quot;blob:https://panacchebeta.myshopify.com/ccf1760d-cb18-446f-8650-fdbf0e74d25b&quot;);">
+                                                <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
+                                                <span class="validation_error"></span>
+                                                <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                            </p>
+                                        </div>
+                                        <div class="row uploadedImage px-0" id="uploadProductImages">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mt-3" for="">Price</label>
+                                    <input type="text" class="form-control" placeholder="$" name="product_price" id="product_price" value="{{ $product->product_price }}">
+                                    <span class="validation_error"></span>
+                                </div>
+                            </div>
+
+                            <p class="text-right"><button type="submit" class="btn btn-primary loginBtn update-product-btn" data="{{ $product->id }}">Update</button></p>
+                            <p class="text-right"><button type="button" class="btn btn-default loginBtn cancel-product-btn">Cancel</button></p>
+
+                        </form>
+                    </div>
                 </div>
-                @endforeach
+            @endforeach
 
 
 
@@ -541,7 +719,7 @@
 
         <div class="col-12 float-left text-right px-0">
             <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right disbaleBtn">Cancel don't Submit</a>
-            <button type="button" class="btn btn-primary loginBtn disbaleBtn mr-3" data-toggle="modal" data-target="#staticBackdrop" id="submit-new-design-btn">Submit New Design</button>
+            <button type="button" class="btn btn-primary loginBtn mr-3" data-toggle="modal" data-target="#staticBackdrop" id="submit-new-design-btn">Submit New Design</button>
         </div>
 
     </div>
