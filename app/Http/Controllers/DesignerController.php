@@ -295,7 +295,7 @@ class DesignerController extends Controller
     }
 
     public function draft(){
-        $designs  = Collection::where('status', 'disabled')->get();
+        $designs  = Collection::where('status', 'draft')->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);

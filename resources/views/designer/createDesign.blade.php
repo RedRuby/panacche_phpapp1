@@ -411,7 +411,7 @@
             <div class="col-12 float-left saveRoomWrap">
                 <p class="text-right pt-2">Note: Save to upload merchandise for this design </p>
                 <p>
-                    <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right disbaleBtn">Cancel don't Save</a>
+                    <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right">Cancel don't Save</a>
                     <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide" id="save-room-details-btn">Save Room Details</button>
                     <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn" id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
                 </p>
@@ -467,43 +467,11 @@
 
                             <div class="form-group">
                                 <label for="">Vendor</label>
-                                <button type="button" class="btn btn-secondary mr-3 w-100" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
+                                <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                <datalist id="vendor-datalist"></datalist>
+                                <button type="button" class="btn btn-secondary mr-3 w-100" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
                             </div>
 
-                            <!-- Add Vender Popup Modal -->
-                            <div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header py-0 px-2">
-                                            <p class="text-center mx-auto modelLogo mt-3"></p>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-center py-0">
-                                            <div class="col-4 float-left">
-                                                <p class="text-left">Vendor Logo</p>
-                                                <div class="col-12 float-left px-0">
-                                                    <div class="col-12 float-left px-0">
-                                                        <p class="custom-file mb-0 addImage">
-                                                            <input type="file" class="custom-file-input" id="customFile" name="filename">
-                                                            <label class="custom-file-label2 mb-0" for="customFile"></label>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-8 float-left">
-                                                <p class="text-left">Vendor Name</p>
-                                                <textarea class="form-control textarea" placeholder="Type Here" rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer text-center d-block pb-4">
-                                            <button type="button" class="btn btn-primary cancleBtn"><a href="#">Cancel</a></button>
-                                            <button type="button" class="btn btn-primary loginBtn"><a href="#">Save</a></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label for="">Quantity</label>
@@ -718,9 +686,52 @@
         </form>
 
         <div class="col-12 float-left text-right px-0">
-            <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right disbaleBtn">Cancel don't Submit</a>
-            <button type="button" class="btn btn-primary loginBtn mr-3" data-toggle="modal" data-target="#staticBackdrop" id="submit-new-design-btn">Submit New Design</button>
+            <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right @if($design->products->count()== 0) hide  @else products-available @endif"">Cancel don't Submit</a>
+            <button type="button" class="btn btn-primary loginBtn mr-3 @if($design->products->count()== 0) hide  @else products-available @endif" data-toggle="modal" data-target="#staticBackdrop" id="submit-new-design-btn">Submit New Design</button>
         </div>
 
     </div>
+
+    <!-- Add Vender Popup Modal -->
+<div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header py-0 px-2">
+                <p class="text-center mx-auto modelLogo mt-3"></p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center py-0">
+                <form id="save-vendor-form">
+                    <div class="col-4 float-left">
+                        <p class="text-left">Vendor Logo</p>
+                        <div class="col-12 float-left px-0">
+                            <div class="col-12 float-left px-0">
+                                <p class="custom-file mb-0 addImage">
+                                    <input type="file" class="custom-file-input" id="vendor_logo" name="vendor_logo">
+                                    <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 float-left">
+                        <p class="text-left">Vendor Name</p>
+                        <textarea class="form-control textarea" placeholder="Type Here" rows="3" name="vendor_name" id="vendor_name"></textarea>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer text-center d-block pb-4">
+                <button type="button" class="btn btn-primary cancleBtn"><a href="#">Cancel</a></button>
+                <button type="button" class="btn btn-primary loginBtn" id="save-vendor-btn"><a href="#">Save</a></button>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Modal -->
+</div>
+
+
+
+

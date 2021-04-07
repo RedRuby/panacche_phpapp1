@@ -64,6 +64,7 @@ Route::get('/admin/designer/profile/{id}', 'AdminController@viewDesignerProfile'
 Route::get('/admin/designer/profile/approve/{id}', 'AdminController@approveDesigner');
 Route::get('/admin/designer/profile/reject/{id}', 'AdminController@rejectDesigner');
 Route::get('/admin/vendor_datalist', 'AdminController@vendorDatalist');
+Route::post('/admin/add/vendor', 'AdminController@addVendor');
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);
 

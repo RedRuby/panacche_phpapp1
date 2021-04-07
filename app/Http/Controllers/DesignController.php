@@ -407,6 +407,7 @@ class DesignController extends Controller
                 $product = Product::create([
                     'id' => $result['product']['id'],
                     'collection_id' => $collection->id,
+                    'vendor_id' => $request->vendor_id,
                     'title' => $request->merchandise,
                     'description' => $request->product_description,
                     'size_specification' => $request->size_specification,
