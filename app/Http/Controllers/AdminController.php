@@ -10,6 +10,7 @@ use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use View;
 use App\Collection;
+use App\Vendor;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -60,15 +61,11 @@ class AdminController extends Controller
     public function viewDesign($id)
     {
         Log::info('collection id'. $id);
-        $design = Collection::where('id', $id)->with('customer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
+        $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
 
-        // foreach($design as $design){
-        //     return $design->products();
-        // /}
+        $design = view('admin.viewDesign')->with('design', $design)->render();
 
-       //return  $design;
-       return View::make('admin.viewDesign')->with("design", $design);
-
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design details loaded successfully'])->setStatusCode(200);
     }
 
     public function viewDesignerProfile($id)
@@ -97,7 +94,6 @@ class AdminController extends Controller
 
     public function rejectDesigner($id)
     {
-
         try {
             $customer = Designer::find($id);
             $customer->status = "disabled";
@@ -107,5 +103,14 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
         }
+    }
+
+    public function vendorDatalist(){
+        $vendors = Vendor::all();
+
+        $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["datalist"=>$datalist], 'message'=>'Vendor datalist loaded successfully'])->setStatusCode(200);
+        //return $datalist;
     }
 }

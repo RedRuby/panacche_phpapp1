@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
 {
-    protected $fillable = ['id', 'customer_id', 'design_name', 'description', 'image_src', 'image_alt', 'published', 'room_type', 'room_style', 'room_budget', 'status', 'design_implementation_guide', 'room_widht', 'room_height'];
+    protected $fillable = ['id', 'designer_id', 'design_name', 'implementation_guide_description', 'image_src', 'image_alt', 'published', 'room_type', 'room_style', 'room_budget', 'status', 'design_implementation_guide', 'room_width_in_feet', 'room_width_in_inches', 'room_height_in_feet', 'room_height_in_inches', 'pet_friendly_design', 'design_price'];
 
     public function collectionImages()
     {

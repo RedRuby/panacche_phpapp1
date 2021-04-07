@@ -62,7 +62,8 @@ Route::get('/new/new_arrival_pending', 'AdminController@newArrivalPendings');
 Route::get('shopify', 'ShopifyController@index')->middleware(['auth.shopify']);
 Route::get('/admin/designer/profile/{id}', 'AdminController@viewDesignerProfile');
 Route::get('/admin/designer/profile/approve/{id}', 'AdminController@approveDesigner');
-Route::get('/admin/designer/profile/reject/{id}', 'AdminController@rejectDesigner');;
+Route::get('/admin/designer/profile/reject/{id}', 'AdminController@rejectDesigner');
+Route::get('/admin/vendor_datalist', 'AdminController@vendorDatalist');
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);
 
@@ -76,6 +77,10 @@ Route::get('/designer/designs/draft', 'DesignerController@draft');
 Route::get('/designer/designs/published', 'DesignerController@published');
 Route::get('/designer/designs/under_review', 'DesignerController@under_review');
 Route::get('/designer/designs/all', 'DesignerController@allDesigns');
+Route::get('/designer/create-design/{id}', 'DesignerController@createDesign');
+Route::get('/designer/design/{id}', 'DesignerController@ViewDesign');
+Route::post('/designer/update/product/', 'DesignerController@updateProduct');
+Route::post('/designer/design/update/', 'DesignerController@updateDesign');
 
 
 Route::get('view', 'FileController@view');

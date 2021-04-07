@@ -54,7 +54,7 @@ class DesignerStoreRequest extends FormRequest
             'password.required' => 'Password field is required!',
             'confirm_password.required' => 'Confirm password field is required!',
             'confirm_password.same' => 'Confirm password field should match with password field!',
-            'website_url.regex' => 'The website url field format is invalid.'
+            'website_url.regex' => 'The website url field format is invalid!'
         ];
     }
 }

@@ -19,10 +19,12 @@ use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use App\User;
 use App\Customer;
+use App\Designer;
 use View;
 use App\CollectionColorPallettes;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\CollectionStoreRequest;
+use App\Http\Requests\ProductStoreRequest;
 
 class DesignController extends Controller
 {
@@ -116,24 +118,24 @@ class DesignController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CollectionStoreRequest $request)
     {
         //Log::info("data " . json_encode($request->all()));
 
 
-        $this->validate($request, [
-            'design_name' => 'required|unique:collections',
-            'design_price' => 'required',
-            'room_budget' => 'required|string',
-            'room_type' => 'required|not_in:0',
-            'room_style' => 'required|not_in:0',
-            'implementation_guide_description' => 'required',
-            'customer_id' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'design_name' => 'required|unique:collections',
+        //     'design_price' => 'required',
+        //     'room_budget' => 'required|string',
+        //     'room_type' => 'required|not_in:0',
+        //     'room_style' => 'required|not_in:0',
+        //     'implementation_guide_description' => 'required',
+        //     'customer_id' => 'required',
+        // ]);
 
         try {
 
-            $customer = Customer::find($request->customer_id);
+            $customer = Designer::find($request->customer_id);
             if (!($customer->status)) {
                 return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
             }
@@ -151,6 +153,10 @@ class DesignController extends Controller
             $api->setSession(new Session($shop->name, $shop->password));
 
             $collectionImages = $request->file('collection_images');
+
+            Log::info('collection_images'. json_encode($collectionImages));
+
+
             $collectionBluePrints = $request->file('collection_blue_prints');
             $colorNames = $request->color_name;
             $colorBrand = $request->brand;
@@ -234,16 +240,21 @@ class DesignController extends Controller
                 $collection = Collection::create([
                     'id' => $result['smart_collection']['id'],
                     'design_name' => $request->design_name,
-                    'customer_id' => $request->customer_id,
+                    'designer_id' => $request->customer_id,
                     'implementation_guide_description' => $request->implementation_guide_description,
+                    'published' => false,
                     'image_src' => $request->image_src,
                     'image_alt' => $request->image_alt,
                     'room_type' => $request->room_type,
                     'room_style' => $request->room_style,
                     'room_budget' => $request->room_budget,
                     'design_implementation_guide' => $designGuideFileName,
-                    'room_width' => $room_width,
-                    'room_height' => $room_height
+                    'room_width_in_feet' => $request->width_in_feet,
+                    'room_width_in_inches' => $request->width_in_inches,
+                    'room_height_in_feet' => $request->height_in_feet,
+                    'room_height_in_inches' => $request->height_in_inches,
+                    'pet_friendly_design' => $request->pet_friendly_design,
+                    'design_price' => $request->design_price
                 ]);
 
                 Log::info('collection ' . json_encode($collection));
@@ -320,27 +331,14 @@ class DesignController extends Controller
         }
     }
 
-    public function uploadProducts(Request $request)
+    public function uploadProducts(ProductStoreRequest $request)
     {
 
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'collection_id' => 'required',
-            'merchandise' => 'required',
-            'size_specification' => 'required',
-            'product_description' => 'required',
-            'product_url' => 'required',
-            'product_price' => 'required',
-            'quantity' => 'required',
-            //product_images.* => 'required',
-            //'design_implementation_guide' => 'required',
-            // 'color_name.*' => 'required',
-        ]);
 
         $productImages = $request->file('product_images');
 
         try {
-            $customer = Customer::find($request->customer_id);
+            $customer = Designer::find($request->customer_id);
             if (!($customer->status)) {
                 return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
             }
@@ -432,10 +430,11 @@ class DesignController extends Controller
                 $product = Product::find($product->id);
                 Log::info('final product' . json_encode($product));
 
-                $returnHTML = view('designer.newProduct')->with('product', $product)->render();
-                return response()->json(['status'=>201, 'success' => true, 'data'=>$returnHTML, 'message'=>'Product added successfully'])->setStatusCode(201);
+                $products = view('designer.newProduct')->with('product', $product)->with('customer',$customer)->with('collection', $collection)->render();
 
-                return View::make('designer.newProduct')->with('product', $product);
+                return response()->json(['status'=>201, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Product added successfully'])->setStatusCode(201);
+
+                //return View::make('designer.newProduct')->with('product', $product);
 
                // return response()->json(['statu' => 201, "data" => $result, "message" => "Product added successfully"])->setStatusCode(201);
             } else {
@@ -453,7 +452,7 @@ class DesignController extends Controller
             'customer_id' => 'required',
             'collection_id' => 'required',
         ]);
-        $customer = Customer::find($request->customer_id);
+        $customer = Designer::find($request->customer_id);
             if (!($customer->status)) {
                 return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
             }
@@ -696,16 +695,18 @@ class DesignController extends Controller
         ]);
 
         $collection = Collection::find($request->collection_id);
-        $collection->status = 'active';
+        $collection->status = 'submitted';
         $collection->save();
 
         $products = Product::where('collection_id', $collection->id)->get();
         foreach($products as $product){
-            $product->status = "active";
+            $product->status = "submitted";
             $product->save();
         }
 
         return response()->json(["status"=>200, "message"=>"design submitted successfully"])->setStatusCode(200);
 
     }
+
+
 }
