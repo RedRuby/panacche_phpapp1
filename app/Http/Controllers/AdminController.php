@@ -12,6 +12,7 @@ use View;
 use App\Collection;
 use App\Vendor;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\AddVendorRequest;
 
 class AdminController extends Controller
 {
@@ -24,7 +25,7 @@ class AdminController extends Controller
         $designers = Designer::where('status', 'pending')
             ->get();
 
-        $designs = Collection::where('published', false)->where('status', 'active')->with('designer')->with('collectionImages')->get();
+        $designs = Collection::where('published', false)->where('status', 'submitted')->with('designer')->with('collectionImages')->get();
 
             $returnHTML = view('admin.newArrivalPendings')->with('designers', $designers)->with('designs', $designs)->render();
 
@@ -44,7 +45,7 @@ class AdminController extends Controller
 
     public function statistics(){
         $newDesignersCount = Designer::where('status', 'pending')->count();
-        $newDesignsCount = Collection::where('status', 'pending')->count();
+        $newDesignsCount = Collection::where('status', 'submitted')->count();
         $newOrdersCount = 0;
         $newSalesCount = 0;
 
@@ -105,12 +106,38 @@ class AdminController extends Controller
         }
     }
 
-    public function vendorDatalist(){
+    public function vendorDatalist()
+    {
         $vendors = Vendor::all();
 
         $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
 
         return response()->json(['status'=>200, 'success' => true, 'data'=>["datalist"=>$datalist], 'message'=>'Vendor datalist loaded successfully'])->setStatusCode(200);
         //return $datalist;
+    }
+
+    public function addVendor(AddVendorRequest $request)
+    {
+        $vendor_logo = $request->vendor_logo;
+        $vendorLogoFileName ="";
+        if (!empty($vendor_logo)) {
+            //Display File Name
+            $vendorLogoFileName = $vendor_logo->getClientOriginalName();
+
+            //Move Uploaded File
+            $destinationPath = public_path() . '/uploads/collection/vendor_logo/';
+            $vendor_logo->move($destinationPath, $vendor_logo->getClientOriginalName());
+        }
+
+
+        $vendor  = Vendor::create([
+            'vendor_name' => $request->vendor_name,
+            'vendor_logo' => $vendorLogoFileName
+        ]);
+
+        $vendors = Vendor::all();
+        $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
+
+        return response()->json(["status" => "success", "statusCode" => 200, 'data'=>["datalist"=>$datalist], "message" => "Vendor has been added successfully"]);
     }
 }

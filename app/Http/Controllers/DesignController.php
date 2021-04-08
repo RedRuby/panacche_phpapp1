@@ -407,6 +407,7 @@ class DesignController extends Controller
                 $product = Product::create([
                     'id' => $result['product']['id'],
                     'collection_id' => $collection->id,
+                    'vendor_id' => $request->vendor_id,
                     'title' => $request->merchandise,
                     'description' => $request->product_description,
                     'size_specification' => $request->size_specification,
@@ -427,7 +428,9 @@ class DesignController extends Controller
 
 
 
-                $product = Product::find($product->id);
+                $product = Product::with('vendor')->find($product->id);
+
+
                 Log::info('final product' . json_encode($product));
 
                 $products = view('designer.newProduct')->with('product', $product)->with('customer',$customer)->with('collection', $collection)->render();

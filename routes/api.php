@@ -64,6 +64,7 @@ Route::get('/admin/designer/profile/{id}', 'AdminController@viewDesignerProfile'
 Route::get('/admin/designer/profile/approve/{id}', 'AdminController@approveDesigner');
 Route::get('/admin/designer/profile/reject/{id}', 'AdminController@rejectDesigner');
 Route::get('/admin/vendor_datalist', 'AdminController@vendorDatalist');
+Route::post('/admin/add/vendor', 'AdminController@addVendor');
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);
 
@@ -81,7 +82,7 @@ Route::get('/designer/create-design/{id}', 'DesignerController@createDesign');
 Route::get('/designer/design/{id}', 'DesignerController@ViewDesign');
 Route::post('/designer/update/product/', 'DesignerController@updateProduct');
 Route::post('/designer/design/update/', 'DesignerController@updateDesign');
-
+Route::get('/designer/view_design_under_review/{id}/', 'DesignerController@viewDesignUnderReview');
 
 Route::get('view', 'FileController@view');
 Route::get('get/resume/{filename}', 'FileController@getResumeFile')->name('get_resume_file');

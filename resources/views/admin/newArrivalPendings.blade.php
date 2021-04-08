@@ -91,7 +91,7 @@
                                          <p class="mb-0">{{ $design->design_name }}</p>
                                      </div>
                                  </div>
-                                 <p class="card-text">$ {{ $design->budget }}</p>
+                                 <p class="card-text">$ {{ $design->room_budget }}</p>
                              </div>
                              <div class="card-footer d-flex">
                                  <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
@@ -263,7 +263,7 @@
                                          <p class="mb-0">{{ $design->design_name }}</p>
                                      </div>
                                  </div>
-                                 <p class="card-text">$ {{ $design->budget }}</p>
+                                 <p class="card-text">$ {{ $design->room_budget }}</p>
                              </div>
                              <div class="card-footer d-flex">
                                  <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
