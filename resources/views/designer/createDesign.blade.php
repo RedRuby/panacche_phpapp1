@@ -353,7 +353,7 @@
                     </div>
                 </div>
 
-                <label for="" class="col-12 px-0">Paint Pallette</label>
+                <label for="" class="col-12 px-0 float-left">Paint Pallette</label>
                 <div class="dragandDropWrap col-md-12 col-xs-12 float-left px-3">
                     <table class="table colorPaintTable" id="colorPaintTable">
                         <thead>
@@ -371,7 +371,7 @@
                             <tr>
                                 <td>
                                     <div class="col-12 float-left px-0">
-                                        <p class="custom-file addColor addColorImg">
+                                        <p class="custom-file addColor addColorImg" style="background-image: url('{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}')">
                                             <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
                                             <input type="file" class="custom-file-input" name="color_img[0]" id="color_img.0">
                                             <span class="validation_error"></span>
@@ -601,10 +601,10 @@
                                 <div class="form-group">
                                     <label for="">Vendor</label>
                                     <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
-                                    <datalist id="vendor-datalist"><option value="1">java</option>
-                                    <option value="2">php</option>
-                                    <option value="3">html</option>
-                                    Add Vendor
+                                    <datalist id="vendor-datalist">
+                                        @foreach ($vendors as $vendor)
+                                            <option data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}" @if($product->vendor->id == $vendor->id) selected @endif></option>
+                                        @endforeach
                                     </datalist>
 
                                     <button type="button" class="btn btn-secondary mr-3 w-100" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>

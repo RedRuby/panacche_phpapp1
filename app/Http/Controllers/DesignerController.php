@@ -18,6 +18,7 @@ use App\ProductTag;
 use App\ProductImages;
 use App\ProductVariant;
 use App\Product;
+use App\Vendor;
 use App\CollectionColorPallettes;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -325,8 +326,10 @@ class DesignerController extends Controller
     public function createDesign($id){
         $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
         //return $design->products;
+        $vendors = Vendor::all();
 
-        $design = view('designer.createDesign')->with('design', $design)->render();
+        $design = view('designer.createDesign')->with('design', $design)->with('vendors', $vendors)->render();
+
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
 
@@ -585,11 +588,10 @@ class DesignerController extends Controller
                 Log::info('collection ' . json_encode($collection));
 
 
-                CollectionImages::where('collection_id', $request->collection_id)->delete();
-                CollectionBluePrints::where('collection_id', $request->collection_id)->delete();
-                CollectionColorPallettes::where('collection_id', $request->collection_id)->delete();
 
                 if ($request->hasfile('collection_images')) {
+                   // CollectionImages::where('collection_id', $request->collection_id)->delete();
+
                      Log::info("has file collection images");
                     foreach ($collectionImages as $collectionImage) {
                         Log::info("single collection img");
@@ -606,6 +608,7 @@ class DesignerController extends Controller
                 }
 
                 if ($request->hasfile('collection_blue_prints')) {
+                   // CollectionBluePrints::where('collection_id', $request->collection_id)->delete();
 
                     Log::info("has file collection blue prints");
                     foreach ($collectionBluePrints as $collectionBluePrint) {
@@ -625,10 +628,12 @@ class DesignerController extends Controller
 
 
                 if ($colorNames) {
+                    //CollectionColorPallettes::where('collection_id', $request->collection_id)->delete();
 
 
                     $colorImgArr = [];
                     if ($request->hasfile('color_img')) {
+
                         foreach ($request->file('color_img') as $file) {
                             $imgFileName = $file->getClientOriginalName();
                             $destinationPath = public_path() . '/uploads/collection/color_pallates/';

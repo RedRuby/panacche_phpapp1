@@ -71,12 +71,8 @@
 
                 <div class="form-group">
                     <label for="">Vendor</label>
-                    <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
-                    <datalist id="vendor-datalist"><option value="1">java</option>
-                    <option value="2">php</option>
-                    <option value="3">html</option>
-                    Add Vendor
-                    </datalist>
+                <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->id }}">
+                    <datalist id="vendor-datalist"></datalist>
 
                     <button type="button" class="btn btn-secondary mr-3 w-100" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
                 </div>
