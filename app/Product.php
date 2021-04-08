@@ -19,6 +19,12 @@ class Product extends Model
     {
         return $this->hasMany('App\ProductImages');
     }
+
+    public function vendor(){
+        return $this->belongsTo('App\Vendor');
+    }
+
+
 }
 
 

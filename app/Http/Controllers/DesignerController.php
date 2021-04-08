@@ -66,10 +66,10 @@ class DesignerController extends Controller
 
         //return $inprogressDesigns;
         $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
-        $publishedDesigns = Collection::where('published', true)->where('status', 'active')->count();
-        $underReviewDesigns = Collection::where('published', false)->where('status', 'active')->count();
+        $publishedDesigns = Collection::where('published', true)->where('status', 'approved')->count();
+        $underReviewDesigns = Collection::where('published', false)->where('status', 'submitted')->count();
 
-        $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->get();
+        $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->where('status', 'approved')->get();
 
         $designer = Designer::find($id);
 
@@ -288,7 +288,7 @@ class DesignerController extends Controller
     }
 
     public function inProgress(){
-        $designs  = Collection::where('status', 'disabled')->get();
+        $designs  = Collection::where('status', 'disabled')->with('collectionImages')->get();
         $designCards = view('designer.inprogress')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Inprogress designs loaded successfully'])->setStatusCode(200);
@@ -309,7 +309,7 @@ class DesignerController extends Controller
     }
 
     public function under_review(){
-        $designs  = Collection::where('status', 'disabled')->get();
+        $designs  = Collection::where('status', 'submitted')->get();
         $designCards = view('designer.under_review')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designs under review loaded successfully'])->setStatusCode(200);
@@ -323,7 +323,7 @@ class DesignerController extends Controller
     }
 
     public function createDesign($id){
-        $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages'])->find($id);
+        $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
         //return $design->products;
 
         $design = view('designer.createDesign')->with('design', $design)->render();
@@ -332,15 +332,6 @@ class DesignerController extends Controller
 
     }
 
-    public function viewDesign($id)
-    {
-        Log::info('collection id'. $id);
-        $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages')->get();
-
-        $design = view('designer.viewDesign')->with('design', $design)->render();
-
-        return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
-    }
 
     public function updateProduct(ProductStoreRequest $request)
     {
@@ -441,7 +432,7 @@ class DesignerController extends Controller
 
 
 
-                $product = Product::find($request->product_id);
+                $product = Product::with('vendor')->find($request->product_id);
                 Log::info('final product' . json_encode($product));
 
                 $products = view('designer.newProduct')->with('product', $product)->with('customer', $customer)->with('collection', $collection)->render();
@@ -673,5 +664,15 @@ class DesignerController extends Controller
         }
     }
 
+    public function viewDesignUnderReview($id){
+        Log::info('collection id'. $id);
+        $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor')->get();
 
+        Log::info('collection id'. json_encode($design));
+        //return $design->products;
+        $design = view('designer.viewDesign')->with('design', $design)->render();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
+
+    }
 }

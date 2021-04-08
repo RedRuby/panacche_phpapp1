@@ -546,7 +546,7 @@
                             <p>Merchandise</p>
                             <p>{{ $product->title }} </p>
                             <p>Description (Sourcing / Vendor)</p>
-                            <p>{{ $product->description }}</p>
+                            <p>{{ $product->vendor->vendor_name }}</p>
 
                             <div class="col-6 px-0 float-left colorVariants">
                                 <p class="mb-1">Quantity</p>

@@ -7,7 +7,7 @@
 
 				<div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="images/panacche_logo.png"></div>
 
-				<div class="col-12 px-3 landingHeading float-left">
+				<!--<div class="col-12 px-3 landingHeading float-left">
 					<h4 class="mb-4">
 						<span class="float-left mr-4">Create New Design</span>
 						<div class="form-group float-left">
@@ -25,7 +25,7 @@
 							</a>
 						</div>
 					</h4>
-				</div>
+				</div>-->
 
 				<div class="col-12 px-3 stepsWrap float-left mb-4">
 					<div class="row">
@@ -246,7 +246,7 @@
 								<p>Merchandise</p>
 								<p>{{ $product->title }}</p>
 								<p>Description (Sourcing / Vendor)</p>
-								<p>{{ $product->description }}</p>
+								<p>{{ $product->vendor->vendor_name }}</p>
 
 								<div class="col-6 px-0 float-left colorVariants">
 									<p class="mb-1">Quantity</p>

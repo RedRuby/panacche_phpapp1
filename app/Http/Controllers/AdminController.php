@@ -25,7 +25,7 @@ class AdminController extends Controller
         $designers = Designer::where('status', 'pending')
             ->get();
 
-        $designs = Collection::where('published', false)->where('status', 'active')->with('designer')->with('collectionImages')->get();
+        $designs = Collection::where('published', false)->where('status', 'submitted')->with('designer')->with('collectionImages')->get();
 
             $returnHTML = view('admin.newArrivalPendings')->with('designers', $designers)->with('designs', $designs)->render();
 
@@ -45,7 +45,7 @@ class AdminController extends Controller
 
     public function statistics(){
         $newDesignersCount = Designer::where('status', 'pending')->count();
-        $newDesignsCount = Collection::where('status', 'pending')->count();
+        $newDesignsCount = Collection::where('status', 'submitted')->count();
         $newOrdersCount = 0;
         $newSalesCount = 0;
 

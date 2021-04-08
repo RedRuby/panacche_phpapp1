@@ -10,4 +10,9 @@ class Vendor extends Model
         'vendor_name',
         'vendor_logo'
     ];
+
+    public function product()
+    {
+        return $this->hasOne('App\Product');
+    }
 }
