@@ -25,7 +25,7 @@ class CreateCollectionsTable extends Migration
             $table->string('room_type')->nullable();
             $table->string('room_style')->nullable();
             $table->string('room_budget')->nullable();
-            $table->enum('status', ['draft', 'submitted', 'approved', 'rejected']);
+            $table->enum('status', ['draft', 'submitted', 'approved', 'rejected', 'reassign']);
             $table->string('design_implementation_guide')->nullable();
             $table->string('room_width_in_feet')->nullable();
             $table->string('room_width_in_inches')->nullable();
