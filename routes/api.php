@@ -94,3 +94,5 @@ Route::get('get/portfolio/{filename}', 'FileController@getPortfolioFile')->name(
 
 
 
+Route::get('/pages/our/designers', 'PagesController@ourDesigners');
+Route::get('/pages/view-designer/{id}', 'PagesController@viewDesigner');

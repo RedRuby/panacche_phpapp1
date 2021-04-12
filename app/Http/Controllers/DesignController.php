@@ -36,18 +36,13 @@ class DesignController extends Controller
      */
     public function index()
     {
-        $designs = Collection::with('collectionImages')->get();
+        $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
         $grouped = $designs->groupBy('room_type');
 
-        // return $grouped->all();
+        $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
-        $designers = Customer::where('tag', 'role:designer')
-            ->where('status', 'active')
-            ->get();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
 
-
-        return View::make('design.gallery')->with("designGroups", $grouped->all())
-            ->with("designers", $designers);
     }
 
     public function viewAllByType($type)
@@ -74,7 +69,7 @@ class DesignController extends Controller
 
         $designs = Collection::with(['customer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages'])->whereHas('customer', function ($q) use ($request) {
             if ($request->Input("customer_id")) {
-                $q->whereIn('customer.id', $request->Input("param.customer_id"));
+                $q->whereIn('designer.id', $request->Input("param.designer_id"));
             }
             if ($request->Input("room_style")) {
                 $q->whereIn('collections.room_style', $request->Input("param.room_style"));
