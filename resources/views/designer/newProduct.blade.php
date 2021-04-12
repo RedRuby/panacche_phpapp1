@@ -1,5 +1,6 @@
+@foreach($products as $key=>$product)
 <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap product-preview-section">
-    <!--<label for="" class="col-12 px-0 mt-3 mb-0">1</label>-->
+    <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
 
     <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
         <div class="col-md-4 float-left">
@@ -33,24 +34,12 @@
             </p>
             <p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>
             <div class="row uploadedImage px-0">
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
-                <div class="col-4 float-left">
-                    <p><img src="images/upload_mearch_Img1.jpg"></p>
-                </div>
+                @foreach ($product->productImages as $productImage )
+                    <div class="col-4 float-left">
+                        <p><img src="{{ asset('/uploads/collection/product/'.$productImage->img_src) }}"></p>
+                    </div>
+                @endforeach
+
             </div>
 
             <p class="text-right"><button type="submit" class="btn btn-primary loginBtn edit-product-btn">Edit</button></p>
@@ -132,4 +121,5 @@
         </form>
     </div>
 </div>
+@endforeach
 

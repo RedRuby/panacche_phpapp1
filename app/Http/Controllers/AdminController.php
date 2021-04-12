@@ -13,6 +13,7 @@ use App\Collection;
 use App\Vendor;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AddVendorRequest;
+use App\DesignRemark;
 
 class AdminController extends Controller
 {
@@ -139,5 +140,43 @@ class AdminController extends Controller
         $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
 
         return response()->json(["status" => "success", "statusCode" => 200, 'data'=>["datalist"=>$datalist], "message" => "Vendor has been added successfully"]);
+    }
+
+    public function reviewDesign($id)
+    {
+        $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor')->get();
+
+        $design = view('admin.reviewDesign')->with('design', $design)->render();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
+
+    }
+
+    public function updateDesignStatus($id, $status)
+    {
+        $design = Collection::find($id);
+        $design->status = $status;
+        $design->save();
+
+        if($design){
+            $message = 'design '.$status.' successfully';
+            return response()->json(['status'=>200, 'success' => true, 'message'=>$message])->setStatusCode(200);
+        }else{
+            return response()->json(['status'=>400, 'success' => false, 'message'=>'Design not found'])->setStatusCode(400);
+        }
+    }
+
+    public function addRemark(Request $request)
+    {
+        $remark = DesignRemark::create([
+            'collection_id' => $request->collection_id,
+            'remark' => $request->remark
+        ]);
+
+        if($remark){
+            return response()->json(['status'=>200, 'success' => true, 'message'=>"remark added successfully"])->setStatusCode(200);
+        }else{
+            return response()->json(['status'=>400, 'success' => false, 'message'=>'Design not found'])->setStatusCode(400);
+        }
     }
 }

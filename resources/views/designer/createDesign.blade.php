@@ -312,7 +312,7 @@
                             <div class="dragDropBox py-2">
                                 <div class="col-12 float-left px-0">
                                     <p class="custom-file mt-3 mb-3">
-                                        <input type="file" class="custom-file-input" name="collection_blue_prints[]" id="collection_blue_prints" multiple="multiple" accept="image/x-png,image/gif,image/jpeg">
+                                        <input type="file" class="custom-file-input" name="collection_blue_prints[]" id="collection_blue_prints" accept="image/x-png,image/gif,image/jpeg" value="">
                                         <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         <span class="validation_error"></span>
                                     </p>
@@ -425,8 +425,8 @@
         <label for="" class="col-12 px-0 font14">Add Merchandise References</label>
         <div class="addRefWrap col-12 float-left py-3 mb-3">
             <div class="row px-3">
-                <button type="button" class="btn btn-primary loginBtn mr-2" id="add-product-view-btn">Add</button>
-                <button type="button" class="btn btn-primary loginBtn mr-2" id="upload-bulk-btn">Upload Bulk</button>
+                <button type="button" class="btn btn-primary loginBtn mr-2 add-product-view-btn" id="add-product-view-btn">Add</button>
+                <button type="button" class="btn btn-primary loginBtn mr-2 upload-bulk-btn" id="upload-bulk-btn">Upload Bulk</button>
                 <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn">Cancel</a>
             </div>
 
@@ -467,8 +467,8 @@
 
                             <div class="form-group">
                                 <label for="">Vendor</label>
-                                <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
-                                <datalist id="vendor-datalist"></datalist>
+                                <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                <datalist class="vendor-datalist"></datalist>
                                 <button type="button" class="btn btn-secondary mr-3 w-100" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
                             </div>
 
@@ -536,10 +536,10 @@
 
             <div id="upload-products-sec">
 
-             @foreach ($design->products as $product)
+             @foreach ($design->products as $key => $product)
 
                 <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap product-preview-section">
-                    <!--<label for="" class="col-12 px-0 mt-3 mb-0">1</label>-->
+                    <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
 
                     <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
                         <div class="col-md-4 float-left">
@@ -672,8 +672,8 @@
             </div>
 
             <div class="row px-3 pt-4">
-                <button type="submit" class="btn btn-primary loginBtn mr-2">Add</button>
-                <button type="submit" class="btn btn-primary loginBtn">Upload Bulk</button>
+                <button type="submit" class="btn btn-primary loginBtn mr-2 add-product-view-btn">Add</button>
+                <button type="submit" class="btn btn-primary loginBtn upload-bulk-btn">Upload Bulk</button>
             </div>
 
         </div>

@@ -77,6 +77,7 @@
                      <div class="row px-3 mb-3 font-weight-bold mt-4">Designs<small>({{ $designs->count() }})</small></div>
                      <div class="row px-0 designCards">
                         @foreach($designs as $design)
+                        <a href="#" data="{{ $design->id }}" class="review-design">
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                          <div class="card">
                             @if($design->collectionImages()->count() == 0)
@@ -100,6 +101,7 @@
                              </div>
                          </div>
                        </div>
+                        </a>
                        @endforeach
                      </div>
 
@@ -249,29 +251,32 @@
                       <div class="row px-3 mb-3 font-weight-bold">Designs<small>({{ $designs->count() }})</small></div>
                      <div class="row px-0 designCards">
                         @foreach($designs as $design)
-                       <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                         <div class="card">
-                            @if($design->collectionImages()->count() == 0)
-                            <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
+                        <a href="#" data="{{ $design->id }}" class="review-design">
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                                <div class="card">
+                                   @if($design->collectionImages()->count() == 0)
+                                   <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
 
-                            @else
-                            <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
-                            @endif
-                             <div class="card-body p-3">
-                                 <div class="d-flex align-items-center mb-2">
-                                     <div class="author-info">
-                                         <p class="mb-0">{{ $design->design_name }}</p>
-                                     </div>
-                                 </div>
-                                 <p class="card-text">$ {{ $design->room_budget }}</p>
-                             </div>
-                             <div class="card-footer d-flex">
-                                 <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
-                                 <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
-                                 <a href="#" class="social social-pinterest mr-3"><i class="fab fa-pinterest"></i></a>
-                             </div>
-                         </div>
-                       </div>
+                                   @else
+                                   <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
+                                   @endif
+                                    <div class="card-body p-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="author-info">
+                                                <p class="mb-0">{{ $design->design_name }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="card-text">$ {{ $design->room_budget }}</p>
+                                    </div>
+                                    <div class="card-footer d-flex">
+                                        <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
+                                        <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
+                                        <a href="#" class="social social-pinterest mr-3"><i class="fab fa-pinterest"></i></a>
+                                    </div>
+                                </div>
+                              </div>
+                        </a>
+
                         @endforeach
                      </div>
                    </div>
