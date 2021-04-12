@@ -33,6 +33,7 @@ class CreateCollectionsTable extends Migration
             $table->string('room_height_in_inches')->nullable();
             $table->string('design_price')->nullable();
             $table->string('pet_friendly_design')->nullable();
+            $table->text('remark')->nullable();
 
             $table->foreign('designer_id')->references('id')->on('designers');
             $table->timestamps();

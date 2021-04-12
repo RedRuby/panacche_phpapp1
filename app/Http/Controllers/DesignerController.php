@@ -71,12 +71,13 @@ class DesignerController extends Controller
         $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
         $publishedDesigns = Collection::where('published', true)->where('status', 'approved')->count();
         $underReviewDesigns = Collection::where('published', false)->where('status', 'submitted')->count();
-
+        $reassignedDesigns = Collection::where('status', 'reassign')->count();
         $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->where('status', 'approved')->get();
 
         $designer = Designer::find($id);
 
-        $dataCards = view('designer.dashboardStatistics')->with('inprogressDesigns', $inprogressDesigns)->with("draftDesigns", $draftDesigns)->with("publishedDesigns", $publishedDesigns)->with("underReviewDesigns", $underReviewDesigns)->render();
+        $dataCards = view('designer.dashboardStatistics')->with('inprogressDesigns', $inprogressDesigns)->with("draftDesigns", $draftDesigns)->with("publishedDesigns", $publishedDesigns)->with("underReviewDesigns", $underReviewDesigns)->with('reassignedDesigns',$reassignedDesigns)->render();
+
         $designCards = view('designer.mydesigns')->with('designs', $designs)->render();
         //$orderRows = view('designer.mymyorders')->with('designs', $designs)->render();
 
@@ -304,6 +305,15 @@ class DesignerController extends Controller
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);
     }
 
+    public function reassign(){
+        $designs  = Collection::where('status', 'reassign')->get();
+        $designCards = view('designer.reassign')->with('designs', $designs)->render();
+
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Reassign designs loaded successfully'])->setStatusCode(200);
+    }
+
+
+
     public function published(){
         $designs  = Collection::where('status', 'disabled')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
@@ -425,7 +435,7 @@ class DesignerController extends Controller
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/'.$collection->id.'/';
                         $productImage->move($destinationPath, $name);
-                        $productImageFileName = $destinationPath . $name;
+                        $productImageFileName = $name;
                         ProductImages::create([
                             'product_id' => $product->id,
                             'img_src' => $productImageFileName,
@@ -567,7 +577,7 @@ class DesignerController extends Controller
                     //Move Uploaded File
                     $destinationPath = public_path() . '/uploads/collection/' . $result['smart_collection']['id'] . '/';
                     $design_implementation_guide->move($destinationPath, $name);
-                    $designGuideFileName = $destinationPath . $name;
+                    $designGuideFileName = $name;
                 }
 
                 $collection = Collection::where('id', $request->collection_id)->update([
@@ -601,9 +611,9 @@ class DesignerController extends Controller
                         $name = $current_time . '_' . $collectionImage->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
-                        $collectionImage->move($destinationPath, $collectionImage);
+                        $collectionImage->move($destinationPath, $name);
 
-                        $collectionImageFileName = $destinationPath . $name;
+                        $collectionImageFileName = $name;
                         CollectionImages::create([
                             'collection_id' => $collection->id,
                             'img_src' => $collectionImageFileName,
@@ -621,7 +631,7 @@ class DesignerController extends Controller
                         $destinationPath = public_path() . '/uploads/collection/' . $collection->id. '/';
                         $collectionBluePrint->move($destinationPath, $name);
 
-                        $collectionBluePrintFileName = $destinationPath . $name;
+                        $collectionBluePrintFileName = $name;
                         CollectionBluePrints::create([
                             'collection_id' => $collection->id,
                             'img_src' => $collectionBluePrintFileName,
@@ -639,7 +649,7 @@ class DesignerController extends Controller
                             $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
                             $file->move($destinationPath, $name);
 
-                            $imgFileName = $destinationPath . $name;
+                            $imgFileName = $name;
                             array_push($colorImgArr, $imgFileName);
                         }
                     }

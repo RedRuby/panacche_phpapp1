@@ -9,7 +9,7 @@
         <div class="col-md-4 px-0 float-left">
             <div class="col-12 newDesignerProfile">
                 @if($designer->display_picture == '')
-                <p class="mx-auto" style="background-image: url({{  asset('uploads/default-profile-picture.png') }})"></p>
+                <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/defaultUserImg.png') }})"></p>
                 @else
                 <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/display_picture/'.$designer->display_picture) }})"></p>
                 @endif

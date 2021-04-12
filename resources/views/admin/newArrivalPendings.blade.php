@@ -54,7 +54,7 @@
                          <div class="card pb-3">
                              <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
                                 @if($designer->display_picture == '')
-                                    <img src="{{ asset('uploads/default-profile-picture.png') }}" class="card-img cover-photo" alt="Cover">
+                                    <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
                                 @else
                                 <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
                                 @endif
@@ -84,7 +84,7 @@
                             <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                             @else
-                            <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
+                            <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                             @endif
                              <div class="card-body p-3">
                                  <div class="d-flex align-items-center mb-2">
@@ -207,7 +207,7 @@
                           <div class="card pb-3">
                               <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
                                  @if($designer->display_picture == '')
-                                     <img src="{{ asset('uploads/default-profile-picture.png') }}" class="card-img cover-photo" alt="Cover">
+                                     <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
                                  @else
                                  <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
                                  @endif
@@ -258,7 +258,7 @@
                                    <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                                    @else
-                                   <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
+                                   <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                                    @endif
                                     <div class="card-body p-3">
                                         <div class="d-flex align-items-center mb-2">

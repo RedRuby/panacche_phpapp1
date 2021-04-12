@@ -51,6 +51,7 @@ Route::get('/design/view_all/{type}', 'DesignController@viewAllByType');
 Route::get('design', 'DesignController@index');
 Route::post('design/search', 'DesignController@searchDesign');
 Route::get('our/designs', 'DesignController@ourDesigns');
+Route::get('/design/remove/{id}/{designerId}', 'DesignController@removeDesign');
 
 
 //Route::get('/admin/dashboard', 'AdminController@index');
@@ -79,6 +80,7 @@ Route::post('/designer', 'DesignerController@store');
 Route::get('/designer/dashboard/{id}', 'DesignerController@dashboard');
 Route::get('/designer/designs/inprogress', 'DesignerController@inProgress');
 Route::get('/designer/designs/draft', 'DesignerController@draft');
+Route::get('/designer/designs/reassign', 'DesignerController@reassign');
 Route::get('/designer/designs/published', 'DesignerController@published');
 Route::get('/designer/designs/under_review', 'DesignerController@under_review');
 Route::get('/designer/designs/all', 'DesignerController@allDesigns');

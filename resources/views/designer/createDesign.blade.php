@@ -68,23 +68,22 @@
                 <span class="float-left mr-4">Create New Design</span>
                 <div class="form-group float-left">
                     <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
-                          <option selected>Draft</option>
-                          <option value="1">Published</option>
-                          <option value="2">Inactive</option>
+                          <option @if($design->status == 'draft') selected @endif>Draft</option>
+                          <option @if($design->status == 'approved') selected @endif>Published</option>
+                          <option @if($design->status == 'rejected') selected @endif>Inactive</option>
                         </select>
                 </div>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
-                    <!-- <a href="landing_page.html">
-                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5">Remove this design
+                    <a href="landing_page.html">
+                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5" id="remove-design-btn" data-id="{{ $design->id }}" data-designer="{{ $design->designer->id }}">Remove this design
                             <i class="fas fa-times-circle newDesignClose"></i>
                         </button>
                     </a>
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
-                    </a> -->
+                    </a>
                     <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in Lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                        <p class="mb-0">{{ $design->remark }}</p>
                     </div>
                 </div>
             </h4>
@@ -288,7 +287,7 @@
                                         <div class="panel panel-default">
                                             <div class="panel-thumbnail">
                                                 <p class="uploadedFile">
-                                                    <img src="{{  asset('uploads/collection/images/'.$collectionImage->img_src) }}" title="image 1" class="thumb"/>' +
+                                                    <img src="{{  asset('uploads/collection/'. $design->id.'/'.$collectionImage->img_src) }}" title="image 1" class="thumb"/>' +
                                                     <span class="imageClose"><i class="fas fa-times-circle"></i></span>
                                                 </p>
                                             </div>
@@ -331,7 +330,7 @@
                                         <div class="panel panel-default">
                                             <div class="panel-thumbnail">
                                                 <p class="uploadedFile">
-                                                    <img src="{{  asset('uploads/collection/images/'.$bluePrintImage->img_src) }}" title="image 1" class="thumb"/>' +
+                                                    <img src="{{  asset('uploads/collection/'.$design->id.'/'.$bluePrintImage->img_src) }}" title="image 1" class="thumb"/>' +
                                                     <span class="imageClose"><i class="fas fa-times-circle"></i></span>
                                                 </p>
                                             </div>
@@ -371,7 +370,7 @@
                             <tr>
                                 <td>
                                     <div class="col-12 float-left px-0">
-                                        <p class="custom-file addColor addColorImg" style="background-image: url('{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}')">
+                                        <p class="custom-file addColor addColorImg" style="background-image: url('{{  asset('uploads/collection/'.$design->id.'/'.$colorPallette->color_img) }}')">
                                             <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
                                             <input type="file" class="custom-file-input" name="color_img[0]" id="color_img.0">
                                             <span class="validation_error"></span>
@@ -468,7 +467,7 @@
                             <div class="form-group">
                                 <label for="">Vendor</label>
                                 <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
-                                <datalist class="vendor-datalist"></datalist>
+                                <datalist class="vendor-datalist" id="vendor-datalist"></datalist>
                                 <button type="button" class="btn btn-secondary mr-3 w-100" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
                             </div>
 

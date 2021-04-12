@@ -36,8 +36,10 @@ class DesignController extends Controller
      */
     public function index()
     {
-        $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
-        $grouped = $designs->groupBy('room_type');
+       // $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
+       $designs = Collection::with(['designer', 'collectionImages'])->get();
+
+       $grouped = $designs->groupBy('room_type');
 
         $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
@@ -229,7 +231,7 @@ class DesignController extends Controller
 
                     //Move Uploaded File
                     $destinationPath = public_path() . '/uploads/collection/' . $result['smart_collection']['id'] . '/';
-                    $design_implementation_guide->move($destinationPath, $design_implementation_guide->getClientOriginalName());
+                    $design_implementation_guide->move($destinationPath, $name);
                     $designGuideFileName = $name;
                 }
 
@@ -263,7 +265,7 @@ class DesignController extends Controller
                         $collectionImageFileName = $current_time . '_' . $collectionImage->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
-                        $collectionImage->move($destinationPath, $collectionImage->getClientOriginalName());
+                        $collectionImage->move($destinationPath, $collectionImageFileName);
 
                         CollectionImages::create([
                             'collection_id' => $collection->id,
@@ -280,7 +282,7 @@ class DesignController extends Controller
                         $name = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/' . $collection->id. '/';
-                        $collectionBluePrint->move($destinationPath, $collectionBluePrint->getClientOriginalName());
+                        $collectionBluePrint->move($destinationPath, $name);
 
                         $collectionBluePrintFileName = $name;
                         CollectionBluePrints::create([
@@ -298,7 +300,7 @@ class DesignController extends Controller
                         foreach ($request->file('color_img') as $file) {
                             $name = $current_time . '_' . $file->getClientOriginalName();
                             $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
-                            $file->move($destinationPath, $file->getClientOriginalName());
+                            $file->move($destinationPath, $name);
 
                             $imgFileName = $name;
                             array_push($colorImgArr, $imgFileName);
@@ -419,7 +421,7 @@ class DesignController extends Controller
                         $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/'.$collection->id. '/';
-                        $productImage->move($destinationPath, $productImage->getClientOriginalName());
+                        $productImage->move($destinationPath, $productImageFileName);
 
                        ProductImages::create([
                             'product_id' => $product->id,
@@ -429,7 +431,7 @@ class DesignController extends Controller
                     }
                 }
 
-                $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
+                $products = Product::with('vendor','productImages')->where('collection_id', $collection->id)->get();
 
 
                 Log::info('final product' . json_encode($product));
@@ -683,5 +685,21 @@ class DesignController extends Controller
         }
 
         return response()->json(["status" => 200, "message" => "design submitted successfully"])->setStatusCode(200);
+    }
+
+    public function removeDesign($id, $designerId)
+    {
+        $collection = Collection::where('designer_id', $designerId)->find($id);
+        if($collection){
+            CollectionImages::where('collection_id', $id)->delete();
+            CollectionBluePrints::where('collection_id', $id)->delete();
+            CollectionColorPallettes::where('collection_id', $id)->delete();
+            $collection->delete();
+            return response()->json(["status" => 200, "message" => "design removed successfully"])->setStatusCode(200);
+
+        }else{
+            return response()->json(["status" => 400, "message" => "design not found"])->setStatusCode(400);
+        }
+
     }
 }

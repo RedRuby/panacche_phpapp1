@@ -38,3 +38,14 @@
       </div>
      </a>
   </div>
+
+  <div class="col-xl-3 col-md-6 col-sm-6 col-xs-12 px-0 card">
+    <a href="pages/reassign-designs" class="pb-3">
+      <div class="card-body">
+        <h5 class="card-title mb-0">
+            <span>Reassigned Designs</span>
+            <span>{{ $reassignedDesigns }}</span>
+        </h5>
+      </div>
+     </a>
+  </div>
