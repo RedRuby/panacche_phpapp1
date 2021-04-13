@@ -40,11 +40,16 @@ class DesignController extends Controller
        $designs = Collection::with(['designer', 'collectionImages'])->get();
 
        $grouped = $designs->groupBy('room_type');
+//       $designers = Designer::where('status','approved')->get();
+       $designers = Designer::all();
+
+
 
         $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
-        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
+        $datalist = view('design.datalist')->with('designers', $designers)->render();
 
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs, "datalist"=>$datalist], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
     }
 
     public function viewAllByType($type)
@@ -63,33 +68,44 @@ class DesignController extends Controller
 
     public function searchDesign(Request $request)
     {
+        Log::info('data ' . json_encode($request->all()));
+
 
         $sort = 'asc';
         if ($request->Input("params.sorts")) {
             $sort = $request->Input("params.sorts");
         }
 
-        $designs = Collection::with(['customer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages'])->whereHas('customer', function ($q) use ($request) {
-            if ($request->Input("customer_id")) {
-                $q->whereIn('designer.id', $request->Input("param.designer_id"));
+        $designs = Collection::with(['designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages'])->whereHas('designer', function ($q) use ($request) {
+            if ($request->Input("designer")) {
+                $q->where('designer_id', $request->Input("param.designer"));
             }
             if ($request->Input("room_style")) {
-                $q->whereIn('collections.room_style', $request->Input("param.room_style"));
+                $q->where('collections.room_style', $request->Input("param.room_style"));
             }
             if ($request->Input("room_type")) {
-                $q->whereIn('collections.room_type', $request->Input("param.room_type"));
+                $q->where('collections.room_type', $request->Input("param.room_type"));
             }
-            if ($request->Input("room_budget")) {
-                $q->whereBetween('collections.room_budget', $request->Input("param.room_budget_min", "room_budget_max"));
+            if ($request->Input("min")) {
+                $q->whereBetween('collections.room_budget', [$request->Input("param.min"),$request->Input("param.max")]);
             }
+
+
         })->orderBy('created_at', $sort)
-            ->where('published', true)
-            ->where('status', 'approved')
+            //->where('published', true)
+            //->where('status', 'approved')
+
             ->get();
+
+            $grouped = $designs->groupBy('room_type');
         //paginate(10);
 
-        return View::make('design.gallery')->with("traditionalDesigns", $traditionalDesigns)
-            ->with("designers", $designers);
+
+        $designs = view('design.gallery')->with('designGroups', $grouped)->render();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
+
+
     }
 
     public function ourDesigns(Request $request)

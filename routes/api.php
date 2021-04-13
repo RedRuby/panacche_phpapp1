@@ -47,6 +47,7 @@ Route::post('/design/products/bulk_upload', 'DesignController@bulkUpload');
 Route::post('/design/submit', 'DesignController@submitDesign');
 Route::get('/design/view_all/{type}', 'DesignController@viewAllByType');
 
+
 //Route::post('/design', 'DesignController@store');
 Route::get('design', 'DesignController@index');
 Route::post('design/search', 'DesignController@searchDesign');
