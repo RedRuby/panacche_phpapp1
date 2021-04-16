@@ -39,7 +39,7 @@ class DesignController extends Controller
        // $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
        $designs = Collection::with(['designer', 'collectionImages'])->get();
 
-       $grouped = $designs->groupBy('room_type');
+       $grouped = $designs->groupBy('room_style');
 //       $designers = Designer::where('status','approved')->get();
        $designers = Designer::all();
 
@@ -54,7 +54,7 @@ class DesignController extends Controller
 
     public function viewAllByType($type)
     {
-        $designs = Collection::with('collectionImages')->where('room_type', $type)->get();
+        $designs = Collection::with('collectionImages')->where('room_style', $type)->get();
         // return $designs;
 
         $designers = Customer::where('tag', 'role:designer')
@@ -71,47 +71,40 @@ class DesignController extends Controller
         Log::info('data ' . json_encode($request->all()));
 
 
-        $sort = 'asc';
+       $sort = 'asc';
         if ($request->Input("params.sorts")) {
             $sort = $request->Input("params.sorts");
         }
 
+        Log::info('request '. $request->max);
+
         $designs = Collection::with(['designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages'])->whereHas('designer', function ($q) use ($request) {
             if ($request->Input("designer")) {
-                $q->where('designer_id', $request->Input("param.designer"));
+                $q->where('designer_id', $request->Input("designer"));
             }
             if ($request->Input("room_style")) {
-                $q->where('collections.room_style', $request->Input("param.room_style"));
+                $q->where('collections.room_style', $request->Input("room_style"));
             }
             if ($request->Input("room_type")) {
-                $q->where('collections.room_type', $request->Input("param.room_type"));
+                $q->where('collections.room_type', $request->Input("room_type"));
             }
-            if ($request->Input("min")) {
-                $q->whereBetween('collections.room_budget', [$request->Input("param.min"),$request->Input("param.max")]);
+            Log::info('request '. $request->max);
+            if ($request->Input("max")) {
+                $min = (int)$request->Input("min");
+                $max = (int)$request->Input("max");
+                $q->whereBetween('collections.room_budget', array($min,$max));
             }
+        })->orderBy('created_at', $sort)->get();
+            $grouped = $designs->groupBy('room_style');
 
+            $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
-        })->orderBy('created_at', $sort)
-            //->where('published', true)
-            //->where('status', 'approved')
-
-            ->get();
-
-            $grouped = $designs->groupBy('room_type');
-        //paginate(10);
-
-
-        $designs = view('design.gallery')->with('designGroups', $grouped)->render();
-
-        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
-
-
+            return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
     }
 
     public function ourDesigns(Request $request)
     {
         $ourDesigns = Collection::get('room_type', $request->type)->get();
-
         return View::make('design.gallery')->with("traditionalDesigns", $traditionalDesigns);
     }
 
@@ -428,10 +421,18 @@ class DesignController extends Controller
 
                 Log::info("current_time" . json_encode($current_time));
 
+                /*$display_picture = $request->file('products_image');
+                if (!empty($display_picture)) {
+                    //Display File Name
+                    $imgFileName = $display_picture->getClientOriginalName();
 
+                    //Move Uploaded File
+                    $destinationPath = public_path() . '/uploads/user/display_picture';
+                    $display_picture->move($destinationPath, $display_picture->getClientOriginalName());
+                }*/
 
-                if ($request->hasfile('products_images')) {
-                    Log::info("has file products_images");
+                if ($request->hasfile('product_images')) {
+                    Log::info("has file product_images");
                     foreach ($productImages as $productImage) {
                         Log::info("single product img");
                         $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
@@ -454,11 +455,11 @@ class DesignController extends Controller
 
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
 
-                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Product added successfully'])->setStatusCode(201);
+                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Merchandise added successfully'])->setStatusCode(201);
 
                 //return View::make('designer.newProduct')->with('product', $product);
 
-                // return response()->json(['statu' => 201, "data" => $result, "message" => "Product added successfully"])->setStatusCode(201);
+                // return response()->json(['statu' => 201, "data" => $result, "message" => "Merchandise added successfully"])->setStatusCode(201);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
             }
@@ -598,7 +599,7 @@ class DesignController extends Controller
                 if ($productIds) {
                     $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
                     $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
-                    return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Product updated successfully'])->setStatusCode(201);
+                    return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Merchandise bulk upload added successfully'])->setStatusCode(201);
                 } else {
                     return response()->json(['status' => 500, 'errors' => $result]);
                 }

@@ -156,17 +156,17 @@
                             <span class="validation_error"></span>
                         </div>
                         <div class="col-12 px-0">
-                            <div class="form-group col-4 float-left pl-0">
+                            <!--<div class="form-group col-4 float-left pl-0">
                                 <label for="">Due Date</label>
                                 <input type="text" class="form-control" placeholder="" name="due_Date" id="due_date" >
                                 <span class="validation_error"></span>
-                            </div>
-                            <div class="form-group col-4 float-left px-0">
+                            </div>-->
+                            <div class="form-group col-6 float-left px-0">
                                 <label for="">Design Price</label>
                                 <input type="text" class="form-control" placeholder="$" name="design_price" id="design_price" onkeyup="verifyInputs()" value="{{ $design->design_price }}">
                                 <span class="validation_error"></span>
                             </div>
-                            <div class="form-group col-4 float-left pr-0">
+                            <div class="form-group col-6 float-left pr-0">
                                 <label for="">Room Budget</label>
                                 <input type="text" class="form-control" placeholder="$" name="room_budget" id="room_budget" onkeyup="verifyInputs()" value="{{ $design->room_budget }}">
                                 <span class="validation_error"></span>
@@ -447,7 +447,7 @@
                     </div>
                 </div>
                 <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
-                    <a href="{{ asset('/uploads/product_bulk_upload.csv') }}">Download a Blank Sample Template CSV file for Bulk upload</a>
+                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}">Download a Blank Sample Template CSV file for Bulk upload</a>
                 </div>
             </div>
 
@@ -491,7 +491,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Retail Price</label>
-                                <input type="text" class="form-control" placeholder="&#36;" name="compare_at_price" id="compare_at_price">
+                                <input type="text" class="form-control" placeholder="&#36;" name="product_price" id="product_price">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
@@ -513,11 +513,12 @@
 
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="mt-3" for="">Price</label>
                                 <input type="text" class="form-control" placeholder="&#36;" name="product_price" id="product_price">
                                 <span class="validation_error"></span>
                             </div>
+                        -->
                         </div>
                     </form>
                 </div>
@@ -558,23 +559,23 @@
                             <p>URL</p>
                             <p>{{ $product->product_url }}</p>
                             <div class="col-6 px-0 float-left">
-                                <p>Price</p>
+                                <p>Retail Price</p>
                                 <p>$ {{ $product->product_price }}</p>
                             </div>
-                            <div class="col-6 px-0 float-left colorVariants">
+                            <!--<div class="col-6 px-0 float-left colorVariants">
                                 <p>Compare at Price </p>
-                                <p>$ {{ $product->product_compare_at_price }}</p>
-                            </div>
+                                <p>$ </p>
+                            </div>-->
                         </div>
                         <div class="col-md-4 float-left">
                             <p>Upload Image Reference
                                 <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
                             </p>
-                            <p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>
+                            <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
                             <div class="row uploadedImage px-0">
                                 @foreach ($product->productImages as $productImage )
                                 <div class="col-4 float-left">
-                                    <p><img src="{{  asset('/uploads/collection/product_images/'.$productImage->img_src) }}"></p>
+                                    <p><img src="{{  asset('/uploads/collection/'.$design->id.'/'.$product->productImages->first()->img_src) }}" class="img-fluid"></p>
                                 </div>
                                 @endforeach
 

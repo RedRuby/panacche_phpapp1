@@ -5,8 +5,13 @@
 
 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
     <div class="card">
-        <img src="images/design1.jpg" class="card-img cover-photo" alt="Cover">
-        <div class="card-body p-3">
+        @if($design->collectionImages()->count() == 0)
+
+            <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
+            @else
+            <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/'.$design->id'/'.$design->collectionImages()->first()->img_src) }}">
+            @endif
+            <div class="card-body p-3">
             <div class="d-flex align-items-center mb-2">
                 <div class="author-info">
                     <p class="mb-0">{{ $design->design_name }}</p>

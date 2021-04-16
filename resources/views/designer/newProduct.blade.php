@@ -20,23 +20,23 @@
             <p>URL</p>
             <p>{{ $product->product_url }}</p>
             <div class="col-6 px-0 float-left">
-                <p>Price</p>
+                <p>Retail Price</p>
                 <p>$ {{ $product->product_price }}</p>
             </div>
-            <div class="col-6 px-0 float-left colorVariants">
+            <!--<div class="col-6 px-0 float-left colorVariants">
                 <p>Compare at Price </p>
-                <p>$ {{ $product->product_compare_at_price }}</p>
-            </div>
+                <p>$</p>
+            </div>-->
         </div>
         <div class="col-md-4 float-left">
             <p>Upload Image Reference
                 <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
             </p>
-            <p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>
+            <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
             <div class="row uploadedImage px-0">
-                @foreach ($product->productImages as $productImage )
+                @foreach ($product->productImages as $key=>$productImage )
                     <div class="col-4 float-left">
-                        <p><img src="{{ asset('/uploads/collection/product/'.$productImage->img_src) }}"></p>
+                        <p><img src="{{ asset('/uploads/collection/'.$collection->id.'/'.$product->productImages->first()->img_src) }}" class="img-fluid"></p>
                     </div>
                 @endforeach
 

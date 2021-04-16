@@ -69,7 +69,7 @@ class DesignerController extends Controller
 
         //return $inprogressDesigns;
         $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
-        $publishedDesigns = Collection::where('published', true)->where('status', 'approved')->count();
+        $publishedDesigns = Collection::where('published', false)->where('status', 'approved')->count();
         $underReviewDesigns = Collection::where('published', false)->where('status', 'submitted')->count();
         $reassignedDesigns = Collection::where('status', 'reassign')->count();
         $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->where('status', 'approved')->get();
@@ -427,8 +427,8 @@ class DesignerController extends Controller
 
                 Log::info("current_time" . json_encode($current_time));
 
-                if ($request->hasfile('products_images')) {
-                    Log::info("has file products_images");
+                if ($request->hasfile('product_images')) {
+                    Log::info("has file product_images");
                     foreach ($productImages as $productImage) {
                         Log::info("single product img");
                         $name = $current_time . '_' . $productImage->getClientOriginalName();
@@ -451,7 +451,7 @@ class DesignerController extends Controller
                 Log::info('final product' . json_encode($product));
 
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
-                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Product updated successfully'])->setStatusCode(200);
+                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Merchandise updated successfully'])->setStatusCode(200);
 
                 //return View::make('designer.newProduct')->with('product', $product);
 

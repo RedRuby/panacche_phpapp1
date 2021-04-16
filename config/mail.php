@@ -13,5 +13,4 @@ return [
     'username' => 'testit.qq.11@gmail.com',
     'password' => '#Test@QQ@11',
     'sendmail' => '/usr/sbin/sendmail -bs',
-
 ];

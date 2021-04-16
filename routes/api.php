@@ -70,6 +70,13 @@ Route::post('/admin/add/vendor', 'AdminController@addVendor');
 Route::get('/admin/review_design/{id}', 'AdminController@reviewDesign');
 Route::get('/admin/design/status/update/{id}/{status}', 'AdminController@updateDesignStatus');
 Route::post('/admin/design/add/remark', 'AdminController@addRemark');
+Route::post('/admin/design/add/disclaimer', 'AdminController@addDisclaimer');
+Route::get('/admin/settings', 'AdminController@settings');
+Route::get('/admin/vendors', 'AdminController@vendors');
+Route::get('/admin/disclaimer', 'AdminController@disclaimers');
+Route::get('/admin/add/disclaimer', 'AdminController@addDisclaimer');
+Route::get('/admin/edit/disclaimer/{id}', 'AdminController@editDisclaimer');
+Route::get('/admin/delete/disclaimer/{id}', 'AdminController@deleteDisclaimer');
 
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);

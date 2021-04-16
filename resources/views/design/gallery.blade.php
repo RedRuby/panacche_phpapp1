@@ -2,7 +2,7 @@
         @if(count($designGroups))
         @foreach($designGroups as $key => $designGroup)
 
-        <div class="row px-5 galleryDesigns">
+        <div class="row px-5">
             <div class="col-12 px-0 galleryHeading">
                <h4 class="mb-4">
                   <span>{{ strtoupper($key) }}</span>
@@ -28,7 +28,7 @@
                                 </div>
                                 @else
                                 <div class="author-img">
-                                    <img src="{{ asset('uploads/collection/designer/defaultUserImg') }}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
+                                    <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
                                 </div>
                                 @endif
                               <div class="author-info">

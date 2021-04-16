@@ -1,0 +1,5 @@
+merchandise,description,size_specification,product_url,product_price,compare_at_price,quantity,product_images
+Test product1,Lorem ipsum,12by15,https://hhshs,125,100,45,
+Test product2,Lorem ipsum,12by16,https://hhshs,128,101,35,
+Test product3,Lorem ipsum,12by17,https://hhshs,127,102,25,
+Test product4,Lorem ipsum,12by18,https://hhshs,187,103,55,

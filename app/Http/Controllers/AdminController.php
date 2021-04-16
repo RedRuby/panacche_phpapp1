@@ -14,6 +14,7 @@ use App\Vendor;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AddVendorRequest;
 use App\DesignRemark;
+use App\DesignDisclaimer;
 
 class AdminController extends Controller
 {
@@ -168,15 +169,80 @@ class AdminController extends Controller
 
     public function addRemark(Request $request)
     {
-        $remark = DesignRemark::create([
-            'collection_id' => $request->collection_id,
-            'remark' => $request->remark
-        ]);
+        $collection = Collection::find($request->collection_id);
+        $collection->remark = $request->remark;
+        $collection->save();
 
-        if($remark){
-            return response()->json(['status'=>200, 'success' => true, 'message'=>"remark added successfully"])->setStatusCode(200);
+        if($collection){
+            return response()->json(['status'=>201, 'success' => true, 'message'=>"remark added successfully"])->setStatusCode(201);
         }else{
             return response()->json(['status'=>400, 'success' => false, 'message'=>'Design not found'])->setStatusCode(400);
         }
     }
+
+    /*public function addDisclaimer(Request $request)
+    {
+        $collection = Collection::find($request->collection_id);
+
+        if($collection){
+            $disclaimer = DesignDisclaimer::create([
+                'disclaimer' => $request->disclaimer,
+                'collection_id' => $request->collection_id
+            ]);
+
+            return response()->json(['status'=>201, 'success' => true, 'message'=>"Disclaimer added successfully"])->setStatusCode(201);
+        }else{
+            return response()->json(['status'=>400, 'success' => false, 'message'=>'Design not found'])->setStatusCode(400);
+        }
+    }*/
+
+    public function settings(Request $request)
+    {
+        $vendors = Vendor::count();
+        $disclaimer = DesignDisclaimer::count();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['vendors' => $vendors, "disclaimer"=>$disclaimer]])->setStatusCode(200);
+    }
+
+    public function vendors()
+    {
+        $vendors = Vendor::all();
+
+        $vendors = view('admin.vendors')->with('vendors', $vendors)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['vendors' => $vendors, ]])->setStatusCode(200);
+    }
+
+    public function disclaimers()
+    {
+        $disclaimer = DesignDisclaimer::all();
+        $disclaimers = view('admin.disclaimers')->with('disclaimers', $disclaimers)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['disclaimers' => $disclaimers, ]])->setStatusCode(200);
+    }
+
+    public function addDisclaimer(Request $request)
+    {
+        $disclaimer = DesignDisclaimer::create([
+            'disclaimer'=>$request->disclaimer
+        ]);
+
+      //  $disclaimers = view('admin.disclaimers')->with('disclaimers', $disclaimers)->render();
+        return response()->json(['status'=>200, 'success' => true, 'message'=>'disclaimer added successfully'])->setStatusCode(200);
+    }
+
+    public function editDisclaimer(Request $request, $id)
+    {
+        $disclaimer = DesignDisclaimer::find($id);
+        $disclaimer->disclaimer = $request->disclaimer;
+        $disclaimer->save();
+        return response()->json(['status'=>200, 'success' => true, 'message'=>'disclaimer edited successfully'])->setStatusCode(200);
+    }
+
+    public function deleteDisclaimer($id)
+    {
+        $disclaimer = DesignDisclaimer::find($id);
+        $disclaimer->delete();
+        return response()->json(['status'=>200, 'success' => true, 'message'=>'disclaimer deleted successfully'])->setStatusCode(200);
+    }
+
+
 }

@@ -10,10 +10,10 @@
     </a>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-12 card text-center mx-0 mb-4">
-    <a href="#">
+    <a href="{{ env('Shop_URL')}}/pages/new-arrival-pending">
         <div class="card-body d-flex">
             <div class="card-title mb-0 text-left col px-0 pt-xl-0 pt-md-1 pt-sm-2 pt-2">
-                <p class="mb-0">New Designes</p>
+                <p class="mb-0">New Designs</p>
                 <p class="mb-0"><em>(Pending Approval)</em></p>
             </div>
             <div class="text-center col px-0">{{ $newDesignsCount }}</div>

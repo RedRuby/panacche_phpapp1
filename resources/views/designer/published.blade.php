@@ -10,7 +10,7 @@
 
             <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
             @else
-            <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}">
+            <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}">
             @endif
             <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">

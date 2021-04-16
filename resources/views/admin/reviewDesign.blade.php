@@ -77,7 +77,8 @@
                 <span class="float-left mr-4 mt-3 mb-3"><strong>Design Name:</strong>
                     {{ $design->design_name }}</span>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0 d-block d-sm-flex">
-                    <form id="add-remark-btn">
+                    <form id="add-remark-form">
+                        <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button"
@@ -240,7 +241,7 @@
 
                         @foreach ($design->collectionImages as $collectionImage)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid"
-                                    src="{{ asset('uploads/collection/images/' . $collectionImage->img_src) }}"></p>
+                                    src="{{ asset('uploads/collection/'.$design->id.'/' . $collectionImage->img_src) }}"></p>
                         @endforeach
 
                     @endif
@@ -259,7 +260,7 @@
 
                         @foreach ($design->bluePrintImages as $bluePrintImage)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid"
-                                    src="{{ asset('uploads/collection/blue_prints/' . $bluePrintImage->img_src) }}"></p>
+                                    src="{{ asset('uploads/collection/'.$design->id.'/' . $bluePrintImage->img_src) }}"></p>
                         @endforeach
 
                     @endif
@@ -285,8 +286,8 @@
                                 <td>
                                     <div class="col-12 float-left px-0">
                                         <p class="custom-file addColor brownColor"
-                                            style="background-image: url('{{ asset('uploads/collection/color_pallates/' . $colorPallette->color_img) }}'); background-size:cover; background-position:center;">
-                                            {{-- <img src="{{  asset('uploads/collection/color_pallates/'.$colorPallette->color_img) }}" /> --}}
+                                            style="background-image: url('{{ asset('uploads/collection/'.$design->id.'/' . $colorPallette->color_img) }}'); background-size:cover; background-position:center;">
+
                                         </p>
                                     </div>
                                 </td>
@@ -378,12 +379,16 @@
             <div class="col-xl-10 col-lg-9 col-md-8 col-sm-12 col-12 float-left">
                 <div class="disclaimerBox col-12 float-left py-3">
                     <div class="mb-0">
-                        <textarea class="form-control textarea" rows="4" placeholder="Type here"></textarea>
-                        <p>
-                            <button type="button" class="btn btn-primary cancelBtn float-right mt-2 p-1">Cancel</button>
-                            <button type="button"
-                                class="btn btn-primary cancelBtn float-right mt-2 p-1 mr-2">Submit</button>
-                        </p>
+                        <form id="disclaimer-form">
+                            <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+                            <textarea class="form-control textarea" rows="4" placeholder="Type here"></textarea>
+                            <p>
+                                <button type="button" class="btn btn-primary cancelBtn float-right mt-2 p-1">Cancel</button>
+                                <button type="button"
+                                class="btn btn-primary cancelBtn float-right mt-2 p-1 mr-2" data="{{ $design->id }}" id="submit-disclaimer-btn">Submit</button>
+                            </p>
+                        </form>
+
                     </div>
                 </div>
             </div>
