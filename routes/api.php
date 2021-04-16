@@ -57,6 +57,7 @@ Route::get('/design/remove/{id}/{designerId}', 'DesignController@removeDesign');
 
 //Route::get('/admin/dashboard', 'AdminController@index');
 //Route::get('/admin/designers', 'AdminController@designers');
+Route::get('/admin/dashboard', 'AdminController@dashboard');
 Route::get('/admin/designs', 'AdminController@designs');
 Route::get('/admin/statistics', 'AdminController@statistics');
 Route::get('/admin/design/{id}', 'AdminController@viewDesign');
@@ -78,7 +79,8 @@ Route::get('/admin/add/disclaimer', 'AdminController@addDisclaimer');
 Route::get('/admin/edit/disclaimer/{id}', 'AdminController@editDisclaimer');
 Route::get('/admin/delete/disclaimer/{id}', 'AdminController@deleteDisclaimer');
 Route::get('/admin/search/vendor/{text}', 'AdminController@searchVendor');
-
+Route::get('/admin/discount', 'AdminController@discount');
+Route::post('/admin/discount/update', 'AdminController@updateDiscount');
 
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);

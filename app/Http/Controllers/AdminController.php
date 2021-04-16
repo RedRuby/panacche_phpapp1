@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AddVendorRequest;
 use App\DesignRemark;
 use App\DesignDisclaimer;
+use App\Order;
+use App\Discount;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -22,6 +25,38 @@ class AdminController extends Controller
     {
     }
 
+    public function dashboard(){
+        $newDesignersCount = Designer::where('status', 'pending')->count();
+        $newDesignsCount = Collection::where('status', 'submitted')->count();
+        $newOrdersCount = Order::count();
+        $newSalesCount = Order::count();
+
+        $designs = Collection::count();
+        $designers = Designer::count();
+        $customers = Customer::count();
+        $orders = Order::count();
+
+        $sale = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->count();
+       $discount = Discount::first();
+
+        //return $designs;
+        $statistics = view('admin.dashboardStatistics')->with("newDesignersCount", $newDesignersCount)->with("newDesignsCount", $newDesignsCount)->with("newOrdersCount", $newOrdersCount)->with("newSalesCount",$newSalesCount)
+        ->render();
+
+        $totalFigures = view('admin.totalFigures')->with("designs",$designs)
+        ->with("designers",$designers)
+        ->with("customers",$customers)
+        ->with("orders",$orders)
+        ->render();
+
+        $todaySale = view('admin.todaySale')->with("sale",$sale)
+        ->with("discount", $discount)->render();
+
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["statistics"=>$statistics, "totalFigures"=> $totalFigures, "todaySale" => $todaySale], 'message'=>'Dashboard details loaded successfully'])->setStatusCode(200);
+
+
+    }
 
     public function newArrivalPendings()
     {
@@ -256,5 +291,20 @@ class AdminController extends Controller
         return response()->json(['status'=>200, 'success' => true, 'message'=>'disclaimer deleted successfully'])->setStatusCode(200);
     }
 
+    public function discount()
+    {
+        $discount = Discount::first();
+        return response()->json(['status'=>200, 'success' => true, "data"=>['discount'=>$discount->discount], 'message'=>'discount added successfully'])->setStatusCode(200);
+
+    }
+
+    public function updateDiscount(Request $request)
+    {
+        $discount = Discount::first();
+        $discount->discount = $request->discount;
+        $discount->save();
+        return response()->json(['status'=>200, 'success' => true, 'message'=>'discount updated successfully'])->setStatusCode(200);
+
+    }
 
 }

@@ -694,7 +694,7 @@
 
     <!-- Add Vender Popup Modal -->
 <div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header py-0 px-2">
                 <p class="text-center mx-auto modelLogo mt-3"></p>
@@ -730,6 +730,29 @@
     </div>
 </div>
 <!-- Modal -->
+
+
+
+  <div class="modal fade" tabindex="-1" id="confirm-remove-design-modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Remove Design</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this design?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="remove-design-yes-btn">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 

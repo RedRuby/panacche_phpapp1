@@ -707,6 +707,21 @@ class DesignController extends Controller
     public function removeDesign($id, $designerId)
     {
         $collection = Collection::where('designer_id', $designerId)->find($id);
+        $products = Product::where('collection_id', $id)->get();
+        $shop = User::where('name', env('Shop_NAME'))->first();
+        $options = new Options();
+        $options->setVersion('2021-01');
+        $api = new BasicShopifyAPI($options);
+        $api->setSession(new Session($shop->name, $shop->password));
+        $result = $api->rest('DELETE', '/admin/smart_collections/'.$id.'.json')['body'];
+        $productImages = ProductImages::where('product_id', $products->first()->id)->delete();
+
+        //$productImages = ProductImages::where('product_id', $products->first()->id)->delete();
+        foreach($products as $product){
+            $result = $api->rest('DELETE', '/admin/products/'.$product->id.'.json')['body'];
+            $product->delete();
+        }
+
         if($collection){
             CollectionImages::where('collection_id', $id)->delete();
             CollectionBluePrints::where('collection_id', $id)->delete();
