@@ -77,6 +77,8 @@ Route::get('/admin/disclaimer', 'AdminController@disclaimers');
 Route::get('/admin/add/disclaimer', 'AdminController@addDisclaimer');
 Route::get('/admin/edit/disclaimer/{id}', 'AdminController@editDisclaimer');
 Route::get('/admin/delete/disclaimer/{id}', 'AdminController@deleteDisclaimer');
+Route::get('/admin/search/vendor/{text}', 'AdminController@searchVendor');
+
 
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);

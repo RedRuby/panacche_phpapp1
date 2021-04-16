@@ -22,6 +22,7 @@ class AdminController extends Controller
     {
     }
 
+
     public function newArrivalPendings()
     {
         $designers = Designer::where('status', 'pending')
@@ -112,10 +113,21 @@ class AdminController extends Controller
     {
         $vendors = Vendor::all();
 
-        $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
+        $vendors = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
 
-        return response()->json(['status'=>200, 'success' => true, 'data'=>["datalist"=>$datalist], 'message'=>'Vendor datalist loaded successfully'])->setStatusCode(200);
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["vendors"=>$vendors], 'message'=>'Vendor datalist loaded successfully'])->setStatusCode(200);
         //return $datalist;
+    }
+
+    public function searchVendor($text)
+    {
+        Log::info("search text ". $text);
+
+        $vendors = Vendor::where('vendor_name','LIKE', '%'.$text.'%')->get();
+        $vendors = view('admin.vendors')->with('vendors', $vendors)->render();
+
+        return response()->json(['status'=>200, 'success' => true, 'data'=>["vendors"=>$vendors], 'message'=>'Vendor datalist loaded successfully'])->setStatusCode(200);
+
     }
 
     public function addVendor(AddVendorRequest $request)
@@ -138,9 +150,9 @@ class AdminController extends Controller
         ]);
 
         $vendors = Vendor::all();
-        $datalist = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
+        $vendors = view('admin.vendorDatalist')->with('vendors', $vendors)->render();
 
-        return response()->json(["status" => "success", "statusCode" => 200, 'data'=>["datalist"=>$datalist], "message" => "Vendor has been added successfully"]);
+        return response()->json(["status" => "success", "statusCode" => 200, 'data'=>["vendors"=>$vendors], "message" => "Vendor has been added successfully"]);
     }
 
     public function reviewDesign($id)
