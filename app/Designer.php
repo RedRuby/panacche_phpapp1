@@ -33,10 +33,4 @@ class Designer extends Model
     {
         return $this->hasMany('App\Order', 'designer_id');
     }
-
-
-
-
-
-
 }

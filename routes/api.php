@@ -83,6 +83,7 @@ Route::get('/admin/discount', 'AdminController@discount');
 Route::post('/admin/discount/update', 'AdminController@updateDiscount');
 Route::GET('/admin/total/designers', 'AdminController@totalDesigners');
 Route::GET('/admin/total/designs', 'AdminController@totalDesigns');
+Route::GET('/admin/search/designs/{text}', 'AdminController@searchDesigns');
 Route::GET('/admin/total/orders', 'AdminController@totalOrders');
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);

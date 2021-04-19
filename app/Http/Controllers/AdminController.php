@@ -316,4 +316,30 @@ class AdminController extends Controller
 
     }
 
+    public function totalDesigns()
+    {
+        $designs = Collection::with('designer','orders')->get();
+        $designs = view('admin.totalDesigns')->with('designs', $designs)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
+    }
+
+    public function searchDesigns($text)
+    {
+        $designs = Collection::with(['designer','orders'])
+        ->whereHas('designer', function ($q) use ($text) {
+            $q->where('collections.design_name', 'LIKE', '%'.$text.'%');
+            $q->orWhere('designers.first_name', 'LIKE', '%'.$text.'%');
+            $q->orWhere('designers.last_name', 'LIKE', '%'.$text.'%');
+        })
+        ->get();
+Log::info('designs'. json_encode($designs));
+        /*
+        ->where('collections.design_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.first_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.last_name', 'LIKE', '%'.$text.'%')
+        */
+        $designs = view('admin.totalDesigns')->with('designs', $designs)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
+    }
+
 }
