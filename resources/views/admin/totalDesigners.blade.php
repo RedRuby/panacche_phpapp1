@@ -99,17 +99,32 @@
                          </tr>
                      </thead>
                      <tbody>
+                        @foreach ($designers->where('status', 'pending') as $key => $designer )
                          <tr>
-                             <td>Lisa Shaikh</td>
-                             <td>10-4-2021</td>
-                             <td>00</td>
-                             <td>00</td>
-                             <td>00</td>
-                             <td>
-                                 <div class="badge badge-danger">Pending</div>
-                             </td>
-                             <td><a href="#">View More</a></td>
-                         </tr>
+                            <td>{{ $designer->first_name }} {{ $designer->last_name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($designer->created_at)->format('d/m/Y')}} </td>
+                            <td>{{ $designer->collections->count() }}</td>
+                            <td>@php
+                                $customersCount = $designer->orders->groupBy('customer_id')->count();
+                            @endphp
+                           {{ $customersCount }}
+                               </td>
+                            <td>{{ $designer->orders->where('status','completed')->count() }}</td>
+
+                            <td>
+                                @if($customersCount == 0)
+                                    <div class="badge badge-secondary">Inactive</div>
+                                @elseif($customersCount >= 0)
+                                    <div class="badge badge-success">Active</div>
+                                @elseif($designer->status == 'pending')
+                                    <div class="badge badge-danger">Pending</div>
+                                @elseif($designer->status == 'rejected')
+                                    <div class="badge badge-dark">Rejected</div>
+                                @endif
+                            </td>
+                        <td><a href="{{ env('Shop_URL') }}/pages/designers-profile?id={{$designer->id}}">View More</a></td>
+                        </tr>
+                         @endforeach
                      </tbody>
                  </table>
              </div>
@@ -149,17 +164,34 @@
                          </tr>
                      </thead>
                      <tbody>
-                         <tr>
-                             <td>John Mathew</td>
-                             <td>10-4-2021</td>
-                             <td>07</td>
-                             <td>03</td>
-                             <td>02</td>
-                             <td>
-                                 <div class="badge badge-success">Active</div>
-                             </td>
-                             <td><a href="#">View More</a></td>
-                         </tr>
+                        @foreach ($designers as $key => $designer )
+                        @if($designer->orders->where('status','completed')->count() > 0)
+                        <tr>
+                            <td>{{ $designer->first_name }} {{ $designer->last_name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($designer->created_at)->format('d/m/Y')}} </td>
+                            <td>{{ $designer->collections->count() }}</td>
+                            <td>@php
+                                $customersCount = $designer->orders->groupBy('customer_id')->count();
+                            @endphp
+                           {{ $customersCount }}
+                               </td>
+                            <td>{{ $designer->orders->where('status','completed')->count() }}</td>
+
+                            <td>
+                                @if($customersCount == 0)
+                                    <div class="badge badge-secondary">Inactive</div>
+                                @elseif($customersCount >= 0)
+                                    <div class="badge badge-success">Active</div>
+                                @elseif($designer->status == 'pending')
+                                    <div class="badge badge-danger">Pending</div>
+                                @elseif($designer->status == 'rejected')
+                                    <div class="badge badge-dark">Rejected</div>
+                                @endif
+                            </td>
+                        <td><a href="{{ env('Shop_URL') }}/pages/designers-profile?id={{$designer->id}}">View More</a></td>
+                        </tr>
+                        @endif
+                         @endforeach
                      </tbody>
                  </table>
              </div>
@@ -199,17 +231,34 @@
                          </tr>
                      </thead>
                      <tbody>
-                         <tr>
-                             <td>Carey Paul</td>
-                             <td>10-4-2021</td>
-                             <td>10</td>
-                             <td>07</td>
-                             <td>07</td>
-                             <td>
-                                 <div class="badge badge-secondary">Inactive</div>
-                             </td>
-                             <td><a href="#">View More</a></td>
-                         </tr>
+                        @foreach ($designers as $key => $designer )
+                        @if($designer->orders->count() == 0)
+                        <tr>
+                            <td>{{ $designer->first_name }} {{ $designer->last_name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($designer->created_at)->format('d/m/Y')}} </td>
+                            <td>{{ $designer->collections->count() }}</td>
+                            <td>@php
+                                $customersCount = $designer->orders->groupBy('customer_id')->count();
+                            @endphp
+                           {{ $customersCount }}
+                               </td>
+                            <td>{{ $designer->orders->where('status','completed')->count() }}</td>
+
+                            <td>
+                                @if($customersCount == 0)
+                                    <div class="badge badge-secondary">Inactive</div>
+                                @elseif($customersCount >= 0)
+                                    <div class="badge badge-success">Active</div>
+                                @elseif($designer->status == 'pending')
+                                    <div class="badge badge-danger">Pending</div>
+                                @elseif($designer->status == 'rejected')
+                                    <div class="badge badge-dark">Rejected</div>
+                                @endif
+                            </td>
+                        <td><a href="{{ env('Shop_URL') }}/pages/designers-profile?id={{$designer->id}}">View More</a></td>
+                        </tr>
+                        @endif
+                         @endforeach
                      </tbody>
                  </table>
              </div>
@@ -249,17 +298,32 @@
                          </tr>
                      </thead>
                      <tbody>
-                         <tr>
-                             <td>Shelly Ben</td>
-                             <td>10-4-2021</td>
-                             <td>07</td>
-                             <td>05</td>
-                             <td>00</td>
-                             <td>
-                                 <div class="badge badge-dark">Rejected</div>
-                             </td>
-                             <td><a href="#">View More</a></td>
-                         </tr>
+                        @foreach ($designers->where('status', 'disabled') as $key => $designer )
+                        <tr>
+                           <td>{{ $designer->first_name }} {{ $designer->last_name }}</td>
+                           <td>{{ \Carbon\Carbon::parse($designer->created_at)->format('d/m/Y')}} </td>
+                           <td>{{ $designer->collections->count() }}</td>
+                           <td>@php
+                               $customersCount = $designer->orders->groupBy('customer_id')->count();
+                           @endphp
+                          {{ $customersCount }}
+                              </td>
+                           <td>{{ $designer->orders->where('status','completed')->count() }}</td>
+
+                           <td>
+                               @if($customersCount == 0)
+                                   <div class="badge badge-secondary">Inactive</div>
+                               @elseif($customersCount >= 0)
+                                   <div class="badge badge-success">Active</div>
+                               @elseif($designer->status == 'pending')
+                                   <div class="badge badge-danger">Pending</div>
+                               @elseif($designer->status == 'rejected')
+                                   <div class="badge badge-dark">Rejected</div>
+                               @endif
+                           </td>
+                       <td><a href="{{ env('Shop_URL') }}/pages/designers-profile?id={{$designer->id}}">View More</a></td>
+                       </tr>
+                        @endforeach
                      </tbody>
                  </table>
              </div>
