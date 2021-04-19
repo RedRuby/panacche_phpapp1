@@ -307,4 +307,13 @@ class AdminController extends Controller
 
     }
 
+    public function totalDesigners()
+    {
+        $designers = Designer::with('collections','orders')->get();
+       // return $designers;
+        $designers = view('admin.totalDesigners')->with('designers', $designers)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designers' => $designers ]])->setStatusCode(200);
+
+    }
+
 }

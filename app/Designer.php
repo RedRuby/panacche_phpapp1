@@ -28,4 +28,15 @@ class Designer extends Model
     {
         return $this->hasMany('App\Collection');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order', 'designer_id');
+    }
+
+
+
+
+
+
 }
