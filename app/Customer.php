@@ -27,4 +27,9 @@ class Customer extends Model
         return $this->belongsToMany('App\Designer');
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order');
+    }
+
 }

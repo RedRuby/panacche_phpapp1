@@ -14,6 +14,10 @@ class Order extends Model
         return $this->belongsTo('App\Collection');
     }
 
+    public function customer(){
+        return $this->belongsTo('App\Customer');
+    }
+
 
 
 }
