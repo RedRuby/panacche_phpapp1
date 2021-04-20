@@ -307,4 +307,74 @@ class AdminController extends Controller
 
     }
 
+    public function totalDesigners()
+    {
+        $designers = Designer::with('collections','orders')->get();
+       // return $designers;
+        $designers = view('admin.totalDesigners')->with('designers', $designers)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designers' => $designers ]])->setStatusCode(200);
+
+    }
+
+    public function totalDesigns()
+    {
+        $designs = Collection::with('designer','orders')->get();
+        $designs = view('admin.totalDesigns')->with('designs', $designs)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
+    }
+
+    public function searchDesigns($text)
+    {
+        $designs = Collection::with(['designer','orders'])
+        ->whereHas('designer', function ($q) use ($text) {
+            $q->where('collections.design_name', 'LIKE', '%'.$text.'%');
+            $q->orWhere('designers.first_name', 'LIKE', '%'.$text.'%');
+            $q->orWhere('designers.last_name', 'LIKE', '%'.$text.'%');
+        })
+        ->get();
+        Log::info('designs'. json_encode($designs));
+        /*
+        ->where('collections.design_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.first_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.last_name', 'LIKE', '%'.$text.'%')
+        */
+        $designs = view('admin.totalDesigns')->with('designs', $designs)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
+    }
+
+    public function totalOrders()
+    {
+        $orders = Order::with('collection','collection.designer', 'customer')->get();
+        //return $orders;
+        $orders = view('admin.totalOrders')->with('orders', $orders)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['orders' => $orders ]])->setStatusCode(200);
+    }
+
+
+    public function searchOrders($text)
+    {
+        $orders = Order::with(['collection','collection.designer','customer'])
+        ->whereHas('collection', function ($q) use ($text) {
+            $q->where('collections.design_name', 'LIKE', '%'.$text.'%');
+        })->orWhereHas('collection.designer', function ($q) use ($text) {
+             $q->orWhere('designers.first_name', 'LIKE', '%'.$text.'%');
+             $q->orWhere('designers.last_name', 'LIKE', '%'.$text.'%');
+        })->orWhereHas('customer', function ($q) use ($text) {
+            $q->where('customers.first_name', 'LIKE', '%'.$text.'%');
+            $q->where('customers.last_name', 'LIKE', '%'.$text.'%');
+        })
+        ->get();
+
+        //return $orders;
+        Log::info('orders'. json_encode($orders));
+        /*
+        ->where('collections.design_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.first_name', 'LIKE', '%'.$text.'%')
+        ->where('collections.designer.last_name', 'LIKE', '%'.$text.'%')
+        */
+        $orders = view('admin.totalOrders')->with('orders', $orders)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['orders' => $orders ]])->setStatusCode(200);
+    }
+
+
 }

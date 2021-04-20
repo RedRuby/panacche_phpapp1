@@ -81,7 +81,12 @@ Route::get('/admin/delete/disclaimer/{id}', 'AdminController@deleteDisclaimer');
 Route::get('/admin/search/vendor/{text}', 'AdminController@searchVendor');
 Route::get('/admin/discount', 'AdminController@discount');
 Route::post('/admin/discount/update', 'AdminController@updateDiscount');
-
+Route::GET('/admin/total/designers', 'AdminController@totalDesigners');
+Route::GET('/admin/search/designers/{text}', 'AdminController@searchDesigners');
+Route::GET('/admin/total/designs', 'AdminController@totalDesigns');
+Route::GET('/admin/search/designs/{text}', 'AdminController@searchDesigns');
+Route::GET('/admin/total/orders', 'AdminController@totalOrders');
+Route::GET('/admin/search/orders/{text}', 'AdminController@searchOrders');
 
 Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.shopify']);
 

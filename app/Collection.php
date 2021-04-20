@@ -18,6 +18,10 @@ class Collection extends Model
         return $this->belongsTo('App\Designer');
     }
 
+    public function customer(){
+        return $this->belongsTo('App\Customer');
+    }
+
     public function products()
     {
         return $this->hasMany('App\Product');
@@ -32,5 +36,11 @@ class Collection extends Model
     {
         return $this->hasMany('App\CollectionColorPallettes');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+
 
 }

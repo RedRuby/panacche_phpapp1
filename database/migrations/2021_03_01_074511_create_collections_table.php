@@ -25,7 +25,7 @@ class CreateCollectionsTable extends Migration
             $table->string('room_type')->nullable();
             $table->string('room_style')->nullable();
             $table->string('room_budget')->nullable();
-            $table->enum('status', ['draft', 'submitted', 'approved', 'rejected', 'reassign']);
+            $table->enum('status', ['draft', 'submitted', 'approved', 'rejected', 'reassign', 'abandonded']);
             $table->string('design_implementation_guide')->nullable();
             $table->string('room_width_in_feet')->nullable();
             $table->string('room_width_in_inches')->nullable();
@@ -34,6 +34,8 @@ class CreateCollectionsTable extends Migration
             $table->string('design_price')->nullable();
             $table->string('pet_friendly_design')->nullable();
             $table->text('remark')->nullable();
+            $table->timestamp('approved_on')->nullable();
+            $table->timestamp('abandonded_on')->nullable();
 
             $table->foreign('designer_id')->references('id')->on('designers');
             $table->timestamps();
