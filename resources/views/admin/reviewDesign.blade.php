@@ -348,7 +348,7 @@
 
                                     @foreach ($product->productImages as $product)
                                         <div class="border border-ligh">
-                                            <p><img src="{{ asset('uploads/collection/product/images/' . $product->img_src) }}"
+                                            <p><img src="{{ asset('uploads/collection/'.$design->id.'/'. $product->img_src) }}"
                                                     class="img-fluid"></p>
                                         </div>
 
