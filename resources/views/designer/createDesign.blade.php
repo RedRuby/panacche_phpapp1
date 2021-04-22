@@ -1,57 +1,79 @@
 <div class="row align-items-center h-100 nilesh">
     <div class="leftSideNav h-100 position-fixed">
-        <ul class="drawer-menu px-3 pb-5 mb-5 text-center" data-children=".drawer-submenu" id="dasboardMenu">
-            <li class="drawer-menu-item mt-2">
-                <a href="#">
-                    <i class="fas fa-bars" data-placement="right" data-toggle="tooltip" title="Menu"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
+        <ul class="drawer-menu px-3 pb-5 mb-5 text-center" id="dasboardMenu" data-children=".drawer-submenu">
             <li class="drawer-menu-item mt-4">
-                <a href="{{ env('Shop_URL') }}/account/myaccount">
-                    <i class="fas fa-th" data-placement="right" data-toggle="tooltip" title="Dashboard"></i>
+                <a href="{{ env('Shop_URL') }}/account/">
+                    <i class="fas fa-th" data-toggle="tooltip" data-placement="right" title="Dashboard"></i>
                     <!--<span class="drawer-menu-text">Dashboard</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
                 <a href="{{ env('Shop_URL') }}">
-                    <i class="fas fa-home" data-placement="right" data-toggle="tooltip" title="Home"></i>
+                    <i class="fas fa-home" data-toggle="tooltip" data-placement="right" title="Home"></i>
                     <!--<span class="drawer-menu-text">Home</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
                 <a href="{{ env('Shop_URL') }}/pages/gallery">
-                    <i class="fas fa-images" data-placement="right" data-toggle="tooltip" title="Gallery"></i>
+                    <i class="fas fa-images" data-toggle="tooltip" data-placement="right" title="Gallery"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="{{ env('Shop_URL') }}/pages/our-designers">
+                    <i class="fas fa-drafting-compass" data-toggle="tooltip" data-placement="right"
+                        title="Our Designers"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
                 <a href="#">
-                    <i class="fas fa-phone-alt" data-placement="right" data-toggle="tooltip" title="Contact"></i>
+                    <i class="fab fa-blogger-b" data-toggle="tooltip" data-placement="right" title="Blogs"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
                 <a href="#">
-                    <i class="fas fa-crosshairs" data-placement="right" data-toggle="tooltip" title="Our Mission"></i>
+                    <i class="fas fa-crosshairs" data-toggle="tooltip" data-placement="right" title="Our Mission"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="#">
+                    <i class="fas fa-phone-alt" data-toggle="tooltip" data-placement="right" title="Contact"></i>
+                    <!--<span class="drawer-menu-text"></span>-->
+                </a>
+            </li>
+            <li class="drawer-menu-item mt-3">
+                <a href="#">
+                    <svg height="17pt" viewBox="0 -26 512 512" width="17pt" xmlns="http://www.w3.org/2000/svg"
+                        data-toggle="tooltip" data-placement="right" title="FAQ">
+                        <path
+                            d="m377.429688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v73.246093c0 11.46875 9.332032 20.808594 20.800782 20.808594h20.808593v-94.054687c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0" />
+                        <path
+                            d="m256.179688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v41.628906h41.609375v-41.628906c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0" />
+                        <path
+                            d="m422.261719 0h-331.441407c-50.082031 0-90.820312 40.648438-90.820312 90.605469v338.867187c0 11.996094 7.28125 22.957032 18.558594 27.925782 3.980468 1.75 8.210937 2.601562 12.402344 2.601562 7.5 0 14.890624-2.738281 20.617187-7.949219 41.550781-37.589843 95.320313-58.289062 151.421875-58.289062h.019531l219.300781.011719c49.449219 0 89.679688-40.320313 89.679688-89.878907v-214.359375c0-49.367187-40.261719-89.535156-89.738281-89.535156zm-246.023438 202.242188c8.28125 0 15 6.707031 15 14.996093 0 8.28125-6.71875 15-15 15h-56.609375v36.609375c0 8.28125-6.71875 15-15 15-8.289062 0-15-6.722656-15-15v-121.683594c0-21.050781 17.121094-38.179687 38.171875-38.179687h48.4375c8.28125 0 15 6.722656 15 15 0 8.289063-6.71875 15-15 15h-48.4375c-4.511719 0-8.171875 3.667969-8.171875 8.179687v55.078126zm130.75 66.605468c0 8.28125-6.71875 15-15 15-8.277343 0-15-6.71875-15-15v-37.425781h-41.609375v37.425781c0 8.28125-6.71875 15-15 15-8.289062 0-15-6.71875-15-15v-109.054687c0-28.007813 22.792969-50.808594 50.800782-50.808594 28.019531 0 50.808593 22.800781 50.808593 50.808594zm133.132813 15h-62.691406c-28.007813 0-50.800782-22.789062-50.800782-50.808594v-73.246093c0-28.007813 22.792969-50.808594 50.800782-50.808594 28.019531 0 50.808593 22.800781 50.808593 50.808594v94.054687h11.882813c8.277344 0 15 6.710938 15 15 0 8.28125-6.722656 15-15 15zm0 0" />
+                    </svg>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item active mt-3">
                 <a href="#">
-                    <i class="fas fa-file-invoice-dollar" data-placement="right" data-toggle="tooltip" title="Payment"></i>
+                    <i class="fas fa-file-invoice-dollar" data-toggle="tooltip" data-placement="right"
+                        title="Payment"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="#">
-                    <i class="fas fa-cog" data-placement="right" data-toggle="tooltip" title="Settings"></i>
+                <a href="{{ env('Shop_URL') }}/pages/settings">
+                    <i class="fas fa-cog" data-toggle="tooltip" data-placement="right" title="Settings"></i>
                     <!--<span class="drawer-menu-text">Setting</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3 mb-5 pb-5">
-                <a href="login.html">
-                    <i class="fas fa-sign-out-alt" data-placement="right" data-toggle="tooltip" title="Logout"></i>
+                <a href="{{ env('Shop_URL') }}/pages/account/logout">
+                    <i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="right" title="Logout"></i>
                     <!--<span class="drawer-menu-text">Logout</span>-->
                 </a>
             </li>
@@ -61,9 +83,8 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm">
 
-    <div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="https://cdn.shopify.com/s/files/1/0529/0255/9930/t/3/assets/panacche_logo.png?v=14350055876468133888"></div>
 
-        <div class="col-12 px-3 landingHeading float-left">
+        <div class="col-12 px-3 landingHeading float-left mt-4">
             <h4 class="mb-4">
                 <span class="float-left mr-4">Create New Design</span>
                 <div class="form-group float-left">
@@ -91,7 +112,7 @@
 
         <form id="create-room-form" enctype="multipart/form-data">
             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-            <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+            <input type="hidden" name="shop" value="{{env('Shop_NAME')}}" />
             <div class="col-12 px-3 stepsWrap float-left mb-4">
                 <div class="row">
                     <div class="col-lg-2 col-md-3 col-sm-6 float-left">
@@ -435,7 +456,7 @@
                     <div class="row mx-0 px-0 pt-2">
                         <form id="csv-bulk-upload-form" accept="multipart/formdata">
                             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-                            <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+                            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
                             <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id_bulk_upload" />
 
                             <div class="custom-file mb-1">
@@ -455,7 +476,7 @@
                 <div class="col-12 addMearchForm py-3 px-0">
                     <form class="mx-0" id="merchandise-section-form">
                         <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-                        <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+                        <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
                         <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id" />
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
@@ -681,7 +702,7 @@
 
         <form id="submit-new-design-form">
             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-            <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
             <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id_submit_design" />
         </form>
 

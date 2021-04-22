@@ -20,6 +20,7 @@ use App\ProductVariant;
 use App\Product;
 use App\Vendor;
 use App\CollectionColorPallettes;
+use App\DigitalProduct;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Osiset\BasicShopifyAPI\Options;
@@ -315,7 +316,7 @@ class DesignerController extends Controller
 
 
     public function published(){
-        $designs  = Collection::where('status', 'disabled')->get();
+        $designs  = Collection::where('status', 'approved')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'published designs loaded successfully'])->setStatusCode(200);
@@ -330,7 +331,7 @@ class DesignerController extends Controller
 
     public function allDesigns(){
         $designs  = Collection::all();
-        $designCards = view('designer.mydesigns')->with('designs', $designs)->render();
+        $designCards = view('designer.allDesigns')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
     }
@@ -391,15 +392,22 @@ class DesignerController extends Controller
                     "tags" => [
                         $collection->design_name,
                     ],
-                    "presentment_prices" => [
+                    "variants"=> [
                         [
-                            "price" => [
-                                "currency_code" => "USD",
-                                "amount" => $request->product_price
-                            ],
-                            "compare_at_price" => $request->compare_at_price
-                        ]
+                          "option1"=> "Default Title",
+                          "price"=> $request->product_price,
+                          //"sku": "123"
+                        ],
                     ],
+                    // "presentment_prices" => [
+                    //     [
+                    //         "price" => [
+                    //             "currency_code" => "USD",
+                    //             "amount" => $request->product_price
+                    //         ],
+                    //         "compare_at_price" => $request->compare_at_price
+                    //     ]
+                    // ],
                   //  "images" => $productImagesArr
                 ]
             ];
@@ -490,7 +498,7 @@ class DesignerController extends Controller
 
             $collectionImages = $request->file('collection_images');
 
-            Log::info('collection_images'. json_encode($collectionImages));
+         //   Log::info('collection_images'. json_encode($collectionImages));
 
 
             $collectionBluePrints = $request->file('collection_blue_prints');
@@ -599,6 +607,66 @@ class DesignerController extends Controller
                     'pet_friendly_design' => $request->pet_friendly_design,
                     'design_price' => $request->design_price
                 ]);
+                $digitalProduct = DigitalProduct::where('collection_id', $request->collection_id)->first();
+
+                    if($digitalProduct){
+                        $productData = [
+                            "product" => [
+                                "id" => $digitalProduct->id,
+                                "title" => "Design Implementation Guide",
+                                "product_type" => '',
+                                "description" => $request->product_description,
+                                "published" => false,
+                                "product_type" => "design_implementation_guide",
+                                "tags" => [
+                                    $collection->design_name,
+                                    "design_implementation_guide"
+                                ],
+                                "variants"=> [
+                                    [
+                                      "option1"=> "Default Title",
+                                      "price"=> $request->design_price,
+                                      //"sku": "123"
+                                    ],
+                                ],
+                                // "presentment_prices" => [
+                                //     [
+                                //         "price" => [
+                                //             "currency_code" => "USD",
+                                //             "amount" => $request->design_price
+                                //         ],
+                                //     ]
+                                // ],
+                                // "images" => $productImagesArr
+                            ]
+                        ];
+
+
+                        $productResult = $api->rest('POST', '/admin/products/'.$digitalProduct->id.'.json', $productData)['body'];
+
+                        if($productResult){
+                            DigitalProduct::where('collection_id', $request->collection_id)->update([
+                                  //  'id' => $productResult['product']['id'],
+                                    'collection_id' => $collection->id,
+                                    'name' => 'Design Implementation Guide',
+                                    'product_type' => 'design_implementation_guide',
+                                    'product_price' => $request->design_price,
+                                ]);
+                        }
+
+                        if($designGuideFileName){
+                            DigitalProduct::where('collection_id', $request->collection_id)->update([
+                                //  'id' => $productResult['product']['id'],
+                                  'collection_id' => $collection->id,
+                                  'name' => 'Design Implementation Guide',
+                                  'product_type' => 'design_implementation_guide',
+                                  'product_price' => $request->design_price,
+                                  'file_path' => $designGuideFileName
+                              ]);
+                        }
+
+                    }
+
 
                 Log::info('collection ' . json_encode($collection));
 

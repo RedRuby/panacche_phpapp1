@@ -1,8 +1,7 @@
 @foreach ($design as $mydesign )
 		<div class="row align-items-center h-100">
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
-				<div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="https://cdn.shopify.com/s/files/1/0529/0255/9930/t/3/assets/panacche_logo.png?v=14350055876468133888"></div>
-				<div class="col-12 px-3 landingHeading float-left">
+								<div class="col-12 px-3 landingHeading float-left">
 					<h4 class="mb-4">
 						<span class="float-left mr-4">New Design Approval</span>
 					</h4>

@@ -1,8 +1,8 @@
 @if($designs->count() == 0)
-    <h1 class="pl-5">There are no new designs available</h1>
+    <h4 class="pl-3">There are no new designs available</h4>
 @endif
 @foreach($designs as $design)
-<a href="panacchebeta.myshopify.com/design/details/{{ $design->id }}" id="view-design" data="{{ $design->id }}">
+<a href="{{env('Shop_NAME')}}/design/details/{{ $design->id }}" id="view-design" data="{{ $design->id }}">
 <div class="col-sm-4">
     <div class="card">
         @if($design->collectionImages()->count() == 0)

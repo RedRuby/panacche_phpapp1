@@ -78,7 +78,7 @@
                     {{ $design->design_name }}</span>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0 d-block d-sm-flex">
                     <form id="add-remark-form">
-                        <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+                        <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button"
@@ -380,7 +380,7 @@
                 <div class="disclaimerBox col-12 float-left py-3">
                     <div class="mb-0">
                         <form id="disclaimer-form">
-                            <input type="hidden" name="shop" value="panacchebeta.myshopify.com" />
+                            <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
                             <textarea class="form-control textarea" rows="4" placeholder="Type here"></textarea>
                             <p>
                                 <button type="button" class="btn btn-primary cancelBtn float-right mt-2 p-1">Cancel</button>

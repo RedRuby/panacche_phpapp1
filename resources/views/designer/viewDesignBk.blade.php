@@ -5,28 +5,6 @@
 
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
 
-				<div class="logo col-12 float-left mb-4 px-3 mt-4"><img src="images/panacche_logo.png"></div>
-
-				<!--<div class="col-12 px-3 landingHeading float-left">
-					<h4 class="mb-4">
-						<span class="float-left mr-4">Create New Design</span>
-						<div class="form-group float-left">
-								<select class="custom-select selectDropdown">
-								  <option selected>Draft</option>
-								  <option value="1">Published</option>
-								  <option value="2">Inactive</option>
-								</select>
-						</div>
-						<div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
-							<a href="landing_page.html">
-								<button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5">Remove this design
-									<i class="fas fa-times-circle newDesignClose"></i>
-								</button>
-							</a>
-						</div>
-					</h4>
-				</div>-->
-
 				<div class="col-12 px-3 stepsWrap float-left mb-4">
 					<div class="row">
 						<div class="col-lg-2 col-md-3 col-sm-6 float-left">

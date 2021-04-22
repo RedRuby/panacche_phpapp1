@@ -42,5 +42,10 @@ class Collection extends Model
         return $this->hasMany('App\Order');
     }
 
+    public function digitalProduct()
+    {
+        return $this->hasOne('App\DigitalProduct');
+    }
+
 
 }

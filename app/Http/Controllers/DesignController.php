@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use Carbon\Carbon;
+use App\DigitalProduct;
 
 class DesignController extends Controller
 {
@@ -138,6 +139,10 @@ class DesignController extends Controller
         //     'implementation_guide_description' => 'required',
         //     'customer_id' => 'required',
         // ]);
+
+        // Log::info('price : '.$request->design_price);
+        // exit;
+
 
         try {
 
@@ -264,6 +269,51 @@ class DesignController extends Controller
                     'design_price' => $request->design_price
                 ]);
 
+
+
+
+            $productData = [
+                "product" => [
+                    "title" => "Design Implementation Guide",
+                    "product_type" => '',
+                    "description" => $request->product_description,
+                    "published" => false,
+                    "product_type" => "design_implementation_guide",
+                    "tags" => [
+                        $collection->design_name,
+                        "design_implementation_guide"
+                    ],
+                    "variants"=> [
+                        [
+                          "option1"=> "Default Title",
+                          "price"=> $request->design_price,
+                          //"sku": "123"
+                        ],
+                    ],
+                    // "presentment_prices" => [
+                    //     [
+                    //         "price" => [
+                    //             "currency_code" => "USD",
+                    //             "amount" => $request->design_price
+                    //         ],
+                    //     ]
+                    // ],
+                    // "images" => $productImagesArr
+                ]
+            ];
+
+            $productResult = $api->rest('POST', '/admin/products.json', $productData)['body'];
+
+            if($productResult){
+                    DigitalProduct::create([
+                        'id' => $productResult['product']['id'],
+                        'collection_id' => $collection->id,
+                        'name' => 'Design Implementation Guide',
+                        'product_type' => 'design_implementation_guide',
+                        'product_price' => $request->design_price,
+                        'file_path' => $designGuideFileName
+                    ]);
+            }
                 Log::info('collection ' . json_encode($collection));
 
 
@@ -385,16 +435,26 @@ class DesignController extends Controller
                     "inventory_quantity" => $request->quantity,
                     "tags" => [
                         $collection->design_name,
+                        $customer->first_name." ".$customer->last_name,
+                        $collection->room_type,
+                        $collection->room_style,
                     ],
-                    "presentment_prices" => [
+                    "variants"=> [
                         [
-                            "price" => [
-                                "currency_code" => "USD",
-                                "amount" => $request->product_price
-                            ],
-                            "compare_at_price" => $request->compare_at_price
-                        ]
+                          "option1"=> "Default Title",
+                          "price"=> $request->product_price,
+                          //"sku": "123"
+                        ],
                     ],
+                    // "presentment_prices" => [
+                    //     [
+                    //         "price" => [
+                    //             "currency_code" => "USD",
+                    //             "amount" => $request->product_price
+                    //         ],
+                    //         "compare_at_price" => $request->compare_at_price
+                    //     ]
+                    // ],
                     // "images" => $productImagesArr
                 ]
             ];
@@ -582,13 +642,11 @@ class DesignController extends Controller
                             'id' => $result['product']['id'],
                             'collection_id' => $collection->id,
                             'title' => $importData[0],
-                            'description' => $importData[1],
-                            'size_specification' => $importData[2],
-                            'product_url' => $importData[3],
-                            'product_price' => $importData[4],
-                            'product_compare_at_price' => $importData[5],
-                            'vendor_id' => $importData[6],
-                            'product_quantity' => $importData[7],
+                            'size_specification' => $importData[1],
+                            'product_url' => $importData[2],
+                            'product_price' => $importData[3],
+                            'vendor_id' => $importData[4],
+                            'product_quantity' => $importData[5],
                             'status' => "draft"
                         ]);
 
