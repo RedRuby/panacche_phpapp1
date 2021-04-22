@@ -4,7 +4,7 @@
 
        <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
         @if($designer->display_picture)
-          <img src="{{ asset('uploads/designer/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
+          <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
           @else
           <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
           @endif
@@ -27,7 +27,7 @@
                 <p class="mb-0 px-3">
                    <span class="">{{ $designer->quote }}</span>
                 </p>
-                <p class="mb-0 my-3"><button type="button" class="btn btn-primary" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</button></p>
+            <p class="mb-0 my-3"><a href="{{env('Shop_URL')}}/pages/view-our-designer-profile?id={{$designer->id}}"  type="button" class="btn btn-primary" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</a></p>
              </div>
           </div>
        </div>

@@ -37,8 +37,8 @@ class DesignController extends Controller
      */
     public function index()
     {
-       // $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
-       $designs = Collection::with(['designer', 'collectionImages'])->get();
+        $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
+       //$designs = Collection::with(['designer', 'collectionImages'])->get();
 
        $grouped = $designs->groupBy('room_style');
 //       $designers = Designer::where('status','approved')->get();
