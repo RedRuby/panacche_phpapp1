@@ -80,7 +80,7 @@
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button"
-                            class="btn btn-primary cancelBtn float-none float-sm-left float-md-right mr-0 mr-sm-3 pr-3 mb-3" id="add-remark-btn" data="{{ $design->id }}">Remarks
+                            class="btn btn-primary cancelBtn float-none float-sm-left float-md-right mr-0 mr-sm-3 pr-3 mb-3" id="add-remark-btn" data="{{ $design->id }}">Comments
                             for the Designer
                             <i class="fas fa-flag ml-2"></i>
                         </button>
