@@ -63,15 +63,13 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
 
-        <div class="logo col-12 float-left mb-4 px-3 mt-4"><img
-                src="https://cdn.shopify.com/s/files/1/0529/0255/9930/t/3/assets/panacche_logo.png?v=14350055876468133888">
-        </div>
 
-        <div class="col-12 px-3 landingHeading float-left">
+
+        < class="col-12 px-3 landingHeading float-left">
             <h4 class="mb-4">
                 <span class="float-left mr-4">New Design Approval</span>
             </h4>
-        </div>
+        </>
         <div class="col-12 px-3 float-left">
             <h6 class="mb-4">
                 <span class="float-left mr-4 mt-3 mb-3"><strong>Design Name:</strong>
@@ -340,10 +338,7 @@
                                     <p>Retail Price</p>
                                     <p>$ {{ $product->product_price }}</p>
                                 </div>
-                                <div class="col-6 px-0 float-left colorVariants">
-                                    <p>Price</p>
-                                    <p>$ {{ $product->product_price }}</p>
-                                </div>
+
                             </div>
                             <div class="col-md-4 float-left">
                                 <p>Product Image</p>
