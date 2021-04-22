@@ -27,7 +27,7 @@
                 <p class="mb-0 px-3">
                    <span class="">{{ $designer->quote }}</span>
                 </p>
-            <p class="mb-0 my-3"><a href="{{env('Shop_URL')}}/pages/view-our-designer-profile?id={{$designer->id}}"  type="button" class="btn btn-primary" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</a></p>
+            <p class="mb-0 my-3"><a href="/pages/view-our-designer-profile?id={{$designer->id}}"  type="button" class="btn btn-primary" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</a></p>
              </div>
           </div>
        </div>
