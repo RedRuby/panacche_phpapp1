@@ -148,11 +148,11 @@ class DesignController extends Controller
 
             $customer = Designer::find($request->customer_id);
             if (!($customer->status)) {
-                return response()->json(['status' => 500, 'errors' => ["designer" => "Account not found"]])->setStatusCode(422);
+                return response()->json(['status' => 400, 'errors' => ["designer" => "Account not found"]])->setStatusCode(400);
             }
 
             if ($customer->status == 'pending' || $customer->status == 'disabled') {
-                return response()->json(['status' => 500, 'errors' => ["designer" => "AYour account is not approved yet to create design, contact Admin!"]])->setStatusCode(422);
+                return response()->json(['status' => 500, 'message' => "Your account is not approved yet to create design, contact Admin!"])->setStatusCode(500);
             }
 
 

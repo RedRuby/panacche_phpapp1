@@ -70,9 +70,9 @@ class DesignerController extends Controller
 
         //return $inprogressDesigns;
         $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
-        $publishedDesigns = Collection::where('published', false)->where('status', 'approved')->count();
-        $underReviewDesigns = Collection::where('published', false)->where('status', 'submitted')->count();
-        $reassignedDesigns = Collection::where('status', 'reassign')->count();
+        $publishedDesigns = Collection::where('designer_id', $id)->where('published', false)->where('status', 'approved')->count();
+        $underReviewDesigns = Collection::where('designer_id', $id)->where('published', false)->where('status', 'submitted')->count();
+        $reassignedDesigns = Collection::where('designer_id', $id)->where('status', 'reassign')->count();
         $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->where('status', 'approved')->get();
 
         $designer = Designer::find($id);
@@ -135,7 +135,7 @@ class DesignerController extends Controller
             $resume = $request->file('resume');
             $portfolio = $request->file('portfolio');
             $status = 'pending';
-            $success_message = "Designer Account Created successfully";
+            $success_message = "Designer Account Created successfully and activation email sent to email box";
             $emailTemplate = "emails.designerAccount";
             $emailSubject = "Designer Account Created successfully!";
             $role = "designer";
@@ -292,22 +292,22 @@ class DesignerController extends Controller
         }
     }
 
-    public function inProgress(){
-        $designs  = Collection::where('status', 'disabled')->with('collectionImages')->get();
+    public function inProgress($id){
+        $designs  = Collection::where('designer_id', $id)->where('status', 'disabled')->with('collectionImages')->get();
         $designCards = view('designer.inprogress')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Inprogress designs loaded successfully'])->setStatusCode(200);
     }
 
-    public function draft(){
-        $designs  = Collection::where('status', 'draft')->get();
+    public function draft($id){
+        $designs  = Collection::where('designer_id', $id)->where('status', 'draft')->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);
     }
 
-    public function reassign(){
-        $designs  = Collection::where('status', 'reassign')->get();
+    public function reassign($id){
+        $designs  = Collection::where('designer_id', $id)->where('status', 'reassign')->get();
         $designCards = view('designer.reassign')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Reassign designs loaded successfully'])->setStatusCode(200);
@@ -315,22 +315,22 @@ class DesignerController extends Controller
 
 
 
-    public function published(){
-        $designs  = Collection::where('status', 'approved')->get();
+    public function published($id){
+        $designs  = Collection::where('designer_id', $id)->where('status', 'approved')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'published designs loaded successfully'])->setStatusCode(200);
     }
 
-    public function under_review(){
-        $designs  = Collection::where('status', 'submitted')->get();
+    public function under_review($id){
+        $designs  = Collection::where('designer_id', $id)->where('status', 'submitted')->get();
         $designCards = view('designer.under_review')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designs under review loaded successfully'])->setStatusCode(200);
     }
 
-    public function allDesigns(){
-        $designs  = Collection::all();
+    public function allDesigns($id){
+        $designs  = Collection::where('designer_id', $id)->get();
         $designCards = view('designer.allDesigns')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
