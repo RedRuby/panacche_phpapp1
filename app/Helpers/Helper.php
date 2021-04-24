@@ -7,9 +7,11 @@ use Spatie\Activitylog\Models\Activity;
 class Helper {
     public static function sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle){
 
-        try{
 
-        $mail = Mail::send(['text'=>$template], $data, function($message) use ($subject, $toEmail, $emailTitle, $fromEmail, $fromName) {
+        try{
+            Log::info("my data" . json_encode($data));
+
+        $mail = Mail::send(['text'=>$template], $data , function($message) use ($subject, $toEmail, $emailTitle, $fromEmail, $fromName) {
                 $message->to($toEmail, $emailTitle)->subject($subject);
                 $message->from($fromEmail,$fromName);
              });
