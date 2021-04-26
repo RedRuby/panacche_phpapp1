@@ -36,7 +36,17 @@
             <div class="card-title mb-0 text-left col px-0">
                 <p class="mb-0 pt-3 ">Sale</p>
             </div>
-            <div class="text-center col px-0">{{ $newSalesCount }}</div>
+            <div class="text-center col px-0">
+                @php
+                $saleCount =0 ;
+                 @endphp
+                @foreach ($totalSales as $sale )
+                   @php
+                       $saleCount = $saleCount + $sale->amount ;
+                   @endphp
+                @endforeach
+                {{ $saleCount }}
+            </div>
         </div>
     </a>
 </div>

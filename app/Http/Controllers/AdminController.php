@@ -29,18 +29,18 @@ class AdminController extends Controller
         $newDesignersCount = Designer::where('status', 'pending')->count();
         $newDesignsCount = Collection::where('status', 'submitted')->count();
         $newOrdersCount = Order::count();
-        $newSalesCount = Order::count();
+        $totalSales = Order::all();
 
         $designs = Collection::count();
         $designers = Designer::count();
         $customers = Customer::count();
         $orders = Order::count();
 
-        $sale = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->count();
+        $sales = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->get();
        $discount = Discount::first();
 
         //return $designs;
-        $statistics = view('admin.dashboardStatistics')->with("newDesignersCount", $newDesignersCount)->with("newDesignsCount", $newDesignsCount)->with("newOrdersCount", $newOrdersCount)->with("newSalesCount",$newSalesCount)
+        $statistics = view('admin.dashboardStatistics')->with("newDesignersCount", $newDesignersCount)->with("newDesignsCount", $newDesignsCount)->with("newOrdersCount", $newOrdersCount)->with("totalSales",$totalSales)
         ->render();
 
         $totalFigures = view('admin.totalFigures')->with("designs",$designs)
@@ -49,7 +49,7 @@ class AdminController extends Controller
         ->with("orders",$orders)
         ->render();
 
-        $todaySale = view('admin.todaySale')->with("sale",$sale)
+        $todaySale = view('admin.todaySale')->with("sales",$sales)
         ->with("discount", $discount)->render();
 
 

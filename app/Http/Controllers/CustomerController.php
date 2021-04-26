@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Http;
 use Spatie\Activitylog\Models\Activity;
 use App\Http\Requests\CustomerStoreRequest;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
+use App\Http\Requests\VerifyContactRequest;
 
 class CustomerController extends Controller
 {
@@ -222,11 +223,9 @@ class CustomerController extends Controller
         Log::info("customer" . json_encode($customer));
     }
 
-    public function verifyPhone(Request $request)
+    public function verifyPhone(VerifyContactRequest $request)
     {
-        $this->validate($request, [
-            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
-        ]);
+
 
         $customer = Customer::where('phone', $request->phone)->get();
         if ($customer->isEmpty()) {

@@ -92,33 +92,6 @@ class DesignerController extends Controller
     {
         Log::info("in store method");
 
-/*
-        $validator = Validator::make($request->all(), [
-            'shop' => 'required',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|unique:customers',
-            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
-            'password' => 'required|string',
-            'confirm_password' => 'required|same:password',
-            'website_url' => 'url',
-            'resume' => 'required',
-            'portfolio' => 'required'
-        ]);
-
-
-        //$validator = Validator::make($request->all(), $rules);
-
-        // Validate the input and return correct response
-        if ($validator->fails()) {
-            return response()->json(array(
-                'success' => false,
-                'errors' => $validator->getMessageBag()
-            ), 422);
-        }
-*/
-
-
         $shop = User::where('name', $request->shop)->first();
         $options = new Options();
         $options->setVersion('2021-01');
