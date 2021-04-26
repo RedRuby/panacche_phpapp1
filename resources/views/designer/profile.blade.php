@@ -9,7 +9,7 @@
         <div class="col-md-4 px-0 float-left">
             <div class="col-12 newDesignerProfile">
                 @if($designer->display_picture == '')
-                <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/defaultUserImg.png') }})"></p>
+                <p class="mx-auto" style="background-image: url({{  asset('default/user.png') }})"></p>
                 @else
                 <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/display_picture/'.$designer->display_picture) }})"></p>
                 @endif
@@ -59,7 +59,7 @@
         <div class="col-md-6 float-left">
             <div class="form-group">
                 <label for=""><span class="mandetory">*</span> Email- Id <em>(This will be your UserID)</em> </label>
-                <p class="submitedText px-2 py-2 font14">{{ $designer->email }}/p>
+                <p class="submitedText px-2 py-2 font14">{{ $designer->email }}</p>
             </div>
             <div class="form-group">
                 <label for="">Business Name </label>
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label for="">Website URL <em>(Example: https://www.mywebsite.com)</em> </label>
-                <p class="submitedText px-2 py-2 font14">https://www.laurabenettedesigns.com</p>
+                <p class="submitedText px-2 py-2 font14">{{ $designer->website_url }}</p>
             </div>
         </div>
         <div class="col-md-6 float-left">
@@ -83,6 +83,10 @@
     </div>
 
     <div class="col-12 mb-4">
+
+
+        @if($designer->status == 'pending')
+
         <a href="#">
             <button type="button" class="btn btn-primary rejectBtn float-right" id="reject-profile-btn" data="{{ $designer->id }}">
                 <i class="fas fa-times-circle mr-1"></i>
@@ -95,6 +99,15 @@
                 Approve
             </button>
         </a>
+        @else
+
+        <a href="#">
+            <button type="button" class="btn btn-primary rejectBtn float-right" id="remove-profile-btn" data="{{ $designer->id }}">
+                <i class="fas fa-times-circle mr-1"></i>
+                Remove This Designer</button>
+        </a>
+        @endif
+
     </div>
 
 </div>

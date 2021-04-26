@@ -21,7 +21,7 @@
     </a>
 </div>
 <div class="col-xl-6 col-md-6 col-sm-6 col-xs-6 card mb-4">
-    <a href="{{ env('Shop_URL') }}/pages/discount">
+    <a href="{{ env('Shop_URL') }}/pages/update-discount">
         <div class="card-body d-flex">
             <div class="card-title todaysSaleHead mb-0 text-left col px-0 pt-2">
                 <p class="mb-0">Panacche Vendor Discount</p>

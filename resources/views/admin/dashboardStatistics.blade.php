@@ -21,7 +21,7 @@
     </a>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-12 card text-center mx-0 mb-4">
-    <a href="#">
+    <a href="{{ env('Shop_URL')}}/pages/new-arrival-pending">
         <div class="card-body d-flex">
             <div class="card-title mb-0 text-left col px-0">
                 <p class="mb-0 pt-xl-2 pt-md-3 pt-sm-3 pt-3">New Orders</p>
@@ -31,7 +31,7 @@
     </a>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-12 card text-center mx-0 mb-4">
-    <a href="#">
+    <a href="{{ env('Shop_URL')}}/pages/new-arrival-pending">
         <div class="card-body d-flex">
             <div class="card-title mb-0 text-left col px-0">
                 <p class="mb-0 pt-3 ">Sale</p>

@@ -54,7 +54,7 @@
                          <div class="card pb-3">
                              <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
                                 @if($designer->display_picture == '')
-                                    <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
+                                    <img src="{{ asset('default/user.png') }}" class="card-img cover-photo" alt="Cover">
                                 @else
                                 <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
                                 @endif
@@ -81,7 +81,7 @@
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                          <div class="card">
                             @if($design->collectionImages()->count() == 0)
-                            <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
+                            <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                             @else
                             <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
@@ -207,7 +207,7 @@
                           <div class="card pb-3">
                               <p class="designerProf rounded-circle mt-4 mx-auto mb-0">
                                  @if($designer->display_picture == '')
-                                     <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
+                                     <img src="{{ asset('default/user.png') }}" class="card-img cover-photo" alt="Cover">
                                  @else
                                  <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
                                  @endif
@@ -255,7 +255,7 @@
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                                 <div class="card">
                                    @if($design->collectionImages()->count() == 0)
-                                   <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
+                                   <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                                    @else
                                    <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
