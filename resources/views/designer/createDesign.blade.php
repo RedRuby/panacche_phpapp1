@@ -184,12 +184,12 @@
                             </div>-->
                             <div class="form-group col-6 float-left px-0">
                                 <label for="">Design Price</label>
-                                <input type="text" class="form-control" placeholder="$" name="design_price" id="design_price" onkeyup="verifyInputs()" value="{{ $design->design_price }}">
+                                <input type="number" class="form-control" placeholder="$" name="design_price" id="design_price" onkeyup="verifyInputs()" value="{{ $design->design_price }}">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group col-6 float-left pr-0">
                                 <label for="">Room Budget</label>
-                                <input type="text" class="form-control" placeholder="$" name="room_budget" id="room_budget" onkeyup="verifyInputs()" value="{{ $design->room_budget }}">
+                                <input type="number" class="form-control" placeholder="$" name="room_budget" id="room_budget" onkeyup="verifyInputs()" value="{{ $design->room_budget }}">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
@@ -244,11 +244,11 @@
                             <div class="form-group col-5 float-left px-0 mb-0">
                                 <p class="italicLabel">Width</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Feet" name="width_in_feet" id="width_in_feet" value="{{ $design->room_width_in_feet }}">
+                                    <input type="number" class="form-control" placeholder="Feet" name="width_in_feet" id="width_in_feet" value="{{ $design->room_width_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Inches" name="width_in_inches" id="width_in_inches" value="{{ $design->room_width_in_inches }}">
+                                    <input type="number" class="form-control" placeholder="Inches" name="width_in_inches" id="width_in_inches" value="{{ $design->room_width_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -258,11 +258,11 @@
                             <div class="form-group col-6 float-left pr-0 mb-0">
                                 <p class="italicLabel">Height</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Feet" name="height_in_feet" id="height_in_feet" value="{{ $design->room_height_in_feet }}">
+                                    <input type="number" class="form-control" placeholder="Feet" name="height_in_feet" id="height_in_feet" value="{{ $design->room_height_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="text" class="form-control" placeholder="Inches" name="height_in_inches" id="height_in_inches" value="{{ $design->room_height_in_inches }}">
+                                    <input type="number" class="form-control" placeholder="Inches" name="height_in_inches" id="height_in_inches" value="{{ $design->room_height_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -375,7 +375,7 @@
 
                 <label for="" class="col-12 px-0 float-left">Paint Pallette</label>
                 <div class="dragandDropWrap col-md-12 col-xs-12 float-left px-3">
-                    <table class="table colorPaintTable" id="colorPaintTable">
+                    <table class="table colorPaintTable">
                         <thead>
                             <tr>
                                 <th scope="col">Color</th>
@@ -410,6 +410,44 @@
                                 <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
                             </tr>
                             @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dragandDropWrap col-md-12 col-xs-12 float-left px-3">
+                    <table class="table colorPaintTable" id="colorPaintTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Color</th>
+                                <th scope="col">Color Name</th>
+                                <th scope="col">Brand</th>
+                                <th scope="col">Finish</th>
+                                <th scope="col">Application</th>
+                                <th scope="col">Add/Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="col-12 float-left px-0">
+                                        <p class="custom-file addColor addColorImg">
+                                            <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
+                                            <input type="file" class="custom-file-input color_img_0" name="color_img[0]" id="color_img.0">
+                                            <span class="validation_error"></span>
+                                            <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control color_name_0" placeholder="" name="color_name[0]" id="color_name.0"><span class="validation_error"></span></td>
+
+                                <td><input type="text" class="form-control brand_0" placeholder="" name="brand[0]" id="brand_name.0"><span class="validation_error"></span></td>
+
+                                <td><input type="text" class="form-control finish_0" placeholder="" name="finish[0]" id="finish.0"><span class="validation_error"></span></td>
+
+                                <td><input type="text" class="form-control application_0" placeholder="" name="application[0]" id="application.0"><span class="validation_error"></span></td>
+
+                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -468,7 +506,7 @@
                     </div>
                 </div>
                 <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
-                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}">Download a Blank Sample Template CSV file for Bulk upload</a>
+                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}" target="_blank">Download a Blank Sample Template CSV file for Bulk upload</a>
                 </div>
             </div>
 
@@ -481,13 +519,14 @@
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
                                 <label for="">Merchandise</label>
-                                <input type="text" class="form-control" placeholder="" name="merchandise" id="merchandise">
+                                <input type="text" class="form-control" placeholder="" name="merchandise">
                                 <span class="validation_error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="">Vendor</label>
                                 <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                <span class="validation_error"></span>
                                 <datalist class="vendor-datalist" id="vendor-datalist"></datalist>
                                 <button type="button" class="btn btn-secondary mr-3 w-100" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
                             </div>
@@ -495,24 +534,24 @@
 
                             <div class="form-group">
                                 <label for="">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="quantity" step="3">
+                                <input type="number" class="form-control" name="quantity"  step="3">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
                                 <label for="">Specification</label>
-                                <input type="text" class="form-control" placeholder="" name="size_specification" id="size_specification">
+                                <input type="text" class="form-control" placeholder="" name="size_specification">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group">
                                 <label for="">URL</label>
-                                <input type="text" class="form-control" placeholder="" name="product_url" id="product_url">
+                                <input type="text" class="form-control" placeholder="" name="product_url" >
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group">
                                 <label for="">Retail Price</label>
-                                <input type="text" class="form-control" placeholder="&#36;" name="product_price" id="product_price">
+                                <input type="number" class="form-control" placeholder="&#36;" name="product_price" >
                                 <span class="validation_error"></span>
                             </div>
                         </div>
@@ -566,7 +605,7 @@
                         <div class="col-md-4 float-left">
                             <p>Merchandise</p>
                             <p>{{ $product->title }} </p>
-                            <p>Description (Sourcing / Vendor)</p>
+                            <p>Sourcing / Vendor</p>
                             <p>{{ $product->vendor->vendor_name }}</p>
 
                             <div class="col-6 px-0 float-left colorVariants">
@@ -615,13 +654,14 @@
                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                                 <div class="form-group">
                                     <label for="">Merchandise</label>
-                                    <input type="text" class="form-control" placeholder="" name="merchandise" id="merchandise" value="{{ $product->title }}">
+                                    <input type="text" class="form-control" placeholder="" name="merchandise" value="{{ $product->title }}">
                                     <span class="validation_error"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Vendor</label>
                                     <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                    <span class="validation_error"></span>
                                     <datalist id="vendor-datalist">
                                         @foreach ($vendors as $vendor)
                                             <option data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}" @if($product->vendor->id == $vendor->id) selected @endif></option>
@@ -634,24 +674,24 @@
 
                                 <div class="form-group">
                                     <label for="">Quantity</label>
-                                    <input type="number" class="form-control" name="quantity" id="quantity" step="3" value="{{ $product->product_quantity }}">
+                                    <input type="number" class="form-control" name="quantity"  step="3" value="{{ $product->product_quantity }}">
                                     <span class="validation_error"></span>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                                 <div class="form-group">
                                     <label for="">Specification</label>
-                                    <input type="text" class="form-control" placeholder="" name="size_specification" id="size_specification" value="{{ $product->size_specification }}">
+                                    <input type="text" class="form-control" placeholder="" name="size_specification" value="{{ $product->size_specification }}">
                                     <span class="validation_error"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">URL</label>
-                                    <input type="text" class="form-control" placeholder="" name="product_url" id="product_url" value="{{ $product->product_url }}">
+                                    <input type="text" class="form-control" placeholder="" name="product_url" value="{{ $product->product_url }}">
                                     <span class="validation_error"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Retail Price</label>
-                                    <input type="text" class="form-control" placeholder="$" name="compare_at_price" id="compare_at_price" value="{{ $product->product_compare_at_price }}">
+                                    <input type="text" class="form-control" placeholder="$" name="product_price" value="{{ $product->product_price }}">
                                     <span class="validation_error"></span>
                                 </div>
                             </div>
@@ -670,13 +710,7 @@
                                         </div>
                                         <div class="row uploadedImage px-0" id="uploadProductImages">
                                         </div>
-
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="mt-3" for="">Price</label>
-                                    <input type="text" class="form-control" placeholder="$" name="product_price" id="product_price" value="{{ $product->product_price }}">
-                                    <span class="validation_error"></span>
                                 </div>
                             </div>
 

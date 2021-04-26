@@ -37,31 +37,6 @@ use Carbon\Carbon;
 
 class DesignerController extends Controller
 {
-    /*public function users($id)
-    {
-        // $customers = Customer::where('tag', 'role:designer')
-        //     ->where('status', 'pending')
-        //     ->get();
-
-        // return View::make("admin.newDesigners")->with("customers", $customers);
-    }*/
-
-   /* public function designs($id)
-    {
-        $designs = Collection::where('customer_id', $id)->with('customer')->with('collectionImages')->get();
-        //return $designs;
-        $data = ['abc', "xyz", "lmn"];
-        $template = "emails.mail";
-        $subject = "just for testing";
-        $fromEmail = "panacchebeta@gmail.com";
-        $fromName = "Panacche Team";
-        $toEmail = "nileshbari.8085@gmail.com";
-        $emailTitle = "Account Creation";
-
-        Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
-
-        return View::make("designer.mydesigns")->with("designs", $designs);
-    }*/
 
     public function dashboard($id)
     {
@@ -80,12 +55,8 @@ class DesignerController extends Controller
         $dataCards = view('designer.dashboardStatistics')->with('inprogressDesigns', $inprogressDesigns)->with("draftDesigns", $draftDesigns)->with("publishedDesigns", $publishedDesigns)->with("underReviewDesigns", $underReviewDesigns)->with('reassignedDesigns',$reassignedDesigns)->render();
 
         $designCards = view('designer.mydesigns')->with('designs', $designs)->render();
-        //$orderRows = view('designer.mymyorders')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["dataCards"=>$dataCards, "designCards"=>$designCards, "designer"=>$designer], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
-
-
-        //return View::make("designer.dashboardStatistics")->with('inprogressDesigns', $inprogressDesigns)->with("draftDesigns", $draftDesigns)->with("publishedDesigns", $publishedDesigns)->with("underReviewDesigns", $underReviewDesigns);
     }
 
     public function store(DesignerStoreRequest $request)
@@ -311,7 +282,6 @@ class DesignerController extends Controller
 
     public function createDesign($id){
         $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
-        //return $design->products;
         $vendors = Vendor::all();
 
         $design = view('designer.createDesign')->with('design', $design)->with('vendors', $vendors)->render();
@@ -372,16 +342,6 @@ class DesignerController extends Controller
                           //"sku": "123"
                         ],
                     ],
-                    // "presentment_prices" => [
-                    //     [
-                    //         "price" => [
-                    //             "currency_code" => "USD",
-                    //             "amount" => $request->product_price
-                    //         ],
-                    //         "compare_at_price" => $request->compare_at_price
-                    //     ]
-                    // ],
-                  //  "images" => $productImagesArr
                 ]
             ];
 
@@ -390,7 +350,6 @@ class DesignerController extends Controller
             if (isset($result['product'])) {
 
                 $product = Product::where('id', $request->product_id)->update([
-                   // 'id' => $result['product']['id'],
                     'vendor_id' => $request->vendor_id,
                     'collection_id' => $collection->id,
                     'title' => $request->merchandise,
@@ -400,7 +359,6 @@ class DesignerController extends Controller
                     'product_price' => $request->product_price,
                     'product_compare_at_price' => $request->compare_at_price,
                     'product_quantity' => $request->quantity,
-                    //'status' => "draft"
                 ]);
 
                 ProductImages::where('product_id', $request->product_id)->delete();
@@ -602,15 +560,6 @@ class DesignerController extends Controller
                                       //"sku": "123"
                                     ],
                                 ],
-                                // "presentment_prices" => [
-                                //     [
-                                //         "price" => [
-                                //             "currency_code" => "USD",
-                                //             "amount" => $request->design_price
-                                //         ],
-                                //     ]
-                                // ],
-                                // "images" => $productImagesArr
                             ]
                         ];
 

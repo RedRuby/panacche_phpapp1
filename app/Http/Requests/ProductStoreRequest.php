@@ -32,7 +32,7 @@ class ProductStoreRequest extends FormRequest
             'product_url' => array("required","regex:".$regex),
             'product_price' => 'required|numeric',
             'quantity' => 'required',
-            'vendor_id' => 'nullable|integer',
+            'vendor_id' => 'required|integer',
            // 'compare_at_price' => 'required|numeric'
         ];
     }
@@ -49,7 +49,7 @@ class ProductStoreRequest extends FormRequest
             'product_price.required' => "Product price field is required!",
             'product_price.numeric' => "Product price field is not valid!",
             'quantity' => 'Quantity field is required!',
-            'vendor_id.nullable' => 'Vendor field is required!',
+            'vendor_id.required' => 'Vendor field is required!',
             'vendor_id.integer' => 'Vendor field is required!',
             // 'compare_at_price.required' => "Sale price field is required!",
             // 'compare_at_price.numeric' => "Sale price field is not valid!",

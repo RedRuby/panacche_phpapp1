@@ -34,7 +34,15 @@ class CollectionStoreRequest extends FormRequest
             'width_in_feet' => 'required|numeric|min:1|not_in:0',
             'width_in_inches' => 'required|numeric|min:1|not_in:0',
             'height_in_feet' => 'required|numeric|min:1|not_in:0',
-            'height_in_inches' => 'required|numeric|min:1|not_in:0'
+            'height_in_inches' => 'required|numeric|min:1|not_in:0',
+            'collection_images.*' => 'required',
+            'blue_print_images.*' => 'required',
+            'color_img.*' => 'required',
+            'color_name.*' => 'required',
+            'brand.*' => 'required',
+            'finish.*' => 'required',
+            'application.*' => 'required',
+
         ];
     }
 
@@ -68,6 +76,11 @@ class CollectionStoreRequest extends FormRequest
             'height_in_inches.numeric' => 'Height in inches is not valid!',
             'height_in_inches.min' => 'Height in inches is not valid!',
             'height_in_inches.not_in' => 'Height in inches is not valid!',
+            'color_img.*' => 'Color image is required!',
+            'color_name.*' => 'Color name field is required!',
+            'brand.*' => 'Brand field is  required!',
+            'finish.*' => 'Finish field is required!',
+            'application.*' => 'Application field is required!',
         ];
     }
 }

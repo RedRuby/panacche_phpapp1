@@ -6,7 +6,7 @@
         <div class="col-md-4 float-left">
             <p>Merchandise</p>
             <p>{{ $product->title }} </p>
-            <p>Description (Sourcing / Vendor)</p>
+            <p>Sourcing / Vendor</p>
             <p>{{ $product->vendor->vendor_name }}</p>
 
             <div class="col-6 px-0 float-left colorVariants">
@@ -54,7 +54,7 @@
             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                 <div class="form-group">
                     <label for="">Merchandise</label>
-                    <input type="text" class="form-control" placeholder="" name="merchandise" id="merchandise" value="{{ $product->title }}">
+                    <input type="text" class="form-control" placeholder="" name="merchandise" value="{{ $product->title }}">
                     <span class="validation_error"></span>
                 </div>
 
@@ -69,24 +69,24 @@
 
                 <div class="form-group">
                     <label for="">Quantity</label>
-                    <input type="number" class="form-control" name="quantity" id="quantity" step="3" value="{{ $product->product_quantity }}">
+                    <input type="number" class="form-control" name="quantity" step="3" value="{{ $product->product_quantity }}">
                     <span class="validation_error"></span>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                 <div class="form-group">
                     <label for="">Specification</label>
-                    <input type="text" class="form-control" placeholder="" name="size_specification" id="size_specification" value="{{ $product->size_specification }}">
+                    <input type="text" class="form-control" placeholder="" name="size_specification" value="{{ $product->size_specification }}">
                     <span class="validation_error"></span>
                 </div>
                 <div class="form-group">
                     <label for="">URL</label>
-                    <input type="text" class="form-control" placeholder="" name="product_url" id="product_url" value="{{ $product->product_url }}">
+                    <input type="text" class="form-control" placeholder="" name="product_url" value="{{ $product->product_url }}">
                     <span class="validation_error"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Retail Price</label>
-                    <input type="text" class="form-control" placeholder="$" name="compare_at_price" id="compare_at_price" value="{{ $product->product_compare_at_price }}">
+                    <input type="number" class="form-control" placeholder="$" name="product_price" value="{{ $product->product_price }}">
                     <span class="validation_error"></span>
                 </div>
             </div>
@@ -108,11 +108,7 @@
 
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="mt-3" for="">Price</label>
-                    <input type="text" class="form-control" placeholder="$" name="product_price" id="product_price" value="{{ $product->product_price }}">
-                    <span class="validation_error"></span>
-                </div>
+
             </div>
 
             <p class="text-right"><button type="submit" class="btn btn-primary loginBtn update-product-btn" data="{{ $product->id }}">Update</button></p>
