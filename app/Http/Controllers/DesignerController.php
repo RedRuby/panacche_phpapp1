@@ -188,6 +188,7 @@ class DesignerController extends Controller
                     'quote' => $request->quote,
                     'business_name' => $request->business_name,
                     'business_address' => $request->business_address,
+                    'website_url' => $request->website_url
                 ]);
 
                 $temp = $designer;
