@@ -284,15 +284,15 @@
                     </nav>
                     <div class="tab-content pb-2 px-3" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="dragDropBox py-2">
-                                <div class="col-12 float-left px-0">
-                                    <p class="custom-file mt-3 mb-3">
+                            <div class="dragDropBox pb-2">
+                                <div class="col-12 float-left p-2">
+                                    <p class="custom-file p-2">
                                         <input type="file" class="custom-file-input" name="collection_images[]" id="collection_images" multiple="multiple" accept="image/x-png,image/gif,image/jpeg">
                                         <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         <span class="validation_error"></span>
                                     </p>
                                 </div>
-                                <p class="text-center mb-2">Upload / drop files here <span>Browse Files</span></p>
+                                <p class="text-center mb-2">Upload / drop files here <span class="collection_img_browse">Browse Files</span></p>
                             </div>
                             <div class="uploadedImages py-2 mt-2 overflow-hidden">
                                 <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
@@ -324,15 +324,15 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <div class="dragDropBox py-2">
-                                <div class="col-12 float-left px-0">
-                                    <p class="custom-file mt-3 mb-3">
+                            <div class="dragDropBox pb-2">
+                                <div class="col-12 float-left p-2">
+                                    <p class="custom-file p-2">
                                         <input type="file" class="custom-file-input" name="collection_blue_prints[]" id="collection_blue_prints" accept="image/x-png,image/gif,image/jpeg" value="">
                                         <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         <span class="validation_error"></span>
                                     </p>
                                 </div>
-                                <p class="text-center mb-2">Upload / drop files here <span>Browse Files</span></p>
+                                <p class="text-center mb-2">Upload / drop files here <span class="blueprint_img_browse">Browse Files</span></p>
                             </div>
                             <div class="uploadedImages py-2 mt-2 overflow-hidden">
 
