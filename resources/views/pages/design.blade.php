@@ -1,52 +1,53 @@
  <!--<div class="signUpPopWrap px-4 pb-3 pt-2 position-fixed"><a href="#">Sign in</a> / <a href="#">Sign up</a></div>-->
  <div class="row align-items-center h-100 mt-5">
     @if($customer)
+
     <div class="leftSideNav h-100 position-fixed">
         <ul class="drawer-menu px-3 pb-5 mb-5 text-center" id="dasboardMenu" data-children=".drawer-submenu">
             <li class="drawer-menu-item mt-4">
-                <a href="{{ shop.url }}/account/">
+                <a href="{{ env('shop.url') }}/account/">
                     <i class="fas fa-th" data-toggle="tooltip" data-placement="right" title="Dashboard"></i>
                     <!--<span class="drawer-menu-text">Dashboard</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}">
+                <a href="{{ env('shop.url') }}">
                     <i class="fas fa-home" data-toggle="tooltip" data-placement="right" title="Home"></i>
                     <!--<span class="drawer-menu-text">Home</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/gallery">
+                <a href="{{ env('shop.url') }}/pages/gallery">
                     <i class="fas fa-images" data-toggle="tooltip" data-placement="right" title="Gallery"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/our-designers">
+                <a href="{{ env('shop.url') }}/pages/our-designers">
                     <i class="fas fa-drafting-compass" data-toggle="tooltip" data-placement="right" title="Our Designers"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/blog">
+                <a href="{{ env('shop.url') }}/pages/blog">
                     <i class="fab fa-blogger-b" data-toggle="tooltip" data-placement="right" title="Blogs"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/our-mission">
+                <a href="{{ env('shop.url') }}/pages/our-mission">
                     <i class="fas fa-crosshairs" data-toggle="tooltip" data-placement="right" title="Our Mission"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/contact-us">
+                <a href="{{ env('shop.url') }}/pages/contact-us">
                     <i class="fas fa-phone-alt" data-toggle="tooltip" data-placement="right" title="Contact"></i>
                     <!--<span class="drawer-menu-text"></span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/faq">
+                <a href="{{ env('shop.url') }}/pages/faq">
                     <svg height="17pt" viewBox="0 -26 512 512" width="17pt" xmlns="http://www.w3.org/2000/svg" data-toggle="tooltip" data-placement="right" title="FAQ">
                         <path d="m377.429688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v73.246093c0 11.46875 9.332032 20.808594 20.800782 20.808594h20.808593v-94.054687c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0"/>
                         <path d="m256.179688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v41.628906h41.609375v-41.628906c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0"/>
@@ -62,13 +63,13 @@
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ shop.url }}/pages/settings">
+                <a href="{{ env('shop.url') }}/pages/settings">
                     <i class="fas fa-cog" data-toggle="tooltip" data-placement="right" title="Settings"></i>
                     <!--<span class="drawer-menu-text">Setting</span>-->
                 </a>
             </li>
             <li class="drawer-menu-item mt-3 mb-5 pb-5">
-                <a href="{{ shop.url }}/account/logout">
+                <a href="{{ env('shop.url') }}/account/logout">
                     <i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="right" title="Logout"></i>
                     <!--<span class="drawer-menu-text">Logout</span>-->
                 </a>
@@ -79,7 +80,7 @@
      @endif
     <div class="col-md-12 col-sm-12 col-xs-12 pl-5 mx-auto mt-4 pt-2">
         <div class="col-md-12 float-left backBtn">
-            <a href="#" class="float-left"><span><i class="fas fa-arrow-left"></i></span></a>
+            <a href="javascript&colon; history.go(-1)" class="float-left"><span><i class="fas fa-arrow-left"></i></span></a>
             <div class="float-right lastLogin">
                 <p class="mb-0">Your Last Login was</p>
                 <p class="mb-0">01/01/2021. 12:00 PM</p>
