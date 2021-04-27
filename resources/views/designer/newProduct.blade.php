@@ -35,7 +35,7 @@
             <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
             <div class="row uploadedImage px-0">
                 @foreach ($product->productImages as $key=>$productImage )
-                    <div class="col-4 float-left">
+                    <div class="col-12 float-left">
                         <p><img src="{{ asset('/uploads/collection/'.$collection->id.'/'.$product->productImages->first()->img_src) }}" class="img-fluid"></p>
                     </div>
                 @endforeach
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div class="col-12 addMearchForm py-3 px-0 update-product-section hide">
+    <div class="col-12 addMearchForm py-3 px-0 update-product-section float-left hide">
         <form class="mx-0 update-product-form">
             <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
             <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
@@ -63,7 +63,7 @@
                 <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->id }}">
                     <datalist id="vendor-datalist"></datalist>
 
-                    <button type="button" class="btn btn-secondary mr-3 w-100" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
+                    <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
                 </div>
 
 
@@ -111,8 +111,9 @@
 
             </div>
 
-            <p class="text-right"><button type="submit" class="btn btn-primary loginBtn update-product-btn" data="{{ $product->id }}">Update</button></p>
-            <p class="text-right"><button type="button" class="btn btn-default loginBtn cancel-product-btn">Cancel</button></p>
+            <p class="text-right px-3 pt-3 float-right">
+                <button type="submit" class="btn btn-primary loginBtn update-product-btn" data="{{ $product->id }}">Update</button>
+            <button type="button" class="btn btn-default loginBtn cancel-product-btn">Cancel</button></p>
 
         </form>
     </div>
