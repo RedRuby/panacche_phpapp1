@@ -390,7 +390,7 @@ class DesignerController extends Controller
                 Log::info('final product' . json_encode($product));
 
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
-                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Merchandise updated successfully'])->setStatusCode(200);
+                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your specifics have been altered successfully.'])->setStatusCode(200);
 
                 //return View::make('designer.newProduct')->with('product', $product);
 
@@ -661,7 +661,7 @@ class DesignerController extends Controller
                     }
                 }
 
-                return response()->json(['status' => 200, 'message' => "Room details updated successfully", "data" => $result])->setStatusCode(200);
+                return response()->json(['status' => 200, 'message' => "Your Particulars Have Been Modified Successfully.", "data" => $result])->setStatusCode(200);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }

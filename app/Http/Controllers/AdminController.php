@@ -124,7 +124,7 @@ class AdminController extends Controller
             $customer->status = "active";
             $customer->save();
 
-            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Designer profile has been approved successfully"]);
+            return response()->json(["status" => "success", "statusCode" => 200, "message" => "Profile Accepted! You can now create great designs."]);
         } catch (\Exception $e) {
             return response()->json(['status' => 422, 'errors' => $e->getMessage()])->setStatusCode(422);
         }

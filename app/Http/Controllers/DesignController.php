@@ -38,11 +38,11 @@ class DesignController extends Controller
     public function index()
     {
         $designs = Collection::with(['designer', 'collectionImages'])->where('status', 'approved')->get();
-       //$designs = Collection::with(['designer', 'collectionImages'])->get();
+        //$designs = Collection::with(['designer', 'collectionImages'])->get();
 
-       $grouped = $designs->groupBy('room_style');
-//       $designers = Designer::where('status','approved')->get();
-       $designers = Designer::all();
+        $grouped = $designs->groupBy('room_style');
+        //       $designers = Designer::where('status','approved')->get();
+        $designers = Designer::all();
 
 
 
@@ -50,7 +50,7 @@ class DesignController extends Controller
 
         $datalist = view('design.datalist')->with('designers', $designers)->render();
 
-        return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs, "datalist"=>$datalist], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
+        return response()->json(['status' => 200, 'success' => true, 'data' => ["designs" => $designs, "datalist" => $datalist], 'message' => 'Designs loaded successfully'])->setStatusCode(200);
     }
 
     public function viewAllByType($type)
@@ -72,12 +72,12 @@ class DesignController extends Controller
         Log::info('data ' . json_encode($request->all()));
 
 
-       $sort = 'asc';
+        $sort = 'asc';
         if ($request->Input("params.sorts")) {
             $sort = $request->Input("params.sorts");
         }
 
-        Log::info('request '. $request->max);
+        Log::info('request ' . $request->max);
 
         $designs = Collection::with(['designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages'])->whereHas('designer', function ($q) use ($request) {
             if ($request->Input("designer")) {
@@ -89,18 +89,18 @@ class DesignController extends Controller
             if ($request->Input("room_type")) {
                 $q->where('collections.room_type', $request->Input("room_type"));
             }
-            Log::info('request '. $request->max);
+            Log::info('request ' . $request->max);
             if ($request->Input("max")) {
                 $min = (int)$request->Input("min");
                 $max = (int)$request->Input("max");
-                $q->whereBetween('collections.room_budget', array($min,$max));
+                $q->whereBetween('collections.room_budget', array($min, $max));
             }
         })->orderBy('created_at', $sort)->get();
-            $grouped = $designs->groupBy('room_style');
+        $grouped = $designs->groupBy('room_style');
 
-            $designs = view('design.gallery')->with('designGroups', $grouped)->render();
+        $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
-            return response()->json(['status'=>200, 'success' => true, 'data'=>["designs"=>$designs], 'message'=>'Designs loaded successfully'])->setStatusCode(200);
+        return response()->json(['status' => 200, 'success' => true, 'data' => ["designs" => $designs], 'message' => 'Designs loaded successfully'])->setStatusCode(200);
     }
 
     public function ourDesigns(Request $request)
@@ -256,30 +256,30 @@ class DesignController extends Controller
 
 
 
-            $productData = [
-                "product" => [
-                    "title" => "Design Implementation Guide",
-                    "product_type" => '',
-                    "description" => $request->product_description,
-                    "published" => false,
-                    "product_type" => "design_implementation_guide",
-                    "tags" => [
-                        $collection->design_name,
-                        "design_implementation_guide"
-                    ],
-                    "variants"=> [
-                        [
-                          "option1"=> "Default Title",
-                          "price"=> $request->design_price,
-                          //"sku": "123"
+                $productData = [
+                    "product" => [
+                        "title" => "Design Implementation Guide",
+                        "product_type" => '',
+                        "description" => $request->product_description,
+                        "published" => false,
+                        "product_type" => "design_implementation_guide",
+                        "tags" => [
+                            $collection->design_name,
+                            "design_implementation_guide"
                         ],
-                    ],
-                ]
-            ];
+                        "variants" => [
+                            [
+                                "option1" => "Default Title",
+                                "price" => $request->design_price,
+                                //"sku": "123"
+                            ],
+                        ],
+                    ]
+                ];
 
-            $productResult = $api->rest('POST', '/admin/products.json', $productData)['body'];
+                $productResult = $api->rest('POST', '/admin/products.json', $productData)['body'];
 
-            if($productResult){
+                if ($productResult) {
                     DigitalProduct::create([
                         'id' => $productResult['product']['id'],
                         'collection_id' => $collection->id,
@@ -288,7 +288,7 @@ class DesignController extends Controller
                         'product_price' => $request->design_price,
                         'file_path' => $designGuideFileName
                     ]);
-            }
+                }
                 Log::info('collection ' . json_encode($collection));
 
 
@@ -298,7 +298,7 @@ class DesignController extends Controller
                         Log::info("single collection img");
                         $collectionImageFileName = $current_time . '_' . $collectionImage->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
+                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
                         $collectionImage->move($destinationPath, $collectionImageFileName);
 
                         CollectionImages::create([
@@ -315,7 +315,7 @@ class DesignController extends Controller
                         Log::info("single blue print img");
                         $name = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id. '/';
+                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
                         $collectionBluePrint->move($destinationPath, $name);
 
                         $collectionBluePrintFileName = $name;
@@ -333,7 +333,7 @@ class DesignController extends Controller
                     if ($request->hasfile('color_img')) {
                         foreach ($request->file('color_img') as $file) {
                             $name = $current_time . '_' . $file->getClientOriginalName();
-                            $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
+                            $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
                             $file->move($destinationPath, $name);
 
                             $imgFileName = $name;
@@ -411,27 +411,17 @@ class DesignController extends Controller
                     "inventory_quantity" => $request->quantity,
                     "tags" => [
                         $collection->design_name,
-                        $customer->first_name." ".$customer->last_name,
+                        $customer->first_name . " " . $customer->last_name,
                         $collection->room_type,
                         $collection->room_style,
                     ],
-                    "variants"=> [
+                    "variants" => [
                         [
-                          "option1"=> "Default Title",
-                          "price"=> $request->product_price,
-                          //"sku": "123"
+                            "option1" => "Default Title",
+                            "price" => $request->product_price,
+                            //"sku": "123"
                         ],
                     ],
-                    // "presentment_prices" => [
-                    //     [
-                    //         "price" => [
-                    //             "currency_code" => "USD",
-                    //             "amount" => $request->product_price
-                    //         ],
-                    //         "compare_at_price" => $request->compare_at_price
-                    //     ]
-                    // ],
-                    // "images" => $productImagesArr
                 ]
             ];
 
@@ -457,26 +447,16 @@ class DesignController extends Controller
 
                 Log::info("current_time" . json_encode($current_time));
 
-                /*$display_picture = $request->file('products_image');
-                if (!empty($display_picture)) {
-                    //Display File Name
-                    $imgFileName = $display_picture->getClientOriginalName();
-
-                    //Move Uploaded File
-                    $destinationPath = public_path() . '/uploads/user/display_picture';
-                    $display_picture->move($destinationPath, $display_picture->getClientOriginalName());
-                }*/
-
                 if ($request->hasfile('product_images')) {
                     Log::info("has file product_images");
                     foreach ($productImages as $productImage) {
                         Log::info("single product img");
                         $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/'.$collection->id. '/';
+                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
                         $productImage->move($destinationPath, $productImageFileName);
 
-                       ProductImages::create([
+                        ProductImages::create([
                             'product_id' => $product->id,
                             'img_src' => $productImageFileName,
                             'img_alt' => $productImageFileName,
@@ -484,18 +464,14 @@ class DesignController extends Controller
                     }
                 }
 
-                $products = Product::with('vendor','productImages')->where('collection_id', $collection->id)->get();
+                $products = Product::with('vendor', 'productImages')->where('collection_id', $collection->id)->get();
 
 
                 Log::info('final product' . json_encode($product));
 
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
 
-                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Merchandise added successfully'])->setStatusCode(201);
-
-                //return View::make('designer.newProduct')->with('product', $product);
-
-                // return response()->json(['statu' => 201, "data" => $result, "message" => "Merchandise added successfully"])->setStatusCode(201);
+                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
             }
@@ -633,7 +609,7 @@ class DesignController extends Controller
                 if ($productIds) {
                     $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
                     $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
-                    return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Merchandise bulk upload added successfully'])->setStatusCode(201);
+                    return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
                 } else {
                     return response()->json(['status' => 500, 'errors' => $result]);
                 }
@@ -735,7 +711,7 @@ class DesignController extends Controller
             $product->save();
         }
 
-        return response()->json(["status" => 200, "message" => "design submitted successfully"])->setStatusCode(200);
+        return response()->json(["status" => 200, "message" => "Your design will be submitted for approval."])->setStatusCode(200);
     }
 
     public function removeDesign($id, $designerId)
@@ -747,25 +723,23 @@ class DesignController extends Controller
         $options->setVersion('2021-01');
         $api = new BasicShopifyAPI($options);
         $api->setSession(new Session($shop->name, $shop->password));
-        $result = $api->rest('DELETE', '/admin/smart_collections/'.$id.'.json')['body'];
+        $result = $api->rest('DELETE', '/admin/smart_collections/' . $id . '.json')['body'];
         $productImages = ProductImages::where('product_id', $products->first()->id)->delete();
 
         //$productImages = ProductImages::where('product_id', $products->first()->id)->delete();
-        foreach($products as $product){
-            $result = $api->rest('DELETE', '/admin/products/'.$product->id.'.json')['body'];
+        foreach ($products as $product) {
+            $result = $api->rest('DELETE', '/admin/products/' . $product->id . '.json')['body'];
             $product->delete();
         }
 
-        if($collection){
+        if ($collection) {
             CollectionImages::where('collection_id', $id)->delete();
             CollectionBluePrints::where('collection_id', $id)->delete();
             CollectionColorPallettes::where('collection_id', $id)->delete();
             $collection->delete();
             return response()->json(["status" => 200, "message" => "design removed successfully"])->setStatusCode(200);
-
-        }else{
+        } else {
             return response()->json(["status" => 400, "message" => "design not found"])->setStatusCode(400);
         }
-
     }
 }
