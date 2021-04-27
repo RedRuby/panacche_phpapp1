@@ -550,7 +550,7 @@ class DesignerController extends Controller
                                 "published" => false,
                                 "product_type" => "design_implementation_guide",
                                 "tags" => [
-                                    $collection->design_name,
+                                    $request->design_name,
                                     "design_implementation_guide"
                                 ],
                                 "variants"=> [
