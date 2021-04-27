@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}">
+                <a href="/{{ env('shop.url') }}">
                     <i class="fas fa-home" data-toggle="tooltip" data-placement="right" title="Home"></i>
                     <!--<span class="drawer-menu-text">Home</span>-->
                 </a>
