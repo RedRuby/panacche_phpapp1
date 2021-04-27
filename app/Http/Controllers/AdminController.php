@@ -294,7 +294,11 @@ class AdminController extends Controller
     public function discount()
     {
         $discount = Discount::first();
-        return response()->json(['status'=>200, 'success' => true, "data"=>['discount'=>$discount->discount], 'message'=>'discount added successfully'])->setStatusCode(200);
+        $discountValue = 0;
+        if($discount){
+            $discountValue = $discount->discount;
+        }
+        return response()->json(['status'=>200, 'success' => true, "data"=>['discount'=>$discountValue], 'message'=>'discount added successfully'])->setStatusCode(200);
 
     }
 
