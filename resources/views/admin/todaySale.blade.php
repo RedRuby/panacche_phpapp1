@@ -27,7 +27,7 @@
                 <p class="mb-0">Panacche Vendor Discount</p>
                 <p class="mb-0"><em>Global Vendor Discount</em></p>
             </div>
-            <div class="text-right col px-0">{{ $discount->discount }} %</div>
+            <div class="text-right col px-0"> @if($discount){{ $discount->discount }}@endif %</div>
         </div>
     </a>
 </div>
