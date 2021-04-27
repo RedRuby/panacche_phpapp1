@@ -136,7 +136,7 @@ class DesignController extends Controller
             }
 
             if ($customer->status == 'pending' || $customer->status == 'disabled') {
-                return response()->json(['status' => 500, 'message' => "Your account is not approved yet to create design, contact Admin!"])->setStatusCode(500);
+                return response()->json(['status' => 500, 'message' => "Kindly wait until your application is under review."])->setStatusCode(500);
             }
 
 
@@ -382,7 +382,7 @@ class DesignController extends Controller
             }
 
             if ($customer->status == 'pending' || $customer->status == 'disabled') {
-                return response()->json(['status' => 500, 'errors' => ["designer" => "AYour account is not approved yet to create design, contact Admin!"]])->setStatusCode(422);
+                return response()->json(['status' => 500, 'errors' => ["designer" => "Kindly wait until your application is under review."]])->setStatusCode(422);
             }
 
             $collection = Collection::find($request->collection_id);
