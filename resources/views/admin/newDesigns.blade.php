@@ -5,12 +5,14 @@
 <a href="{{env('Shop_NAME')}}/design/details/{{ $design->id }}" id="view-design" data="{{ $design->id }}">
         <div class="col-sm-4">
             <div class="card">
+                <div class="card-img projectImg">
                 @if($design->collectionImages()->count() == 0)
                 <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                 @else
                 <img src="{{  asset('uploads/collection/images/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                 @endif
+                </div>
                 <div class="card-body p-3">
                     <div class="d-flex align-items-center mb-2">
                         @if($design->customer()->count() == 0)

@@ -94,6 +94,7 @@
                         @foreach ($designs as $design )
                         <div class="col-sm-4">
                             <div class="card">
+                                <div class="card-img projectImg">
                                 @if($design->collectionImages()->count() == 0)
 
                                 <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
@@ -101,6 +102,7 @@
                                 <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}">
 
                                 @endif
+                                </div>
                                 <div class="card-body p-3">
                                     <div class="d-flex align-items-center mb-2">
                                         <div class="author-img">

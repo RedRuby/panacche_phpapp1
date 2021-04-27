@@ -80,12 +80,13 @@
                         <a href="#" data="{{ $design->id }}" class="review-design">
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                          <div class="card">
+                            <div class="card-img projectImg">
                             @if($design->collectionImages()->count() == 0)
                             <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
-
                             @else
                             <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                             @endif
+                            </div>
                              <div class="card-body p-3">
                                  <div class="d-flex align-items-center mb-2">
                                      <div class="author-info">
@@ -254,12 +255,14 @@
                         <a href="#" data="{{ $design->id }}" class="review-design">
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                                 <div class="card">
+                                    <div class="card-img projectImg">
                                    @if($design->collectionImages()->count() == 0)
                                    <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
 
                                    @else
                                    <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                                    @endif
+                                    </div>
                                     <div class="card-body p-3">
                                         <div class="d-flex align-items-center mb-2">
                                             <div class="author-info">
@@ -305,7 +308,9 @@
                      <div class="row px-0 designCards">
                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                          <div class="card">
+                            <div class="card-img projectImg">
                              <img src="images/design1.jpg" class="card-img cover-photo" alt="Cover">
+                            </div>
                              <div class="card-body p-3">
                                  <div class="d-flex align-items-center mb-2">
                                      <div class="author-info">

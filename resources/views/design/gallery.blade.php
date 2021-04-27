@@ -16,11 +16,13 @@
 
                     <div class="col-lg-3 col-md-6 col-sm-6 mt-4 mt-md-0 mt-sm-0 mt-lg-0">
                         <div class="card">
+                            <div class="card-img projectImg">
                            @if($design->collectionImages()->count() == 0)
                            <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
                            @else
                            <img src="{{  asset('uploads/collection/'.$design->id. '/' .$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                            @endif
+                            </div>
 
                            <div class="card-body p-3">
                               <div class="d-flex align-items-center mb-2">
