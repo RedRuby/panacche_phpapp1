@@ -127,22 +127,6 @@ class DesignController extends Controller
      */
     public function store(CollectionStoreRequest $request)
     {
-        //Log::info("data " . json_encode($request->all()));
-
-
-        // $this->validate($request, [
-        //     'design_name' => 'required|unique:collections',
-        //     'design_price' => 'required',
-        //     'room_budget' => 'required|string',
-        //     'room_type' => 'required|not_in:0',
-        //     'room_style' => 'required|not_in:0',
-        //     'implementation_guide_description' => 'required',
-        //     'customer_id' => 'required',
-        // ]);
-
-        // Log::info('price : '.$request->design_price);
-        // exit;
-
 
         try {
 
@@ -290,15 +274,6 @@ class DesignController extends Controller
                           //"sku": "123"
                         ],
                     ],
-                    // "presentment_prices" => [
-                    //     [
-                    //         "price" => [
-                    //             "currency_code" => "USD",
-                    //             "amount" => $request->design_price
-                    //         ],
-                    //     ]
-                    // ],
-                    // "images" => $productImagesArr
                 ]
             ];
 
@@ -383,7 +358,8 @@ class DesignController extends Controller
                     }
                 }
 
-                return response()->json(['status' => 201, 'message' => "Room details saved successfully", "data" => $result])->setStatusCode(201);
+                return response()->json(['status' => 201, 'message' => "Congratulations!!
+                Your Particulars Have Been Saved Successfully.", "data" => $result])->setStatusCode(201);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }
