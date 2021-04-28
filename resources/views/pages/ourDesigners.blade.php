@@ -9,7 +9,7 @@
         @if($designer->display_picture)
           <img src="{{ asset('uploads/designer/display_picture/'.$designer->display_picture) }}" class="card-img cover-photo" alt="Cover">
           @else
-          <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" class="card-img cover-photo" alt="Cover">
+          <img src="{{ asset('default/user.png') }}" class="card-img cover-photo" alt="Cover">
           @endif
        </p>
 

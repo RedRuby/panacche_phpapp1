@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-img projectImg">
                            @if($design->collectionImages()->count() == 0)
-                           <img src="{{  asset('uploads/collection/images/design1.jpg') }}" class="card-img cover-photo" alt="Cover">
+                           <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
                            @else
                            <img src="{{  asset('uploads/collection/'.$design->id. '/' .$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                            @endif
@@ -31,11 +31,11 @@
                               <div class="d-flex align-items-center mb-2">
                                    @if($design->designer->display_picture)
                                    <div class="author-img">
-                                       <img src="{{ asset('uploads/collection/'.$design->id.'/'.$design->designer->display_picture)}}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
+                                       <img src="{{ asset('uploads/designer/'.$design->designer->display_picture)}}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
                                    </div>
                                    @else
                                    <div class="author-img">
-                                       <img src="{{ asset('uploads/designer/defaultUserImg.png') }}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
+                                       <img src="{{ asset('default/user.png') }}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
                                    </div>
                                    @endif
                                  <div class="author-info">
