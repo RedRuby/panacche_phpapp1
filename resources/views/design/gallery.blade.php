@@ -1,5 +1,5 @@
 
-        @if($designGroups->count == 0)
+        @if($designGroups->count() == 0)
             <h4>Designs Not Found</h4>
         @endif
         @if(count($designGroups))
