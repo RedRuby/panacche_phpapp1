@@ -31,7 +31,7 @@
                               <div class="d-flex align-items-center mb-2">
                                    @if($design->designer->display_picture)
                                    <div class="author-img">
-                                       <img src="{{ asset('uploads/designer/'.$design->designer->display_picture)}}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
+                                       <img src="{{ asset('uploads/designer/display_picture/'.$design->designer->display_picture)}}" alt="Person" class="img-fluid rounded-circle mr-1" style="width:35px">
                                    </div>
                                    @else
                                    <div class="author-img">
