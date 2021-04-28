@@ -12,7 +12,7 @@
           <div class="card">
              <div class="designerImg">
                 @if($designer->display_picture)
-                 <img src="{{ asset('/default/designer/display_picture/'. $designer->display_picture) }}" class="img-fluid" alt="Cover">
+                 <img src="{{ asset('/uploads/designer/display_picture/'. $designer->display_picture) }}" class="img-fluid" alt="Cover">
                 @else
                 <img src="{{ asset('/default/user.png') }}" class="img-fluid" alt="Cover">
                 @endif
