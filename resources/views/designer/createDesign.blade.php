@@ -153,7 +153,7 @@
                         <p class="stepsName">
                             @if($design->status== 'submitted')
                             <span class="notComplated submit-design-progress  greenActive mr-2"></span>
-                            <span class="greenActive">Submit Design For Approval</span>
+                            <span class="greenActiveText">Submit Design For Approval</span>
                             @else
                             <span class="notComplated submit-design-progress mr-2"></span>
                             <span>Submit Design For Approval</span>
