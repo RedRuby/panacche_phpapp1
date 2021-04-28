@@ -1,6 +1,6 @@
 @foreach ($design as $mydesign )
 		<div class="row align-items-center h-100">
-			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
+			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView pt-5">
 								<div class="col-12 px-3 landingHeading float-left">
 					<h4 class="mb-4">
 						<span class="float-left mr-4">New Design Approval</span>

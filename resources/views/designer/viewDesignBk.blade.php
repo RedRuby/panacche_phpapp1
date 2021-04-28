@@ -3,7 +3,7 @@
 	<div class="container-fluid landingPageWrap">
 		<div class="row align-items-center h-100">
 
-			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView">
+			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView pt-5">
 
 				<div class="col-12 px-3 stepsWrap float-left mb-4">
 					<div class="row">

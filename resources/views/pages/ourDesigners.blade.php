@@ -1,3 +1,6 @@
+@if($designers->count() == 0)
+<h4>Designers Not Found</h4>
+@else
 @foreach ($designers as $designer)
 <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
     <div class="card">
@@ -34,4 +37,5 @@
     </div>
  </div>
 @endforeach
+@endif
 

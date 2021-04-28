@@ -17,21 +17,20 @@
            <tbody>
             @foreach ($orders as $order)
             <tr>
-                <td>PD#{{ $order->id }}</td>
                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
-                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
+                <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
                 <td>{{ $order->collection->design_name }}</td>
-                <td>{{ $order->collection->designer->first_name }} {{ $order->collection->designer->last_name }}</td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
                 <td>
                     @if($order->status == 'completed')
-                    <div class="badge badge-success">Completed Order</div>
-                    @elseif($order->status == 'in-progress')
-                    <div class="badge badge-danger">Incomplete Order</div>
-                    @elseif($order->status == 'pending')
-                    <div class="badge badge-warning">Purchase Order Sent</div>
+                        <div class="badge badge-success">Delivered & Paid</div>
+                        @elseif($order->status == 'in-progress')
+                        <div class="badge badge-warning">In Progress</div>
+                        @elseif($order->status == 'pending')
+                        <div class="badge badge-warning">Abandoned</div>
                     @endif
                 </td>
+                <td>{{ $order->amount }}</td>
             </tr>
 
             @endforeach
@@ -58,21 +57,21 @@
            <tbody>
             @foreach ($orders->where('status', 'in-progress') as $order)
             <tr>
-                <td>PD#{{ $order->id }}</td>
                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
-                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
+                <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
                 <td>{{ $order->collection->design_name }}</td>
-                <td>{{ $order->collection->designer->first_name }} {{ $order->collection->designer->last_name }}</td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
                 <td>
                     @if($order->status == 'completed')
-                        <div class="badge badge-success">Delivered & Pai</div>
+                        <div class="badge badge-success">Delivered & Paid</div>
                         @elseif($order->status == 'in-progress')
                         <div class="badge badge-warning">In Progress</div>
                         @elseif($order->status == 'pending')
                         <div class="badge badge-warning">Abandoned</div>
                     @endif
                 </td>
+                <td>{{ $order->amount }}</td>
+
             </tr>
 
             @endforeach
@@ -100,21 +99,20 @@
            <tbody>
             @foreach ($orders->where('status', 'completed') as $order)
             <tr>
-                <td>PD#{{ $order->id }}</td>
                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
-                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
+                <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
                 <td>{{ $order->collection->design_name }}</td>
-                <td>{{ $order->collection->designer->first_name }} {{ $order->collection->designer->last_name }}</td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
                 <td>
                     @if($order->status == 'completed')
-                        <div class="badge badge-success">Delivered & Pai</div>
+                        <div class="badge badge-success">Delivered & Paid</div>
                         @elseif($order->status == 'in-progress')
                         <div class="badge badge-warning">In Progress</div>
                         @elseif($order->status == 'pending')
                         <div class="badge badge-warning">Abandoned</div>
                     @endif
                 </td>
+                <td>{{ $order->amount }}</td>
             </tr>
 
             @endforeach
@@ -142,21 +140,20 @@
            <tbody>
             @foreach ($orders->where('status', 'in-progress') as $order)
             <tr>
-                <td>PD#{{ $order->id }}</td>
                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
-                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
+                <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
                 <td>{{ $order->collection->design_name }}</td>
-                <td>{{ $order->collection->designer->first_name }} {{ $order->collection->designer->last_name }}</td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $order->customer->first_name }} {{ $order->customer->last_name }}</td>
                 <td>
                     @if($order->status == 'completed')
-                        <div class="badge badge-success">Delivered & Pai</div>
+                        <div class="badge badge-success">Delivered & Paid</div>
                         @elseif($order->status == 'in-progress')
                         <div class="badge badge-warning">In Progress</div>
                         @elseif($order->status == 'pending')
                         <div class="badge badge-warning">Abandoned</div>
                     @endif
                 </td>
+                <td>{{ $order->amount }}</td>
             </tr>
 
             @endforeach

@@ -291,6 +291,13 @@ class DesignerController extends Controller
 
     }
 
+    public function viewAllDesigns($id)
+    {
+        $designs = Collection::with('designer','orders')->where('designer_id', $id)->get();
+        $designs = view('designer.designer-view-all-designs')->with('designs', $designs)->render();
+        return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
+    }
+
     public function createDesign($id){
         $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
         $vendors = Vendor::all();

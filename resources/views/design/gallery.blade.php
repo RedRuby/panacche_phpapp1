@@ -1,4 +1,7 @@
 
+        @if($designGroups->count == 0)
+            <h4>Designs Not Found</h4>
+        @endif
         @if(count($designGroups))
         @foreach($designGroups as $key => $designGroup)
 
