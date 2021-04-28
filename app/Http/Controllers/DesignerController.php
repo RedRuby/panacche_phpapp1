@@ -34,6 +34,7 @@ use App\Http\Requests\DesignerStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\UpdateCollectionRequest;
 use Carbon\Carbon;
+use App\Order;
 
 class DesignerController extends Controller
 {
@@ -279,6 +280,15 @@ class DesignerController extends Controller
         $designCards = view('designer.allDesigns')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
+    }
+
+    public function viewAllOrders($id){
+        $orders = Order::with('collection','collection.designer', 'customer')->
+        where('designer_id', $id)->get();
+        $orders = view('designer.designer-view-all-orders')->with('orders', $orders)->render();
+
+        return response()->json(['status'=>201, 'success' => true, 'data'=>["orders"=>$orders], 'message'=>'All orders loaded successfully'])->setStatusCode(200);
+
     }
 
     public function createDesign($id){
@@ -680,4 +690,6 @@ class DesignerController extends Controller
         return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
 
     }
+
+
 }
