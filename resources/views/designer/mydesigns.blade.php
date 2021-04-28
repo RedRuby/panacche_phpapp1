@@ -3,7 +3,7 @@
 @endif
 @foreach($designs as $design)
 <a href="{{env('Shop_NAME')}}/design/details/{{ $design->id }}" id="view-design" data="{{ $design->id }}">
-<div class="col-sm-4">
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
     <div class="card">
         <div class="card-img projectImg">
         @if($design->collectionImages()->count() == 0)
@@ -20,7 +20,7 @@
                 @if($design->designer()->count() == 0)
                 @else
                 <div class="author-img">
-                    <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('uploads/designer/display_picture'.$design->designer->display_picture) }}" style="width:35px">
+                    <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('uploads/designer/display_picture/'.$design->designer->display_picture) }}" style="width:35px">
                 </div>
                 @endif
 

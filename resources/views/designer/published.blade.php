@@ -1,5 +1,5 @@
 @if($designs->count() == 0)
-    <h1 class="pl-5">Published designs are not available</h1>
+    <h4 class="pl-3">Published designs are not available</h4>
 @endif
 @foreach($designs as $design)
 
@@ -16,6 +16,12 @@
             </div>
             <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
+                    @if($design->designer()->count() == 0)
+                    @else
+                    <div class="author-img">
+                        <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('uploads/designer/display_picture/'.$design->designer->display_picture) }}" style="width:35px">
+                    </div>
+                    @endif
                     <div class="author-info">
                         <p class="mb-0">{{ $design->design_name }}</p>
                     </div>
