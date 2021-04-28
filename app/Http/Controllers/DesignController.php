@@ -27,6 +27,7 @@ use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use Carbon\Carbon;
 use App\DigitalProduct;
+use App\Vendor;
 
 class DesignController extends Controller
 {
@@ -468,8 +469,8 @@ class DesignController extends Controller
 
 
                 Log::info('final product' . json_encode($product));
-
-                $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
+                $vendors = Vendor::all();
+                $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors',$vendors)->render();
 
                 return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
             } else {
@@ -607,8 +608,9 @@ class DesignController extends Controller
                 }
 
                 if ($productIds) {
+                    $vendors = Vendor::all();
                     $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
-                    $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
+                    $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
                     return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
                 } else {
                     return response()->json(['status' => 500, 'errors' => $result]);

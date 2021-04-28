@@ -60,8 +60,12 @@
 
                 <div class="form-group">
                     <label for="">Vendor</label>
-                <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->id }}">
-                    <datalist id="vendor-datalist"></datalist>
+                <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->vendor_name }}">
+                    <datalist id="vendor-datalist" class="vendor-datalist">
+                        @foreach ($vendors as $vendor)
+                        <option @if($product->vendor->id == $vendor->id) selected @endif data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}"></option>
+                    @endforeach
+                    </datalist>
 
                     <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
                 </div>

@@ -389,14 +389,11 @@ class DesignerController extends Controller
                 $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
 
                 Log::info('final product' . json_encode($product));
-
-                $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->render();
+                $vendors = Vendor::all();
+                $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
                 return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your specifics have been altered successfully.'])->setStatusCode(200);
 
-                //return View::make('designer.newProduct')->with('product', $product);
-
-               // return response()->json(['statu' => 201, "data" => $result, "message" => "Product added successfully"])->setStatusCode(201);
-            } else {
+              } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
             }
         } catch (\Exception $e) {

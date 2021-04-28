@@ -655,11 +655,11 @@
 
                                 <div class="form-group">
                                     <label for="">Vendor</label>
-                                    <input type="text" class="form-control" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                    <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->vendor_name }}">
                                     <span class="validation_error"></span>
-                                    <datalist id="vendor-datalist">
+                                    <datalist id="vendor-datalist" class="vendor-datalist">
                                         @foreach ($vendors as $vendor)
-                                            <option data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}" @if($product->vendor->id == $vendor->id) selected @endif></option>
+                                            <option @if($product->vendor->id == $vendor->id) selected @endif data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}"></option>
                                         @endforeach
                                     </datalist>
 

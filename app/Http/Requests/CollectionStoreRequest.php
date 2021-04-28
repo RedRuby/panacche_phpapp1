@@ -76,11 +76,11 @@ class CollectionStoreRequest extends FormRequest
             'height_in_inches.numeric' => 'Height in inches is not valid!',
             'height_in_inches.min' => 'Height in inches is not valid!',
             'height_in_inches.not_in' => 'Height in inches is not valid!',
-            'color_img.*' => 'Color image is required!',
-            'color_name.*' => 'Color name field is required!',
-            'brand.*' => 'Brand field is  required!',
-            'finish.*' => 'Finish field is required!',
-            'application.*' => 'Application field is required!',
+            'color_img' => 'Color image is required!',
+            'color_name' => 'Color name field is required!',
+            'brand' => 'Brand field is  required!',
+            'finish' => 'Finish field is required!',
+            'application' => 'Application field is required!',
         ];
     }
 }
