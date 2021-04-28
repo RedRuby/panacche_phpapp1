@@ -663,7 +663,7 @@
                                         @endforeach
                                     </datalist>
 
-                                    <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" data-toggle="modal" data-target="#addVenderPop"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
+                                    <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
                                 </div>
 
 
@@ -738,13 +738,13 @@
 
         <div class="col-12 float-left text-right px-0">
             <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right @if($design->products->count()== 0) hide  @else products-available @endif"">Cancel don't Submit</a>
-            <button type="button" class="btn btn-primary loginBtn mr-3 @if($design->products->count()== 0) hide  @else products-available @endif" data-toggle="modal" data-target="#staticBackdrop" id="submit-new-design-btn">Submit New Design</button>
+            <button type="button" class="btn btn-primary loginBtn mr-3 @if($design->products->count()== 0) hide  @else products-available @endif" id="submit-new-design-btn">Submit New Design</button>
         </div>
 
     </div>
 
     <!-- Add Vender Popup Modal -->
-<div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!--<div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header py-0 px-2">
@@ -779,7 +779,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- Modal -->
 
 
@@ -797,8 +797,8 @@
           <p>Are you sure you want to delete this design?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="remove-design-yes-btn">Yes</button>
+          <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
         </div>
       </div>
     </div>
