@@ -288,7 +288,7 @@
                             <p>{{ $product->vendor->vendor_name }}</p>
 
                             <div class="col-6 px-0 float-left colorVariants">
-                                <p class="mb-1">Quantity</p>
+                                <p class="">Quantity</p>
                                 <p>{{ $product->product_quantity }}</p>
                             </div>
                         </div>
@@ -313,7 +313,7 @@
                                     @else
 
                                     @foreach($product->productImages as $product)
-                                        <div class="col-4 float-left">
+                                        <div class="col-12 float-left viewProductImg px-0 mb-3">
                                             <p><img src="{{  asset('uploads/collection/product/images/'.$product->img_src) }}"></p>
                                         </div>
 
