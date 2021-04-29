@@ -1,101 +1,25 @@
 <div class="row align-items-center h-100 nilesh">
-    <div class="leftSideNav h-100 position-fixed">
-        <ul class="drawer-menu px-3 pb-5 mb-5 text-center" id="dasboardMenu" data-children=".drawer-submenu">
-            <li class="drawer-menu-item mt-4">
-                <a href="{{ env('shop.url') }}/account/">
-                    <i class="fas fa-th" data-toggle="tooltip" data-placement="right" title="Dashboard"></i>
-                    <!--<span class="drawer-menu-text">Dashboard</span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="/{{ env('shop.url') }}">
-                    <i class="fas fa-home" data-toggle="tooltip" data-placement="right" title="Home"></i>
-                    <!--<span class="drawer-menu-text">Home</span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/gallery">
-                    <i class="fas fa-images" data-toggle="tooltip" data-placement="right" title="Gallery"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/our-designers">
-                    <i class="fas fa-drafting-compass" data-toggle="tooltip" data-placement="right" title="Our Designers"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/blog">
-                    <i class="fab fa-blogger-b" data-toggle="tooltip" data-placement="right" title="Blogs"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/our-mission">
-                    <i class="fas fa-crosshairs" data-toggle="tooltip" data-placement="right" title="Our Mission"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/contact-us">
-                    <i class="fas fa-phone-alt" data-toggle="tooltip" data-placement="right" title="Contact"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/faq">
-                    <svg height="17pt" viewBox="0 -26 512 512" width="17pt" xmlns="http://www.w3.org/2000/svg" data-toggle="tooltip" data-placement="right" title="FAQ">
-                        <path d="m377.429688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v73.246093c0 11.46875 9.332032 20.808594 20.800782 20.808594h20.808593v-94.054687c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0"/>
-                        <path d="m256.179688 138.984375c-11.46875 0-20.800782 9.339844-20.800782 20.808594v41.628906h41.609375v-41.628906c0-11.46875-9.328125-20.808594-20.808593-20.808594zm0 0"/>
-                        <path d="m422.261719 0h-331.441407c-50.082031 0-90.820312 40.648438-90.820312 90.605469v338.867187c0 11.996094 7.28125 22.957032 18.558594 27.925782 3.980468 1.75 8.210937 2.601562 12.402344 2.601562 7.5 0 14.890624-2.738281 20.617187-7.949219 41.550781-37.589843 95.320313-58.289062 151.421875-58.289062h.019531l219.300781.011719c49.449219 0 89.679688-40.320313 89.679688-89.878907v-214.359375c0-49.367187-40.261719-89.535156-89.738281-89.535156zm-246.023438 202.242188c8.28125 0 15 6.707031 15 14.996093 0 8.28125-6.71875 15-15 15h-56.609375v36.609375c0 8.28125-6.71875 15-15 15-8.289062 0-15-6.722656-15-15v-121.683594c0-21.050781 17.121094-38.179687 38.171875-38.179687h48.4375c8.28125 0 15 6.722656 15 15 0 8.289063-6.71875 15-15 15h-48.4375c-4.511719 0-8.171875 3.667969-8.171875 8.179687v55.078126zm130.75 66.605468c0 8.28125-6.71875 15-15 15-8.277343 0-15-6.71875-15-15v-37.425781h-41.609375v37.425781c0 8.28125-6.71875 15-15 15-8.289062 0-15-6.71875-15-15v-109.054687c0-28.007813 22.792969-50.808594 50.800782-50.808594 28.019531 0 50.808593 22.800781 50.808593 50.808594zm133.132813 15h-62.691406c-28.007813 0-50.800782-22.789062-50.800782-50.808594v-73.246093c0-28.007813 22.792969-50.808594 50.800782-50.808594 28.019531 0 50.808593 22.800781 50.808593 50.808594v94.054687h11.882813c8.277344 0 15 6.710938 15 15 0 8.28125-6.722656 15-15 15zm0 0"/>
-                    </svg>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item active mt-3">
-                <a href="#">
-                    <i class="fas fa-file-invoice-dollar" data-toggle="tooltip" data-placement="right" title="Payment"></i>
-                    <!--<span class="drawer-menu-text"></span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3">
-                <a href="{{ env('shop.url') }}/pages/settings">
-                    <i class="fas fa-cog" data-toggle="tooltip" data-placement="right" title="Settings"></i>
-                    <!--<span class="drawer-menu-text">Setting</span>-->
-                </a>
-            </li>
-            <li class="drawer-menu-item mt-3 mb-5 pb-5">
-                <a href="{{ env('shop.url') }}/account/logout">
-                    <i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="right" title="Logout"></i>
-                    <!--<span class="drawer-menu-text">Logout</span>-->
-                </a>
-            </li>
-        </ul>
-    </div>
-
-
-
     <div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm pt-5">
-
-
         <div class="col-12 px-3 landingHeading float-left mt-4">
             <h4 class="mb-4">
                 <span class="float-left mr-4">Create New Design</span>
                 <div class="form-group float-left">
                     <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
-                          <option @if($design->status == 'draft') selected @endif>Draft</option>
-                          <option @if($design->status == 'approved') selected @endif>Published</option>
-                          <option @if($design->status == 'rejected') selected @endif>Inactive</option>
-                        </select>
+                        <option @if ($design->status == 'draft') selected @endif>Draft</option>
+                        <option @if ($design->status == 'approved') selected @endif>Published</option>
+                        <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
+                    </select>
                 </div>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
                     <a href="landing_page.html">
-                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5" id="remove-design-btn" data-id="{{ $design->id }}" data-designer="{{ $design->designer->id }}">Remove this design
+                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5"
+                            id="remove-design-btn" data-id="{{ $design->id }}"
+                            data-designer="{{ $design->designer->id }}">Remove this design
                             <i class="fas fa-times-circle newDesignClose"></i>
                         </button>
                     </a>
-                    <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
                     </a>
                     <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
@@ -107,19 +31,19 @@
 
         <form id="create-room-form" enctype="multipart/form-data">
             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-            <input type="hidden" name="shop" value="{{env('Shop_NAME')}}" />
+            <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
             <div class="col-12 px-3 stepsWrap float-left mb-4">
                 <div class="row">
                     <div class="col-lg-2 col-md-3 col-sm-6 float-left">
                         <p class="stepsCount mb-1 pl-4 ml-1">Step 1</p>
                         <p class="stepsName">
 
-                            @if($design->count()== 0)
-                            <span class="notComplated room-progress mr-2"></span>
-                            <span class="">Add Room Details</span>
+                            @if ($design->count() == 0)
+                                <span class="notComplated room-progress mr-2"></span>
+                                <span class="">Add Room Details</span>
                             @else
-                            <span class="notComplated room-progress greenActive mr-2"></span>
-                            <span class="greenActiveText">Add Room Details</span>
+                                <span class="notComplated room-progress greenActive mr-2"></span>
+                                <span class="greenActiveText">Add Room Details</span>
                             @endif
                         </p>
                     </div>
@@ -133,12 +57,12 @@
 
                         <p class="stepsCount mb-1 pl-4 ml-1">Step 2</p>
                         <p class="stepsName">
-                            @if($design->products->count()== 0)
-                            <span class="notComplated merchandise-progress  mr-2"></span>
-                            <span>Add Merchandise</span>
+                            @if ($design->products->count() == 0)
+                                <span class="notComplated merchandise-progress  mr-2"></span>
+                                <span>Add Merchandise</span>
                             @else
-                            <span class="notComplated merchandise-progress greenActive mr-2"></span>
-                            <span class="greenActiveText">Add Merchandise</span>
+                                <span class="notComplated merchandise-progress greenActive mr-2"></span>
+                                <span class="greenActiveText">Add Merchandise</span>
                             @endif
                         </p>
                     </div>
@@ -151,12 +75,12 @@
                     <div class="col-lg-3 col-md-3 col-sm-6 float-left">
                         <p class="stepsCount mb-1 pl-4 ml-1">Step 3</p>
                         <p class="stepsName">
-                            @if($design->status== 'submitted')
-                            <span class="notComplated submit-design-progress  greenActive mr-2"></span>
-                            <span class="greenActiveText">Submit Design For Approval</span>
+                            @if ($design->status == 'submitted')
+                                <span class="notComplated submit-design-progress  greenActive mr-2"></span>
+                                <span class="greenActiveText">Submit Design For Approval</span>
                             @else
-                            <span class="notComplated submit-design-progress mr-2"></span>
-                            <span>Submit Design For Approval</span>
+                                <span class="notComplated submit-design-progress mr-2"></span>
+                                <span>Submit Design For Approval</span>
                             @endif
                         </p>
                     </div>
@@ -168,7 +92,8 @@
                     <form class="mx-0">
                         <div class="form-group">
                             <label for="">Design Name</label>
-                            <input type="text" class="form-control" placeholder="" name="design_name" id="design_name" onkeyup="verifyInputs()" value="{{ $design->design_name }}">
+                            <input type="text" class="form-control" placeholder="" name="design_name" id="design_name"
+                                onkeyup="verifyInputs()" value="{{ $design->design_name }}">
                             <span class="validation_error"></span>
                         </div>
                         <div class="col-12 px-0">
@@ -179,57 +104,63 @@
                             </div>-->
                             <div class="form-group col-6 float-left px-0">
                                 <label for="">Design Price</label>
-                                <input type="number" class="form-control" placeholder="$" name="design_price" id="design_price" onkeyup="verifyInputs()" value="{{ $design->design_price }}">
+                                <input type="number" class="form-control" placeholder="$" name="design_price"
+                                    id="design_price" onkeyup="verifyInputs()" value="{{ $design->design_price }}">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group col-6 float-left pr-0">
                                 <label for="">Room Budget</label>
-                                <input type="number" class="form-control" placeholder="$" name="room_budget" id="room_budget" onkeyup="verifyInputs()" value="{{ $design->room_budget }}">
+                                <input type="number" class="form-control" placeholder="$" name="room_budget"
+                                    id="room_budget" onkeyup="verifyInputs()" value="{{ $design->room_budget }}">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="">Room Type</label>
                             <select class="custom-select selectDropdown" name="room_type" id="room_type">
-                          <option value="0">Select Room Type</option>
-                          <option value="Bedroom" @if($design->room_type == 'Bedroom') selected="selected" @endif>Bedroom</option>
-                          <option value="Kitchen" @if($design->room_type == 'Kitchen') selected="selected" @endif>Kitchen</option>
-                          <option value="Living Room" @if($design->room_type == 'Living Room') selected="selected" @endif>Living Room</option>
-                        </select>
+                                <option value="0">Select Room Type</option>
+                                <option value="Bedroom" @if ($design->room_type == 'Bedroom') selected="selected" @endif>Bedroom</option>
+                                <option value="Kitchen" @if ($design->room_type == 'Kitchen') selected="selected" @endif>Kitchen</option>
+                                <option value="Living Room" @if ($design->room_type == 'Living Room') selected="selected" @endif>Living Room</option>
+                            </select>
                             <span class="validation_error"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="">Room Style</label>
                             <select class="custom-select selectDropdown" name="room_style" id="room_style">
-                          <option value="0">Select Room Style</option>
-                          <option value="Modern" @if($design->room_style == 'Modern') selected="selected" @endif>Modern</option>
-                          <option value="Traditional" @if($design->room_style == 'Traditional') selected="selected" @endif>Traditional</option>
-                          <option value="Transitional" @if($design->room_style == 'Transitional') selected="selected" @endif>Transitional</option>
-                          <option value="Glamorous" @if($design->room_style == 'Glamorous') selected="selected" @endif>Glamorous</option>
+                                <option value="0">Select Room Style</option>
+                                <option value="Modern" @if ($design->room_style == 'Modern') selected="selected" @endif>Modern</option>
+                                <option value="Traditional" @if ($design->room_style == 'Traditional') selected="selected" @endif>Traditional</option>
+                                <option value="Transitional" @if ($design->room_style == 'Transitional') selected="selected" @endif>Transitional</option>
+                                <option value="Glamorous" @if ($design->room_style == 'Glamorous') selected="selected" @endif>Glamorous</option>
 
-                          <option value="Vintage" @if($design->room_style == 'Vintage') selected="selected" @endif>Vintage</option>
-                          <option value="Rustic" @if($design->room_style == 'Rustic') selected="selected" @endif>Rustic</option>
-                          <option value="Farmhouse" @if($design->room_style == 'Farmhouse') selected="selected" @endif>Farmhouse</option>
-                          <option value="Beach" @if($design->room_style == 'Beach') selected="selected" @endif>Beach</option>
-                          <option value="Minimal" @if($design->room_style == 'Minimal') selected="selected" @endif>Minimal</option>
+                                <option value="Vintage" @if ($design->room_style == 'Vintage') selected="selected" @endif>Vintage</option>
+                                <option value="Rustic" @if ($design->room_style == 'Rustic') selected="selected" @endif>Rustic</option>
+                                <option value="Farmhouse" @if ($design->room_style == 'Farmhouse') selected="selected" @endif>Farmhouse</option>
+                                <option value="Beach" @if ($design->room_style == 'Beach') selected="selected" @endif>Beach</option>
+                                <option value="Minimal" @if ($design->room_style == 'Minimal') selected="selected" @endif>Minimal</option>
 
-                          <option value="Mid-century" @if($design->room_style == 'Mid-century') selected="selected" @endif>Mid-century</option>
-                          <option value="Industrial" @if($design->room_style == 'Industrial') selected="selected" @endif>Industrial</option>
-                          <option value="Eclectic" @if($design->room_style == 'Eclectic') selected="selected" @endif>Eclectic</option>
-                          <option value="Bohemian" @if($design->room_style == 'Bohemian') selected="selected" @endif>Bohemian</option>
-                        </select>
+                                <option value="Mid-century" @if ($design->room_style == 'Mid-century') selected="selected" @endif>Mid-century</option>
+                                <option value="Industrial" @if ($design->room_style == 'Industrial') selected="selected" @endif>Industrial</option>
+                                <option value="Eclectic" @if ($design->room_style == 'Eclectic') selected="selected" @endif>Eclectic</option>
+                                <option value="Bohemian" @if ($design->room_style == 'Bohemian') selected="selected" @endif>Bohemian</option>
+                            </select>
                             <span class="validation_error"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="" class="w-100">Is this a Pet Friendly Design?</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="pet_friendly_design" id="inlineRadio1" value="Yes"  {{ ($design->pet_friendly_design=="Yes")? "checked" : "" }}>
+                                <input class="form-check-input" type="radio" name="pet_friendly_design"
+                                    id="inlineRadio1" value="Yes"
+                                    {{ $design->pet_friendly_design == 'Yes' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="inlineRadio1">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="pet_friendly_design" id="inlineRadio2" value="No" {{ ($design->pet_friendly_design=="No")? "checked" : "" }}>
+                                <input class="form-check-input" type="radio" name="pet_friendly_design"
+                                    id="inlineRadio2" value="No"
+                                    {{ $design->pet_friendly_design == 'No' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="inlineRadio2">No</label>
                             </div>
                         </div>
@@ -239,11 +170,14 @@
                             <div class="form-group col-5 float-left px-0 mb-0">
                                 <p class="italicLabel">Width</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="number" class="form-control" placeholder="Feet" name="width_in_feet" id="width_in_feet" value="{{ $design->room_width_in_feet }}">
+                                    <input type="number" class="form-control" placeholder="Feet" name="width_in_feet"
+                                        id="width_in_feet" value="{{ $design->room_width_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="number" class="form-control" placeholder="Inches" name="width_in_inches" id="width_in_inches" value="{{ $design->room_width_in_inches }}">
+                                    <input type="number" class="form-control" placeholder="Inches"
+                                        name="width_in_inches" id="width_in_inches"
+                                        value="{{ $design->room_width_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -253,11 +187,14 @@
                             <div class="form-group col-6 float-left pr-0 mb-0">
                                 <p class="italicLabel">Height</p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="number" class="form-control" placeholder="Feet" name="height_in_feet" id="height_in_feet" value="{{ $design->room_height_in_feet }}">
+                                    <input type="number" class="form-control" placeholder="Feet" name="height_in_feet"
+                                        id="height_in_feet" value="{{ $design->room_height_in_feet }}">
                                     <span class="validation_error"></span>
                                 </p>
                                 <p class="col-6 float-left pl-0">
-                                    <input type="number" class="form-control" placeholder="Inches" name="height_in_inches" id="height_in_inches" value="{{ $design->room_height_in_inches }}">
+                                    <input type="number" class="form-control" placeholder="Inches"
+                                        name="height_in_inches" id="height_in_inches"
+                                        value="{{ $design->room_height_in_inches }}">
                                     <span class="validation_error"></span>
                                 </p>
                             </div>
@@ -265,7 +202,8 @@
 
                         <div class="form-group">
                             <label for="">Design Description</label>
-                            <textarea class="form-control textarea" rows="4" name="implementation_guide_description" id="implementation_guide_description">{{ $design->implementation_guide_description }}</textarea>
+                            <textarea class="form-control textarea" rows="4" name="implementation_guide_description"
+                                id="implementation_guide_description">{{ $design->implementation_guide_description }}</textarea>
                             <span class="validation_error"></span>
                         </div>
                     </form>
@@ -278,45 +216,58 @@
                 <div class="dragandDropWrap col-md-12 col-xs-12 float-left px-0 mb-3">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active col-xl-3 col-md-4 col-sm-4 col-5 text-left" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">3D Rendered Images</a>
-                            <a class="nav-item nav-link col-xl-3 col-md-4 col-sm-4 col-5 text-left" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Concept Board</a>
+                            <a class="nav-item nav-link active col-xl-3 col-md-4 col-sm-4 col-5 text-left"
+                                id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                                aria-selected="true">3D Rendered Images</a>
+                            <a class="nav-item nav-link col-xl-3 col-md-4 col-sm-4 col-5 text-left" id="nav-profile-tab"
+                                data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                aria-selected="false">Concept Board</a>
                         </div>
                     </nav>
                     <div class="tab-content pb-2 px-3" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
                             <div class="dragDropBox pb-2">
                                 <div class="col-12 float-left p-2">
                                     <p class="custom-file p-2">
-                                        <input type="file" class="custom-file-input" name="collection_images[]" id="collection_images" multiple="multiple" accept="image/x-png,image/gif,image/jpeg">
+                                        <input type="file" class="custom-file-input" name="collection_images[]"
+                                            id="collection_images" multiple="multiple"
+                                            accept="image/x-png,image/gif,image/jpeg">
                                         <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         <span class="validation_error"></span>
                                     </p>
                                 </div>
-                                <p class="text-center mb-2">Upload / drop files here <span class="collection_img_browse">Browse Files</span></p>
+                                <p class="text-center mb-2">Upload / drop files here <span
+                                        class="collection_img_browse">Browse Files</span></p>
                             </div>
                             <div class="uploadedImages py-2 mt-2 overflow-hidden">
-                                <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
+                                <div id="carouselExample" class="carousel slide row" data-ride="carousel"
+                                    data-interval="9000">
                                     <div class="carousel-inner collection_images row w-100 mx-auto" role="listbox">
                                     </div>
                                     @foreach ($design->collectionImages as $collectionImage)
-                                    <div class="carousel-item col-md-3 active">
-                                        <div class="panel panel-default">
-                                            <div class="panel-thumbnail">
-                                                <p class="uploadedFile">
-                                                    <img src="{{  asset('uploads/collection/'. $design->id.'/'.$collectionImage->img_src) }}" title="image 1" class="thumb"/>' +
-                                                    <span class="imageClose"><i class="fas fa-times-circle"></i></span>
-                                                </p>
+                                        <div class="carousel-item col-md-3 active">
+                                            <div class="panel panel-default">
+                                                <div class="panel-thumbnail">
+                                                    <p class="uploadedFile">
+                                                        <img src="{{ asset('uploads/collection/' . $design->id . '/' . $collectionImage->img_src) }}"
+                                                            title="image 1" class="thumb" />' +
+                                                        <span class="imageClose"><i
+                                                                class="fas fa-times-circle"></i></span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endforeach
 
 
-                                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#carouselExample" role="button"
+                                        data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </a>
-                                    <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                                    <a class="carousel-control-next text-faded" href="#carouselExample" role="button"
+                                        data-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
@@ -327,38 +278,46 @@
                             <div class="dragDropBox pb-2">
                                 <div class="col-12 float-left p-2">
                                     <p class="custom-file p-2">
-                                        <input type="file" class="custom-file-input" name="collection_blue_prints[]" id="collection_blue_prints" accept="image/x-png,image/gif,image/jpeg" value="">
+                                        <input type="file" class="custom-file-input" name="collection_blue_prints[]"
+                                            id="collection_blue_prints" accept="image/x-png,image/gif,image/jpeg"
+                                            value="">
                                         <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         <span class="validation_error"></span>
                                     </p>
                                 </div>
-                                <p class="text-center mb-2">Upload / drop files here <span class="blueprint_img_browse">Browse Files</span></p>
+                                <p class="text-center mb-2">Upload / drop files here <span
+                                        class="blueprint_img_browse">Browse Files</span></p>
                             </div>
                             <div class="uploadedImages py-2 mt-2 overflow-hidden">
 
 
-                                <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
+                                <div id="carouselExample" class="carousel slide row" data-ride="carousel"
+                                    data-interval="9000">
                                     <div class="carousel-inner collection_blue_prints row w-100 mx-auto" role="listbox">
                                     </div>
 
                                     @foreach ($design->bluePrintImages as $bluePrintImage)
-                                    <div class="carousel-item col-md-3 active">
-                                        <div class="panel panel-default">
-                                            <div class="panel-thumbnail">
-                                                <p class="uploadedFile">
-                                                    <img src="{{  asset('uploads/collection/'.$design->id.'/'.$bluePrintImage->img_src) }}" title="image 1" class="thumb"/>' +
-                                                    <span class="imageClose"><i class="fas fa-times-circle"></i></span>
-                                                </p>
+                                        <div class="carousel-item col-md-3 active">
+                                            <div class="panel panel-default">
+                                                <div class="panel-thumbnail">
+                                                    <p class="uploadedFile">
+                                                        <img src="{{ asset('uploads/collection/' . $design->id . '/' . $bluePrintImage->img_src) }}"
+                                                            title="image 1" class="thumb" />' +
+                                                        <span class="imageClose"><i
+                                                                class="fas fa-times-circle"></i></span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endforeach
 
-                                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#carouselExample" role="button"
+                                        data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </a>
-                                    <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                                    <a class="carousel-control-next text-faded" href="#carouselExample" role="button"
+                                        data-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
@@ -382,28 +341,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($design->colorPallettes as $colorPallette)
-                            <tr>
-                                <td>
-                                    <div class="col-12 float-left px-0">
-                                        <p class="custom-file addColor addColorImg" style="background-image: url('{{  asset('uploads/collection/'.$design->id.'/'.$colorPallette->color_img) }}')">
-                                            <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
-                                            <input type="file" class="custom-file-input" name="color_img[0]" id="color_img.0">
-                                            <span class="validation_error"></span>
-                                            <label class="custom-file-label2 mb-0" for="customFile"></label>
-                                        </p>
-                                    </div>
-                                </td>
-                                <td><input type="text" class="form-control" placeholder="" name="color_name[0]" id="color_name.0" value="{{ $colorPallette->color_name }}"><span class="validation_error"></span></td>
+                            @foreach ($design->colorPallettes as $colorPallette)
+                                <tr>
+                                    <td>
+                                        <div class="col-12 float-left px-0">
+                                            <p class="custom-file addColor addColorImg"
+                                                style="background-image: url('{{ asset('uploads/collection/' . $design->id . '/' . $colorPallette->color_img) }}')">
+                                                <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
+                                                <input type="file" class="custom-file-input" name="color_img[0]"
+                                                    id="color_img.0">
+                                                <span class="validation_error"></span>
+                                                <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="form-control" placeholder="" name="color_name[0]"
+                                            id="color_name.0" value="{{ $colorPallette->color_name }}"><span
+                                            class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="brand[0]" id="brand_name.0" value="{{ $colorPallette->brand }}"><span class="validation_error"></span></td>
+                                    <td><input type="text" class="form-control" placeholder="" name="brand[0]"
+                                            id="brand_name.0" value="{{ $colorPallette->brand }}"><span
+                                            class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="finish[0]" id="finish.0" value="{{ $colorPallette->finish }}"><span class="validation_error"></span></td>
+                                    <td><input type="text" class="form-control" placeholder="" name="finish[0]"
+                                            id="finish.0" value="{{ $colorPallette->finish }}"><span
+                                            class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control" placeholder="" name="application[0]" id="application.0" value="{{ $colorPallette->application }}"><span class="validation_error"></span></td>
+                                    <td><input type="text" class="form-control" placeholder="" name="application[0]"
+                                            id="application.0" value="{{ $colorPallette->application }}"><span
+                                            class="validation_error"></span></td>
 
-                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
-                            </tr>
+                                    <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
+                                            class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -427,21 +397,29 @@
                                     <div class="col-12 float-left px-0">
                                         <p class="custom-file addColor addColorImg">
                                             <!--<span class="addColorIcon"><i class="fas fa-plus-circle"></i></span>-->
-                                            <input type="file" class="custom-file-input color_img_0" name="color_img[0]" id="color_img.0">
+                                            <input type="file" class="custom-file-input color_img_0" name="color_img[0]"
+                                                id="color_img.0">
                                             <span class="validation_error"></span>
                                             <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         </p>
                                     </div>
                                 </td>
-                                <td><input type="text" class="form-control color_name_0" placeholder="" name="color_name[0]" id="color_name.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control color_name_0" placeholder=""
+                                        name="color_name[0]" id="color_name.0"><span class="validation_error"></span>
+                                </td>
 
-                                <td><input type="text" class="form-control brand_0" placeholder="" name="brand[0]" id="brand_name.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control brand_0" placeholder="" name="brand[0]"
+                                        id="brand_name.0"><span class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control finish_0" placeholder="" name="finish[0]" id="finish.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control finish_0" placeholder="" name="finish[0]"
+                                        id="finish.0"><span class="validation_error"></span></td>
 
-                                <td><input type="text" class="form-control application_0" placeholder="" name="application[0]" id="application.0"><span class="validation_error"></span></td>
+                                <td><input type="text" class="form-control application_0" placeholder=""
+                                        name="application[0]" id="application.0"><span class="validation_error"></span>
+                                </td>
 
-                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
+                                        class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -451,7 +429,8 @@
                     <label for="">Upload Design Implementation Guide for this design.</label>
                     <div class="row mx-0 px-0 pt-2">
                         <div class="custom-file mb-1">
-                            <input type="file" class="custom-file-input" name="design_implementation_guide" id="design_implementation_guide">
+                            <input type="file" class="custom-file-input" name="design_implementation_guide"
+                                id="design_implementation_guide">
                             <span class="validation_error"></span>
                             <span class="dig_file_name"></span>
                             <label class="custom-file-label mb-0" for="customFile"></label>
@@ -464,9 +443,12 @@
             <div class="col-12 float-left saveRoomWrap">
                 <p class="text-right pt-2">Note: Save to upload merchandise for this design </p>
                 <p>
-                    <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right">Cancel don't Save</a>
-                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide" id="save-room-details-btn">Save Room Details</button>
-                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn" id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
+                    <a href="{{ env('Shop_URL') }}/account" type="button"
+                        class="btn btn-primary cancelBtn float-right">Cancel don't Save</a>
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide"
+                        id="save-room-details-btn">Save Room Details</button>
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn"
+                        id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
                 </p>
             </div>
         </form>
@@ -478,8 +460,10 @@
         <label for="" class="col-12 px-0 font14">Add Merchandise References</label>
         <div class="addRefWrap col-12 float-left py-3 mb-3">
             <div class="row px-3">
-                <button type="button" class="btn btn-primary loginBtn mr-2 add-product-view-btn" id="add-product-view-btn">Add</button>
-                <button type="button" class="btn btn-primary loginBtn mr-2 upload-bulk-btn" id="upload-bulk-btn">Upload Bulk</button>
+                <button type="button" class="btn btn-primary loginBtn mr-2 add-product-view-btn"
+                    id="add-product-view-btn">Add</button>
+                <button type="button" class="btn btn-primary loginBtn mr-2 upload-bulk-btn" id="upload-bulk-btn">Upload
+                    Bulk</button>
                 <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn">Cancel</a>
             </div>
 
@@ -489,11 +473,13 @@
                     <div class="row mx-0 px-0 pt-2">
                         <form id="csv-bulk-upload-form" accept="multipart/formdata">
                             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-                            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
-                            <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id_bulk_upload" />
+                            <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
+                            <input type="hidden" name="collection_id" value="{{ $design->id }}"
+                                id="collection_id_bulk_upload" />
 
                             <div class="custom-file mb-1">
-                                <input type="file" class="custom-file-input" id="upload_product_csv" name="upload_product_csv">
+                                <input type="file" class="custom-file-input" id="upload_product_csv"
+                                    name="upload_product_csv">
                                 <span class="validation_error label--error"></span>
                                 <label class="custom-file-label mb-0" for="customFile"></label>
                             </div>
@@ -501,7 +487,8 @@
                     </div>
                 </div>
                 <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
-                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}" target="_blank">Download a Blank Sample Template CSV file for Bulk upload</a>
+                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}" target="_blank">Download a Blank
+                        Sample Template CSV file for Bulk upload</a>
                 </div>
             </div>
 
@@ -509,7 +496,7 @@
                 <div class="col-12 addMearchForm py-3 px-0">
                     <form class="mx-0" id="merchandise-section-form">
                         <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-                        <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
+                        <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
                         <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id" />
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
@@ -520,16 +507,18 @@
 
                             <div class="form-group">
                                 <label for="">Vendor</label>
-                                <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist">
+                                <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id"
+                                    id="vendor_id" list="vendor-datalist">
                                 <span class="validation_error"></span>
                                 <datalist class="vendor-datalist" id="vendor-datalist"></datalist>
-                                <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
+                                <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn"
+                                    id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"></i> Add New Vendor</button>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="">Quantity</label>
-                                <input type="number" class="form-control" name="quantity"  step="3">
+                                <input type="number" class="form-control" name="quantity" step="3">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
@@ -541,24 +530,27 @@
                             </div>
                             <div class="form-group">
                                 <label for="">URL</label>
-                                <input type="text" class="form-control" placeholder="" name="product_url" >
+                                <input type="text" class="form-control" placeholder="" name="product_url">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group">
                                 <label for="">Retail Price</label>
-                                <input type="number" class="form-control" placeholder="&#36;" name="product_price" >
+                                <input type="number" class="form-control" placeholder="&#36;" name="product_price">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
-                                <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i class="fas fa-times-circle"></i></span></label>
+                                <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i
+                                            class="fas fa-times-circle"></i></span></label>
                                 <div class="imageRefUpload p-3 col-12 float-left">
 
                                     <div class="col-12 float-left px-0">
                                         <p>Drag and Drop Image/ Browse Files</p>
                                         <p class="custom-file mb-0 addImage">
-                                            <input type="file" class="custom-file-input" id="product_images" name="product_images[]" multiple="multiple" accept="image/x-png,image/gif,image/jpeg">
+                                            <input type="file" class="custom-file-input" id="product_images"
+                                                name="product_images[]" multiple="multiple"
+                                                accept="image/x-png,image/gif,image/jpeg">
                                             <span class="validation_error"></span>
                                             <label class="custom-file-label2 mb-0" for="customFile"></label>
                                         </p>
@@ -580,8 +572,10 @@
             </div>
 
             <div class="col-12 float-left px-0 mt-3">
-                <button type="button" class="btn btn-primary cancelBtn float-right" id="save-merchandise-cancel-btn">Cancel</button>
-                <button type="button" class="btn btn-primary loginBtn float-right mr-3" id="save-merchandise-section-btn">Save Merchandise</button>
+                <button type="button" class="btn btn-primary cancelBtn float-right"
+                    id="save-merchandise-cancel-btn">Cancel</button>
+                <button type="button" class="btn btn-primary loginBtn float-right mr-3"
+                    id="save-merchandise-section-btn">Save Merchandise</button>
             </div>
 
             <!--<div class="col-12 float-left mt-1 px-0 addmerchBoxWrap">
@@ -591,132 +585,153 @@
 
             <div id="upload-products-sec">
 
-             @foreach ($design->products as $key => $product)
+                @foreach ($design->products as $key => $product)
 
-                <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap product-preview-section">
-                    <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
+                    <div class="col-12 float-left mt-1 px-0 addmerchBoxWrap product-preview-section">
+                        <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
 
-                    <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
-                        <div class="col-md-4 float-left">
-                            <p>Merchandise</p>
-                            <p>{{ $product->title }} </p>
-                            <p>Sourcing / Vendor</p>
-                            <p>{{ $product->vendor->vendor_name }}</p>
+                        <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
+                            <div class="col-md-4 float-left">
+                                <p>Merchandise</p>
+                                <p>{{ $product->title }} </p>
+                                <p>Sourcing / Vendor</p>
+                                <p>{{ $product->vendor->vendor_name }}</p>
 
-                            <div class="col-6 px-0 float-left colorVariants">
-                                <p class="mb-1">Quantity</p>
-                                <p>{{ $product->product_quantity }}</p>
+                                <div class="col-6 px-0 float-left colorVariants">
+                                    <p class="mb-1">Quantity</p>
+                                    <p>{{ $product->product_quantity }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 float-left">
-                            <p>Size Specification</p>
-                            <p>{{ $product->size_specification }}</p>
-                            <p>URL</p>
-                            <p>{{ $product->product_url }}</p>
-                            <div class="col-6 px-0 float-left">
-                                <p>Retail Price</p>
-                                <p>$ {{ $product->product_price }}</p>
-                            </div>
-                            <!--<div class="col-6 px-0 float-left colorVariants">
+                            <div class="col-md-4 float-left">
+                                <p>Size Specification</p>
+                                <p>{{ $product->size_specification }}</p>
+                                <p>URL</p>
+                                <p>{{ $product->product_url }}</p>
+                                <div class="col-6 px-0 float-left">
+                                    <p>Retail Price</p>
+                                    <p>$ {{ $product->product_price }}</p>
+                                </div>
+                                <!--<div class="col-6 px-0 float-left colorVariants">
                                 <p>Compare at Price </p>
                                 <p>$ </p>
                             </div>-->
-                        </div>
-                        <div class="col-md-4 float-left">
-                            <p>Upload Image Reference
-                                <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
-                            </p>
-                            <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
-                            <div class="row uploadedImage px-0">
-                                @foreach ($product->productImages as $productImage )
-                                <div class="col-12 float-left">
-                                    <p><img src="{{  asset('/uploads/collection/'.$design->id.'/'.$product->productImages->first()->img_src) }}" class="img-fluid"></p>
-                                </div>
-                                @endforeach
-
-
                             </div>
-
-                            <p class="text-right"><button type="submit" class="btn btn-primary loginBtn edit-product-btn">Edit</button></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12 addMearchForm py-3 px-0 update-product-section float-left hide">
-                        <form class="mx-0 update-product-form">
-                            <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-                            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
-                            <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id">
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
-                                <div class="form-group">
-                                    <label for="">Merchandise</label>
-                                    <input type="text" class="form-control" placeholder="" name="merchandise" value="{{ $product->title }}">
-                                    <span class="validation_error"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">Vendor</label>
-                                    <input type="text" class="form-control vendor_id" placeholder="" name="vendor_id" id="vendor_id" list="vendor-datalist" value="{{ $product->vendor->vendor_name }}">
-                                    <span class="validation_error"></span>
-                                    <datalist id="vendor-datalist" class="vendor-datalist">
-                                        @foreach ($vendors as $vendor)
-                                            <option @if($product->vendor->id == $vendor->id) selected @endif data-value="{{ $vendor->id }}" value="{{ $vendor->vendor_name }}"></option>
-                                        @endforeach
-                                    </datalist>
-
-                                    <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn" id="add-vendor-btn"><i class="fas fa-plus-circle mr-2" aria-hidden="true"></i> Add New Vendor</button>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="">Quantity</label>
-                                    <input type="number" class="form-control" name="quantity"  step="3" value="{{ $product->product_quantity }}">
-                                    <span class="validation_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
-                                <div class="form-group">
-                                    <label for="">Specification</label>
-                                    <input type="text" class="form-control" placeholder="" name="size_specification" value="{{ $product->size_specification }}">
-                                    <span class="validation_error"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">URL</label>
-                                    <input type="text" class="form-control" placeholder="" name="product_url" value="{{ $product->product_url }}">
-                                    <span class="validation_error"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Retail Price</label>
-                                    <input type="text" class="form-control" placeholder="$" name="product_price" value="{{ $product->product_price }}">
-                                    <span class="validation_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
-                                <div class="form-group">
-                                    <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i class="fas fa-times-circle" aria-hidden="true"></i></span></label>
-                                    <div class="imageRefUpload p-3 col-12 float-left">
-
-                                        <div class="col-12 float-left px-0">
-                                            <p>Drag and Drop Image/ Browse Files</p>
-                                            <p class="custom-file mb-0 addImage" style="background-image: url(&quot;blob:https://panacchebeta.myshopify.com/ccf1760d-cb18-446f-8650-fdbf0e74d25b&quot;);">
-                                                <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
-                                                <span class="validation_error"></span>
-                                                <label class="custom-file-label2 mb-0" for="customFile"></label>
-                                            </p>
+                            <div class="col-md-4 float-left">
+                                <p>Upload Image Reference
+                                    <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
+                                </p>
+                                <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
+                                <div class="row uploadedImage px-0">
+                                    @foreach ($product->productImages as $productImage)
+                                        <div class="col-12 float-left">
+                                            <p><img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                    class="img-fluid"></p>
                                         </div>
-                                        <div class="row uploadedImage px-0" id="uploadProductImages">
+                                    @endforeach
+
+
+                                </div>
+
+                                <p class="text-right"><button type="submit"
+                                        class="btn btn-primary loginBtn edit-product-btn">Edit</button></p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 addMearchForm py-3 px-0 update-product-section float-left hide">
+                            <form class="mx-0 update-product-form">
+                                <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
+                                <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
+                                <input type="hidden" name="collection_id" value="{{ $design->id }}"
+                                    id="collection_id">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                    <div class="form-group">
+                                        <label for="">Merchandise</label>
+                                        <input type="text" class="form-control" placeholder="" name="merchandise"
+                                            value="{{ $product->title }}">
+                                        <span class="validation_error"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Vendor</label>
+                                        <input type="text" class="form-control vendor_id" placeholder=""
+                                            name="vendor_id" id="vendor_id" list="vendor-datalist"
+                                            value="{{ $product->vendor->vendor_name }}">
+                                        <span class="validation_error"></span>
+                                        <datalist id="vendor-datalist" class="vendor-datalist">
+                                            @foreach ($vendors as $vendor)
+                                                <option @if ($product->vendor->id == $vendor->id) selected @endif
+                                                    data-value="{{ $vendor->id }}"
+                                                    value="{{ $vendor->vendor_name }}"></option>
+                                            @endforeach
+                                        </datalist>
+
+                                        <button type="button" class="btn btn-secondary mr-3 w-100 loginBtn"
+                                            id="add-vendor-btn"><i class="fas fa-plus-circle mr-2"
+                                                aria-hidden="true"></i> Add New Vendor</button>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="">Quantity</label>
+                                        <input type="number" class="form-control" name="quantity" step="3"
+                                            value="{{ $product->product_quantity }}">
+                                        <span class="validation_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                    <div class="form-group">
+                                        <label for="">Specification</label>
+                                        <input type="text" class="form-control" placeholder="" name="size_specification"
+                                            value="{{ $product->size_specification }}">
+                                        <span class="validation_error"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">URL</label>
+                                        <input type="text" class="form-control" placeholder="" name="product_url"
+                                            value="{{ $product->product_url }}">
+                                        <span class="validation_error"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Retail Price</label>
+                                        <input type="text" class="form-control" placeholder="$" name="product_price"
+                                            value="{{ $product->product_price }}">
+                                        <span class="validation_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
+                                    <div class="form-group">
+                                        <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i
+                                                    class="fas fa-times-circle" aria-hidden="true"></i></span></label>
+                                        <div class="imageRefUpload p-3 col-12 float-left">
+
+                                            <div class="col-12 float-left px-0">
+                                                <p>Drag and Drop Image/ Browse Files</p>
+                                                <p class="custom-file mb-0 addImage"
+                                                    style="background-image: url(&quot;blob:https://panacchebeta.myshopify.com/ccf1760d-cb18-446f-8650-fdbf0e74d25b&quot;);">
+                                                    <input type="file" class="custom-file-input" id="product_images"
+                                                        name="product_images[]"
+                                                        accept="image/x-png,image/gif,image/jpeg">
+                                                    <span class="validation_error"></span>
+                                                    <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                                </p>
+                                            </div>
+                                            <div class="row uploadedImage px-0" id="uploadProductImages">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <p class="text-right px-3 pt-3 float-right">
-                                <button type="submit" class="btn btn-primary loginBtn update-product-btn" data="{{ $product->id }}">Update</button>
-                            <button type="button" class="btn btn-default loginBtn cancel-product-btn">Cancel</button></p>
+                                <p class="text-right px-3 pt-3 float-right">
+                                    <button type="submit" class="btn btn-primary loginBtn update-product-btn"
+                                        data="{{ $product->id }}">Update</button>
+                                    <button type="button"
+                                        class="btn btn-default loginBtn cancel-product-btn">Cancel</button>
+                                </p>
 
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
 
 
 
@@ -732,19 +747,22 @@
 
         <form id="submit-new-design-form">
             <input type="hidden" name="customer_id" value="{{ $design->designer->id }}" />
-            <input type="hidden" name="shop" value="{{ env('Shop_NAME')}}" />
+            <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
             <input type="hidden" name="collection_id" value="{{ $design->id }}" id="collection_id_submit_design" />
         </form>
 
         <div class="col-12 float-left text-right px-0">
-            <a href="{{ env('Shop_URL') }}/account" type="button" class="btn btn-primary cancelBtn float-right @if($design->products->count()== 0) hide  @else products-available @endif"">Cancel don't Submit</a>
-            <button type="button" class="btn btn-primary loginBtn mr-3 @if($design->products->count()== 0) hide  @else products-available @endif" id="submit-new-design-btn">Submit New Design</button>
+            <a href="{{ env('Shop_URL') }}/account" type="button"
+                class="btn btn-primary cancelBtn float-right @if ($design->products->count() ==
+            0) hide @else products-available @endif"">Cancel don't Submit</a>
+            <button type="button" class="btn btn-primary loginBtn mr-3 @if ($design->products->count() == 0) hide @else products-available @endif"
+                id="submit-new-design-btn">Submit New Design</button>
         </div>
 
     </div>
 
     <!-- Add Vender Popup Modal -->
-<!--<div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!--<div class="modal fade addVendorPopWrap" id="addVenderPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header py-0 px-2">
@@ -780,32 +798,28 @@
         </div>
     </div>
 </div>-->
-<!-- Modal -->
+    <!-- Modal -->
 
 
 
-  <div class="modal fade" tabindex="-1" id="confirm-remove-design-modal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Remove Design</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div class="modal fade" tabindex="-1" id="confirm-remove-design-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Design</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this design?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete this design?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
-        </div>
-      </div>
     </div>
-  </div>
 
 </div>
-
-
-
-
