@@ -1,5 +1,5 @@
 @if($designs->count() == 0)
-    <h1 class="pl-5">There are no in progress designs available</h1>
+    <h4 class="pl-3">There are no in progress designs available</h4>
 @endif
 @foreach($designs as $design)
 
