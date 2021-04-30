@@ -22,12 +22,14 @@ use App\Customer;
 use App\Designer;
 use View;
 use App\CollectionColorPallettes;
+use App\CSVBulkUpload;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use Carbon\Carbon;
 use App\DigitalProduct;
 use App\Vendor;
+use App\Jobs\ProductBulkUpload;
 
 class DesignController extends Controller
 {
@@ -291,7 +293,7 @@ class DesignController extends Controller
                     ]);
                 }
                 Log::info('collection ' . json_encode($collection));
-
+                mkdir('uploads/collection/' . $collection->id, 0755, true);
 
                 if ($request->hasfile('collection_images')) {
                     Log::info("has file collection images");
@@ -420,6 +422,7 @@ class DesignController extends Controller
                         [
                             "option1" => "Default Title",
                             "price" => $request->product_price,
+                            "inventory_quantity" => $request->quantity,
                             //"sku": "123"
                         ],
                     ],
@@ -502,11 +505,8 @@ class DesignController extends Controller
         if (!($collection)) {
             return response()->json(['status' => 500, 'errors' => ["design" => "Design or Room not found"]])->setStatusCode(422);
         }
-        $shop = User::where('name', $request->shop)->first();
-        $options = new Options();
-        $options->setVersion('2021-01');
-        $api = new BasicShopifyAPI($options);
-        $api->setSession(new Session($shop->name, $shop->password));
+
+        Log::info('seems ok ');
 
         $file = $request->file('upload_product_csv');
 
@@ -523,6 +523,7 @@ class DesignController extends Controller
         // 2MB in Bytes
         $maxFileSize = 2097152;
 
+
         // Check file extension
         if (in_array(strtolower($extension), $valid_extension)) {
 
@@ -530,97 +531,35 @@ class DesignController extends Controller
             if ($fileSize <= $maxFileSize) {
 
                 // File upload location
-                $location = 'uploads';
+                $current_time = Carbon::now()->timestamp;
+                $location = 'uploads/csv/';
 
                 // Upload file
-                $file->move($location, $filename);
+
+                $csvFileName = $current_time . '_' . $file->getClientOriginalName();
+
+                $file->move($location, $csvFileName);
 
                 // Import CSV to Database
-                $filepath = public_path($location . "/" . $filename);
+                $filepath = public_path($location . "/" . $csvFileName);
 
-                // Reading file
-                $file = fopen($filepath, "r");
+                $csvBulkUpload = CSVBulkUpload::create([
+                    'collection_id' => $collection->id,
+                    'file_name' => $csvFileName,
+                    'status' => 'pending'
+                ]);
 
-                $importData_arr = array();
-                $i = 0;
+                Log::info('csvBulkUpload' . json_encode($csvBulkUpload));
 
-                while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-                    $num = count($filedata);
-
-
-                    for ($c = 0; $c < $num; $c++) {
-                        $importData_arr[$i][] = $filedata[$c];
-                    }
-                    $i++;
-                }
-                fclose($file);
-
-                // Insert to MySQL database
-
-                $productIds = [];
-
-                unset($importData_arr[0]);
-                foreach ($importData_arr as $importData) {
-
-                    Log::info("import Data" . json_encode($importData));
-                    $data = [
-                        "product" => [
-                            "title" => $importData[0],
-                            "product_type" => '',
-                            "description" => $importData[1],
-                            "published" => false,
-                            "inventory_quantity" => $importData[6],
-                            "tags" => [
-                                $collection->design_name,
-                            ],
-                            "presentment_prices" => [
-                                [
-                                    "price" => [
-                                        "currency_code" => "USD",
-                                        "amount" => $importData[4]
-                                    ],
-                                    "compare_at_price" => $importData[5]
-                                ]
-                            ],
-
-                        ]
-                    ];
-
-                    $result = $api->rest('POST', '/admin/products.json', $data)['body'];
-                    Log::info('result' . json_encode($result));
-
-                    if (isset($result['product'])) {
-
-                        $product = Product::create([
-                            'id' => $result['product']['id'],
-                            'collection_id' => $collection->id,
-                            'title' => $importData[0],
-                            'size_specification' => $importData[1],
-                            'product_url' => $importData[2],
-                            'product_price' => $importData[3],
-                            'vendor_id' => $importData[4],
-                            'product_quantity' => $importData[5],
-                            'status' => "draft"
-                        ]);
-
-                        array_push($productIds, $product->id);
-                    }
-                }
-
-                if ($productIds) {
-                    $vendors = Vendor::all();
-                    $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
-                    $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
-                    return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
+                $bulkUploadJob = (new ProductBulkUpload())->delay(Carbon::now()->addSeconds(3));
+                dispatch($bulkUploadJob);
+                    return response()->json(['status' => 201, 'success' => true, 'message' => 'Your specifics have been started uploading in background successfully.'])->setStatusCode(201);
                 } else {
-                    return response()->json(['status' => 500, 'errors' => $result]);
+                    return response()->json(['status' => 500, 'errors' => "Max file size exceeded"]);
                 }
             } else {
-                return response()->json(['status' => 500, 'errors' => "data"]);
+                return response()->json(['status' => 500, 'errors' => "Invalid file extension"]);
             }
-        } else {
-            return response()->json(['status' => 500, 'errors' => ["upload_product_csv" => "Invalid file extension"]]);
-        }
     }
 
     /**

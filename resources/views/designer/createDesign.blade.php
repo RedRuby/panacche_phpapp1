@@ -487,7 +487,7 @@
                     </div>
                 </div>
                 <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
-                    <a href="{{ asset('/uploads/merchandise_bulk_upload.csv') }}" target="_blank">Download a Blank
+                    <a href="{{ asset('/uploads/product_bulk_upload.csv') }}" target="_blank">Download a Blank
                         Sample Template CSV file for Bulk upload</a>
                 </div>
             </div>
