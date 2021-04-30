@@ -38,9 +38,9 @@ class PagesController extends Controller
 
     public function viewDesign($id, $customer, $shop)
     {
-        $customer = Customer::find($customer);
+        //$customer = Customer::find($customer);
         $design = Collection::with('designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages', 'products.vendor', 'digitalProduct')->find($id);
-
+        /*
 
         // if($design->digitalProduct){
         $shop = User::where('name', $shop)->first();
@@ -56,11 +56,12 @@ class PagesController extends Controller
 
         //  }
 
-        $discount = Discount::first();
-        $design = view('pages.design')->with('design', $design)
-            ->with('discount', $discount)
-            ->with('customer', $customer)
-            ->with('variant_id', $result["variants"][0]["id"])->render();
+        $discount = Discount::first();*/
+        
+        $design = view('pages.design')->with('design', $design)->render();//
+            //->with('discount', $discount)
+            //->with('customer', $customer)
+            //->with('variant_id', $result["variants"][0]["id"])->render();
 
         return response()->json(['status' => 200, 'success' => true, 'data' => ["design" => $design], 'message' => 'Design loaded successfully'])->setStatusCode(200);
     }
