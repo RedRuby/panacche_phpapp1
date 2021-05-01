@@ -11,7 +11,7 @@
                           @if($design->collectionImages()->count() == 0)
                            <img src="{{  asset('default/design.jpg') }}" class="card-img cover-photo" alt="Cover">
                            @else
-                           <img src="http://127.0.0.1:8000/uploads/collection/{{$design->id}}/{{$design->collectionImages()->first()->img_src}}" class="card-img cover-photo" alt="Cover">
+                           <img src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}" class="card-img cover-photo" alt="Cover">
                            @endif
                            <div class="card-body p-3">
                            </div>
@@ -92,7 +92,7 @@
                                     <div class="card">
                                      <div class="card-img projectImg">
                                         <a href="#" data-toggle="modal" data-target="#designGalleryPop">
-                                            <img src="http://127.0.0.1:8000/uploads/collection/product/images/{{$productImage->img_src}}" class="card-img cover-photo" alt="Cover">
+                                            <img src="{{  asset('uploads/collection/product/images/'.$productImage->img_src) }}" class="card-img cover-photo" alt="Cover">
                                         </a>
                                      </div>
                                   </div>
