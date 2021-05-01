@@ -32,6 +32,8 @@ Route::get('/', function () {
 Route::resource('customer', 'CustomerController');
 Route::post('/customer', 'CustomerController@store');
 
+Route::get('/my-projects', 'CustomerController@myProjects');
+
 Route::post('verify_email', 'CustomerController@verifyEmail');
 //Route::post('verify_username', 'CustomerController@verifyUsername');
 Route::post('verify_phone', 'CustomerController@verifyPhone');

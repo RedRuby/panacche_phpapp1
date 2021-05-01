@@ -20,6 +20,7 @@ use Spatie\Activitylog\Models\Activity;
 use App\Http\Requests\CustomerStoreRequest;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use App\Http\Requests\VerifyContactRequest;
+use App\UserDesignerRating;
 
 class CustomerController extends Controller
 {
@@ -309,6 +310,27 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         return response()->json(["status" => "success", "statusCode" => 200, "message" => "Customer profile data", "data" => $customer]);
+    }
+
+    /**
+     * This method is used to fetch the data of my projects customer landing page along with the recommended designs.
+     * @author Vaibhav Mehta
+     * @since 30 April, 2021
+     */
+    public function myProjects(Request $request) {
+
+        $ratings = (new UserDesignerRating())->getRecommendedDesignsByRatings();
+        Log::info("CustomerController :: myProjects for user id :: ".$request->id);
+        Log::info("CustomerController :: myProjects ratings :: ".print_r($ratings, true));
+
+        if(isset($request->id) && $request->id != '') {
+            $my_projects = view('customer.my_projects')->with('ratings', $ratings)->render();
+
+        } else {
+            $my_projects = view('customer.no_projects')->with('ratings', $ratings)->render();
+        }
+
+        return response()->json(['status' => 200, 'success' => true, 'data' => ["my_projects" => $my_projects], 'message' => 'My projects loaded successfully'])->setStatusCode(200);
     }
 
 
