@@ -16,7 +16,7 @@
             </div>
             <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
-                    @if($design->designer()->count() == 0)
+                    @if($design->designer()->display_picture)
                     <div class="author-img">
                         <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('default/user.png') }}" style="width:35px">
                     </div>
