@@ -224,7 +224,7 @@ class DesignController extends Controller
             $current_time = Carbon::now()->timestamp;
 
             Log::info("current_time" . json_encode($current_time));
-            mkdir('uploads/collection/' . $collection->id, 0755, true);
+            mkdir('uploads/collection/' . $result['smart_collection']['id'], 0755, true);
 
 
             if (isset($result['smart_collection'])) {
