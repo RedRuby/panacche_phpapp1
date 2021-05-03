@@ -16,15 +16,13 @@
             </div>
             <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
-                    @if($design->designer()->display_picture)
                     <div class="author-img">
-                        <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('default/user.png') }}" style="width:35px">
-                    </div>
-                    @else
-                    <div class="author-img">
-                        <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('uploads/designer/display_picture/'.$design->designer->display_picture) }}" style="width:35px">
-                    </div>
-                    @endif
+                        @if($design->designer->display_picture)
+                            <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('uploads/designer/display_picture/'.$design->designer->display_picture) }}" style="width:35px">
+                        @else
+                            <img alt="Person" class="img-fluid rounded-circle mr-1" src="{{ asset('default/user.png') }}" style="width:35px">
+                        @endif
+                        </div>
                     <div class="author-info">
                         <p class="mb-0">{{ $design->design_name }}</p>
                     </div>
