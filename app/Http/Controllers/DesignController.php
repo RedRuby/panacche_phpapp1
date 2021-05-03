@@ -96,7 +96,12 @@ class DesignController extends Controller
             if ($request->Input("max")) {
                 $min = (int)$request->Input("min");
                 $max = (int)$request->Input("max");
-                $q->whereBetween('collections.room_budget', array($min, $max));
+                if($min == "20000"){
+                    $q->where('collections.room_budget', '>' , $min);
+                }else{
+                    $q->whereBetween('collections.room_budget', array($min, $max));
+                }
+
             }
         })->orderBy('created_at', $sort)->get();
         $grouped = $designs->groupBy('room_style');
@@ -219,6 +224,8 @@ class DesignController extends Controller
             $current_time = Carbon::now()->timestamp;
 
             Log::info("current_time" . json_encode($current_time));
+            mkdir('uploads/collection/' . $collection->id, 0755, true);
+
 
             if (isset($result['smart_collection'])) {
 
@@ -293,7 +300,6 @@ class DesignController extends Controller
                     ]);
                 }
                 Log::info('collection ' . json_encode($collection));
-                mkdir('uploads/collection/' . $collection->id, 0755, true);
 
                 if ($request->hasfile('collection_images')) {
                     Log::info("has file collection images");
