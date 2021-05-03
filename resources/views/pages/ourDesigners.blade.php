@@ -30,7 +30,7 @@
                 <p class="mb-0 px-3">
                    <span class="">{{ Str::limit($designer->quote, 130, '...') }} </span>
                 </p>
-            <p class="mb-0 my-3"><a href="{{env('Shop_URL')}}/pages/view-our-designer-profile?id={{$designer->id}}"  type="button" class="btn btn-primary" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</a></p>
+            <p class="mb-0 my-3"><a href="{{env('Shop_URL')}}/pages/view-our-designer-profile?id={{$designer->id}}"  type="button" class="btn btn-primary loginBtn" id="view-designer-profile-btn" data="{{ $designer->id }}">View Profile</a></p>
              </div>
           </div>
        </div>

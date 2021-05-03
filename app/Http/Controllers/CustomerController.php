@@ -51,17 +51,6 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        /*$this->validate($request, [
-            'shop' => 'required',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|unique:customers',
-            'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
-            'how_did_you_hear_about_us' => 'required',
-            'password' => 'required|string',
-            'confirm_password' => 'required|same:password',
-        ]);*/
-
         $shop = User::where('name', $request->shop)->first();
         $options = new Options();
         $options->setVersion('2021-01');
