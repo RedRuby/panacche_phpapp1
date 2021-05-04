@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Collection;
 use View;
+use Share;
 use Mail;
 use App\User;
 use App\Customer;
@@ -20,6 +22,8 @@ use Spatie\Activitylog\Models\Activity;
 use App\Http\Requests\CustomerStoreRequest;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use App\Http\Requests\VerifyContactRequest;
+use App\MyProject;
+use App\MyProjectsCollection;
 use App\UserDesignerRating;
 
 class CustomerController extends Controller
@@ -323,8 +327,43 @@ class CustomerController extends Controller
         Log::info("CustomerController :: myProjects for user id :: ".$request->id);
         Log::info("CustomerController :: myProjects ratings :: ".print_r($ratings, true));
 
+        if(empty($ratings)) {
+            $ratings = (new Collection())->getRandomDesigns();
+            Log::info("CustomerController :: myProjects ratings :: ".print_r($ratings, true));
+        }
+
+        foreach($ratings as $key => $value) {
+            $url = env('Shop_URL').'/pages/buy-design?id='.$value->designer_id;
+            Log::info("ratings :: Page URL :: ".$url);
+            $ratings[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+            // $ratings[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
+            $ratings[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+            $ratings[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+        }
+
         if(isset($request->id) && $request->id != '') {
-            $my_projects = view('customer.my_projects')->with('ratings', $ratings)->render();
+
+            $myProjectsCollectionIds = (new MyProject())->getMyProjects();
+            Log::info("CustomerController :: myProjects myProjectsCollectionIds :: ".print_r($myProjectsCollectionIds, true));
+
+            if(count($myProjectsCollectionIds) > 0) {
+                $myProjects = (new MyProjectsCollection())->getMyProjectCollections($request->id, $myProjectsCollectionIds);
+
+                foreach($myProjects as $key => $value) {
+                    $url = env('Shop_URL').'/pages/buy-design?id='.$value->designer_id;
+                    Log::info("Page URL :: ".$url);
+                    $myProjects[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                    // $myProjects[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
+                    $myProjects[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                    $myProjects[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+                }
+                Log::info("CustomerController :: myProjects myProjects  :: ".print_r($myProjects, true));
+
+
+                $my_projects = view('customer.my_projects')->with('ratings', $ratings)->with('myProjects', $myProjects)->render();
+            } else {
+                $my_projects = view('customer.no_projects')->with('ratings', $ratings)->render();
+            }
 
         } else {
             $my_projects = view('customer.no_projects')->with('ratings', $ratings)->render();
