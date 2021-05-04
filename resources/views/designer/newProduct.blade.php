@@ -3,7 +3,7 @@
     <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
 
     <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
-        <div class="col-md-4 float-left">
+        <div class="col-md-4 float-left pb-2">
             <p>Merchandise</p>
             <p>{{ $product->title }} </p>
             <p>Sourcing / Vendor</p>
@@ -14,13 +14,13 @@
                 <p>{{ $product->product_quantity }}</p>
             </div>
         </div>
-        <div class="col-md-4 float-left">
+        <div class="col-md-4 float-left pb-2">
             <p>Size Specification</p>
             <p>{{ $product->size_specification }}</p>
             <p>URL</p>
             <p>{{ $product->product_url }}</p>
             <div class="col-6 px-0 float-left">
-                <p>Retail Price</p>
+                <p class="mb-1">Retail Price</p>
                 <p>$ {{ $product->product_price }}</p>
             </div>
             <!--<div class="col-6 px-0 float-left colorVariants">
@@ -28,7 +28,7 @@
                 <p>$</p>
             </div>-->
         </div>
-        <div class="col-md-4 float-left">
+        <div class="col-md-4 float-left pb-2">
             <p>Upload Image Reference
                 <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
             </p>
@@ -36,7 +36,15 @@
             <div class="row uploadedImage px-0">
                 @foreach ($product->productImages as $key=>$productImage )
                     <div class="col-12 float-left">
-                        <p><img src="{{ asset('/uploads/collection/'.$collection->id.'/'.$product->productImages->first()->img_src) }}" class="img-fluid"></p>
+                        <p>
+                            @if($product->productImages->first()->img_src)
+                            <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                class="img-fluid">
+                            @else
+                            <img src="{{ asset('/default/product.jpg')}}"
+                            class="img-fluid">
+                            @endif
+                        </p>
                     </div>
                 @endforeach
 
