@@ -6,32 +6,41 @@
             <div class="col-12 px-3 landingHeading mt-4 float-left">
                 <h4 class="mb-4">
                     <span class="float-left mr-4 mb-4">Create New Design</span>
-                </h4>
-                <div class="form-group float-left">
-                    <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
-                        <option @if ($design->status == 'draft') selected @endif>Draft</option>
-                        <option @if ($design->status == 'approved') selected @endif>Published</option>
-                        <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
-                        <option @if ($design->status == 'submitted') selected @endif>Under Review</option>
+                    <div class="form-group float-left">
+                        <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
+                            <option @if ($design->status == 'draft') selected @endif>Draft</option>
+                            <option @if ($design->status == 'approved') selected @endif>Published</option>
+                            <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
+                            <option @if ($design->status == 'submitted') selected @endif>Under Review</option>
 
-                    </select>
-                </div>
-                <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
-                    <a href="landing_page.html">
-                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5"
-                            id="remove-design-btn" data-id="{{ $design->id }}"
-                            data-designer="{{ $design->designer->id }}">Remove this design
-                            <i class="fas fa-times-circle newDesignClose"></i>
-                        </button>
-                    </a>
-                    <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
-                    </a>
-                    <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
-                        <p class="mb-0">{{ $design->remark }}</p>
+                        </select>
                     </div>
-                </div>
+
+                    <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
+                        <a href="landing_page.html">
+                            <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5"
+                                id="remove-design-btn" data-id="{{ $design->id }}"
+                                data-designer="{{ $design->designer->id }}">Remove this design
+                                <i class="fas fa-times-circle newDesignClose"></i>
+                            </button>
+                        </a>
+                        <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
+                        </a>
+                        <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
+                            <p class="mb-0 text-white">
+                                @if($design->remark)
+                                {{ $design->remark }}
+                                @else
+                                No Remark
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </h4>
+
+
             </div>
 
             <div class="col-12 px-3 stepsWrap float-left mb-4">
@@ -78,13 +87,9 @@
                     <form class="mx-0">
 
                         <div class="col-12 px-0 float-left mb-3">
-                            <div class="form-group col-6 float-left pl-0">
+                            <div class="form-group col-12 float-left pl-0">
                                 <label for="">Design Name</label>
                                 <p class="mb-0">{{ $design->design_name }}</p>
-                            </div>
-                            <div class="form-group col-6 float-left pr-0">
-                                <label for="">Due Date</label>
-                                <p class="mb-0"></p>
                             </div>
                         </div>
 
@@ -252,29 +257,24 @@
                                     <p>URL</p>
                                     <p>{{ $product->product_url }}</p>
                                     <div class="col-6 px-0 float-left">
-                                        <p>Retail Price</p>
-                                        <p>$ {{ $product->product_price }}</p>
-                                    </div>
-                                    <div class="col-6 px-0 float-left colorVariants">
-                                        <p>Price</p>
+                                        <p class="mb-1">Retail Price</p>
                                         <p>$ {{ $product->product_price }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4 float-left">
                                     <p>Product Image</p>
-                                    @if ($product->productImages->count() == 0)
+                                    <div class="col-12 float-left viewProductImg px-0 mb-3">
+                                        <p>
+                                            @if ($product->productImages->count() == 0)
+                                            <img src="{{ asset('default/product.jpg') }}">
+                                            @else
+                                            @foreach ($product->productImages as $product)
+                                                <img src="{{ asset('uploads/collection/'.$design->id. '/' . $product->img_src) }}">
+                                            @endforeach
+                                            @endif
+                                        </p>
+                                    </div>
 
-                                    @else
-
-                                        @foreach ($product->productImages as $product)
-                                            <div class="col-12 float-left viewProductImg px-0 mb-3">
-                                                <p><img
-                                                        src="{{ asset('uploads/collection/'.$design->id. '/' . $product->img_src) }}">
-                                                </p>
-                                            </div>
-
-                                        @endforeach
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -304,7 +304,7 @@
                 <p>Are you sure you want to delete this design?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
             </div>
         </div>

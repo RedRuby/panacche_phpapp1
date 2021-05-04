@@ -5,14 +5,7 @@
 @else
 @foreach ($vendors as $vendor)
 <tr>
-    <td><span class="vendorLogo">
-        @if($vendor->vendor_logo)
-            <img src="{{ asset('uploads/collection/vendor_logo/'.$vendor->vendor_logo) }}" class="img-fluid rounded-circle mr-3" width="40">
-        @else
-            <img src="" class="img-fluid rounded-circle mr-3" width="40">
-        @endif
-    </span>
-    </td>
+
     <td>{{ \Carbon\Carbon::parse($vendor->created_at)->format('d/m/Y')}}</td>
     <td>{{ $vendor->id }}</td>
     <td>{{ $vendor->vendor_name }}</td>
