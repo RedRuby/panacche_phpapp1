@@ -1,9 +1,5 @@
-<div class="row align-items-center h-100">
-            
-            <div class="col-md-12 col-sm-12 col-xs-12 mx-auto designDetails">
-                <div class="col-md-12 float-left backBtn mt-5">
-                  <a href="#" class="float-left"><span><i class="fas fa-arrow-left"></i></span></a>
-               </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12 mx-auto  mt-5 designDetails">
                <div class="leftPart col-lg-12 col-md-12 col-sm-12 col-12 float-left pl-3 pr-0 mt-4">
                   <div class="row px-3">
                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 px-0 designCards float-left buyDesign">
@@ -25,7 +21,7 @@
                         </div>
                         <div class="col-12 px-0 roomsDisc float-left">
                            <p class="mb-0">Style: <span>{{ $design->room_style }}<span></p>
-                           <p class="mb-0">Total Design Package Price: ${{ $design->design_price }}</p>
+                           <p class="mb-0">Total Design Package Price: ${{ $design->room_budget }}</p>
                         </div>
                         <div class="col-12 px-0 panaccheSaving float-left">
                            <p class="">
@@ -40,11 +36,7 @@
                                 <i class="fas fa-exclamation-circle mr-2"></i> Buy Design Implementation Guide
                               </p>
                               <div class="col-md-6 float-left px-0">
-                                <p>To get the complete access of this design & interact with the designer, take your first step !</p>
-                                <p class="mb-0">Addition Benefits:</p>
-                                <p class="mb-0">- Interact with the Designer directly</p>
-                                <p class="mb-0">- Receive access to the items of this</p>
-                                <p class="mb-0">design at Panacche exclusive discount</p>
+                                {!! $product_description !!}
                               </div>
                               <div class="col-md-6 getGuideBox float-left">
                                 <p class="py-4 mb-0">${{ $design->design_price }}</p>
@@ -85,20 +77,31 @@
                         <div class="col-12 float-left align-items-center mt-4 px-5 pb-4">
                       
                           <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
-                            @foreach ($design->products as $product)
-                              @foreach ($product->productImages as $productImage)
                                 <div class="carousel-inner row w-100 mx-auto designCards">
-                                  <div class="carousel-item col-md-3 active">
-                                    <div class="card">
-                                     <div class="card-img projectImg">
-                                        <a href="#" data-toggle="modal" data-target="#designGalleryPop">
-                                            <img src="{{  asset('uploads/collection/product/images/'.$productImage->img_src) }}" class="card-img cover-photo" alt="Cover">
-                                        </a>
-                                     </div>
-                                  </div>
+                            @php
+                            $i = 0
+                            @endphp
+                            @foreach ($design->products as $pkey => $product)
+                              @foreach ($product->productImages as $key => $productImage)
+                              <div class="carousel-item col-md-3 
+                              @if($i == 0)
+                              active
+                              @endif
+                              @php
+                              $i++
+                              @endphp
+                              ">
+                                <div class="card">
+                                  <div class="card-img projectImg">
+                                    <a href="#" data-toggle="modal" class="designGalleryImgSrc" data-target="#designGalleryPop">
+                                      <img src="{{  asset('uploads/collection/product/images/'.$productImage->img_src) }}" class="card-img cover-photo" alt="Cover">
+                                    </a>
+                                 </div>
                                 </div>
+                              </div>
                               @endforeach
                             @endforeach
+                                </div>
                             </div>
                             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
@@ -111,6 +114,34 @@
                           </div>
                           
                             
+                          <!-- Design Gallery Modal -->
+                          <div class="modal fade galleryModel" id="designGalleryPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                             <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                   <div class="modal-header p-0 border-bottom-0">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                   </div>
+                                   <div class="modal-body">
+                                    <img src="" id="designGalleryImg" class="img-fluid" alt="Cover">
+                                    <a class="gallery-control-prev" href="javascript:;" role="button" data-slide="prev">
+                                      <span class="gallery-control-prev-icon" aria-hidden="true">
+                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                                      </span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="gallery-control-next" href="javascript:;" role="button" data-slide="next">
+                                      <span class="gallery-control-next-icon" aria-hidden="true">
+                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                      </span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+
                         </div>
                         
                         <!-- Design Gallery Modal -->
@@ -143,7 +174,7 @@
                                   <p class="px-5 mb-0">To access the details of the design, Kindly register as a Panacche user. </p>
                                </div>
                                <div class="modal-footer text-center d-block pb-4">
-                                  <button type="button" class="btn btn-primary loginBtn"><a href="landing_page.html">Login</a></button>
+                                  <button type="button" class="btn btn-primary loginBtn"><a href="/account">Login</a></button>
                                </div>
                             </div>
                          </div>
@@ -154,4 +185,3 @@
                   </div>
                </div>
             </div>
-         </div>

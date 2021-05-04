@@ -118,7 +118,7 @@ Route::get('get/portfolio/{filename}', 'FileController@getPortfolioFile')->name(
 Route::get('/pages/our/designers', 'PagesController@ourDesigners');
 Route::get('/pages/view-designer/{id}', 'PagesController@viewDesigner');
 
-Route::get('/pages/view/design/{id}/{customer}/{shop}', 'PagesController@viewDesign');
+Route::get('/pages/view/design/{id}/{shop}/{customer?}', 'PagesController@viewDesign');
 
 Route::post('/order/creation', 'OrderController@orderCreation');
 
