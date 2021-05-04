@@ -357,6 +357,7 @@ class DesignerController extends Controller
                         [
                           "option1"=> "Default Title",
                           "price"=> $request->product_price,
+                          "inventory_quantity" => $request->quantity,
                           //"sku": "123"
                         ],
                     ],
