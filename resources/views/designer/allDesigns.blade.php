@@ -17,6 +17,7 @@
                 <div class="col-12 px-0 mb-4">
                     <div class="row px-0 designCards">
                         @foreach ($designs as $design )
+                        <a href="#" id="view-under-review-design" data="{{ $design->id }}">
                         <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-img projectImg">
@@ -62,6 +63,8 @@
                             </div>
                         </div>
                         @endforeach
+                        </a>
+
 
 
                     </div>

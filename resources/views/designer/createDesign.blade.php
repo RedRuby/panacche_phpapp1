@@ -181,7 +181,7 @@
                         <div class="col-12 px-0">
                             <label for="" class="w-100">Approximate Room Size </label>
                             <div class="form-group col-5 float-left px-0 mb-0">
-                                <p class="italicLabel">Width</p>
+                                <p class="italicLabel mb-2">Width</p>
                                 <p class="col-6 float-left pl-0">
                                     <input type="number" class="form-control" placeholder="Feet" name="width_in_feet"
                                         id="width_in_feet" value="{{ $design->room_width_in_feet }}">
@@ -198,7 +198,7 @@
                                 <i class="fas fa-times"></i>
                             </div>
                             <div class="form-group col-6 float-left pr-0 mb-0">
-                                <p class="italicLabel">Height</p>
+                                <p class="italicLabel mb-2">Height</p>
                                 <p class="col-6 float-left pl-0">
                                     <input type="number" class="form-control" placeholder="Feet" name="height_in_feet"
                                         id="height_in_feet" value="{{ $design->room_height_in_feet }}">
@@ -383,7 +383,7 @@
                                     <td><input type="text" class="form-control" placeholder="" name="application[0]"
                                             id="application.0" value="{{ $colorPallette->application }}"><span
                                             class="validation_error"></span></td>
-                                            <td><i class="fas fa-save mr-2" aria-hidden="true"></i> <i class="fas fa-trash" aria-hidden="true"></i><i class="fas fa-plus-circle addPlus hide" aria-hidden="true"></i></td>
+                                            <td><i class="fas fa-trash" aria-hidden="true"></i><i class="fas fa-plus-circle addPlus hide" aria-hidden="true"></i></td>
 
                                     {{-- <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
                                             class="fas fa-plus-circle addPlus" id="addPlus"></i></td> --}}
@@ -432,7 +432,7 @@
                                         name="application[0]" id="application.0"><span class="validation_error"></span>
                                 </td>
 
-                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
+                                <td> <i class="fas fa-trash hide"></i><i
                                         class="fas fa-plus-circle addPlus"></i></td>
                             </tr>
                         </tbody>
