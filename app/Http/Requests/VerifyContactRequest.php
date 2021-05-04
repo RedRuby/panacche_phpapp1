@@ -24,15 +24,17 @@ class VerifyContactRequest extends FormRequest
     public function rules()
     {
         return [
-                'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
-        ];
+       //        'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
+               'phone' => 'required',
+
+            ];
     }
 
     public function messages()
     {
         return [
                 'phone.required' => 'Contact number field is required!',
-                'phone.regex' => 'Contact number must be valid!',
+               // 'phone.regex' => 'Contact number must be valid!',
         ];
     }
 }
