@@ -31,7 +31,7 @@ class AddVendorRequest extends FormRequest
     public function messages()
     {
         return [
-            'vendor.required' => 'Vendor name field is required!'
+            'vendor_name.required' => 'Vendor name field is required!'
         ];
     }
 }
