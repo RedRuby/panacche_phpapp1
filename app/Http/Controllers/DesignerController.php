@@ -239,21 +239,21 @@ class DesignerController extends Controller
     }
 
     public function inProgress($id){
-        $designs  = Collection::where('designer_id', $id)->where('status', 'disabled')->with('collectionImages')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'disabled')->with('collectionImages')->get();
         $designCards = view('designer.inprogress')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Inprogress designs loaded successfully'])->setStatusCode(200);
     }
 
     public function draft($id){
-        $designs  = Collection::where('designer_id', $id)->where('status', 'draft')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->with('designer')->where('designer_id', $id)->where('status', 'draft')->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);
     }
 
     public function reassign($id){
-        $designs  = Collection::where('designer_id', $id)->where('status', 'reassign')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'reassign')->get();
         $designCards = view('designer.reassign')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Reassign designs loaded successfully'])->setStatusCode(200);
@@ -262,21 +262,21 @@ class DesignerController extends Controller
 
 
     public function published($id){
-        $designs  = Collection::where('designer_id', $id)->where('status', 'approved')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'approved')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'published designs loaded successfully'])->setStatusCode(200);
     }
 
     public function under_review($id){
-        $designs  = Collection::where('designer_id', $id)->where('status', 'submitted')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'submitted')->get();
         $designCards = view('designer.under_review')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designs under review loaded successfully'])->setStatusCode(200);
     }
 
     public function allDesigns($id){
-        $designs  = Collection::where('designer_id', $id)->get();
+        $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->get();
         $designCards = view('designer.allDesigns')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
@@ -293,7 +293,7 @@ class DesignerController extends Controller
 
     public function viewAllDesigns($id)
     {
-        $designs = Collection::with('designer','orders')->where('designer_id', $id)->get();
+        $designs = Collection::with(['designer','collectionImages'])->with('designer','orders')->where('designer_id', $id)->get();
         $designs = view('designer.designer-view-all-designs')->with('designs', $designs)->render();
         return response()->json(['status'=>200, 'success' => true, 'data'=>['designs' => $designs ]])->setStatusCode(200);
     }
@@ -527,13 +527,13 @@ class DesignerController extends Controller
                 if (!empty($design_implementation_guide)) {
                     //Display File Name
 
-                    $name = $current_time . '_' . $design_implementation_guide->getClientOriginalName();
+                    $designGuideFileName = $current_time . '_' . $design_implementation_guide->getClientOriginalName();
 
                     //Move Uploaded File
-                    $destinationPath = public_path() . '/uploads/collection/' . $result['smart_collection']['id'] . '/';
-                    $design_implementation_guide->move($destinationPath, $name);
-                    $designGuideFileName = $name;
+                    $destinationPath = public_path() . '/uploads/collection/' . $request->collection_id . '/';
+                    $design_implementation_guide->move($destinationPath, $designGuideFileName);
                 }
+                Log::info("OK");
 
                 $collection = Collection::where('id', $request->collection_id)->update([
                    // 'id' => $result['smart_collection']['id'],
@@ -554,8 +554,9 @@ class DesignerController extends Controller
                     'pet_friendly_design' => $request->pet_friendly_design,
                     'design_price' => $request->design_price
                 ]);
+                Log::info("OK1");
                 $digitalProduct = DigitalProduct::where('collection_id', $request->collection_id)->first();
-
+                Log::info("Ok2");
                     if($digitalProduct){
                         $productData = [
                             "product" => [
@@ -578,24 +579,25 @@ class DesignerController extends Controller
                                 ],
                             ]
                         ];
-
+                        Log::info("OK3");
 
                         $productResult = $api->rest('POST', '/admin/products/'.$digitalProduct->id.'.json', $productData)['body'];
-
+                        Log::info("OK4");
                         if($productResult){
                             DigitalProduct::where('collection_id', $request->collection_id)->update([
                                   //  'id' => $productResult['product']['id'],
-                                    'collection_id' => $collection->id,
+                                    'collection_id' => $request->collection_id,
                                     'name' => 'Design Implementation Guide',
                                     'product_type' => 'design_implementation_guide',
                                     'product_price' => $request->design_price,
                                 ]);
                         }
 
+
                         if($designGuideFileName){
                             DigitalProduct::where('collection_id', $request->collection_id)->update([
                                 //  'id' => $productResult['product']['id'],
-                                  'collection_id' => $collection->id,
+                                  'collection_id' => $request->collection_id,
                                   'name' => 'Design Implementation Guide',
                                   'product_type' => 'design_implementation_guide',
                                   'product_price' => $request->design_price,
@@ -614,14 +616,13 @@ class DesignerController extends Controller
                     Log::info("has file collection images");
                     foreach ($collectionImages as $collectionImage) {
                         Log::info("single collection img");
-                        $name = $current_time . '_' . $collectionImage->getClientOriginalName();
+                        $collectionImageFileName = $current_time . '_' . $collectionImage->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
-                        $collectionImage->move($destinationPath, $name);
+                        $destinationPath = public_path() . '/uploads/collection/' . $request->collection_id.'/';
+                        $collectionImage->move($destinationPath, $collectionImageFileName);
 
-                        $collectionImageFileName = $name;
                         CollectionImages::create([
-                            'collection_id' => $collection->id,
+                            'collection_id' => $request->collection_id,
                             'img_src' => $collectionImageFileName,
                             'img_alt' => $collectionImageFileName,
                         ]);
@@ -632,14 +633,13 @@ class DesignerController extends Controller
                     Log::info("has file collection blue prints");
                     foreach ($collectionBluePrints as $collectionBluePrint) {
                         Log::info("single blue print img");
-                        $name = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
+                        $collectionBluePrintFileName = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
                         //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id. '/';
-                        $collectionBluePrint->move($destinationPath, $name);
+                        $destinationPath = public_path() . '/uploads/collection/' . $request->collection_id. '/';
+                        $collectionBluePrint->move($destinationPath, $collectionBluePrintFileName);
 
-                        $collectionBluePrintFileName = $name;
                         CollectionBluePrints::create([
-                            'collection_id' => $collection->id,
+                            'collection_id' => $request->collection_id,
                             'img_src' => $collectionBluePrintFileName,
                             'img_alt' => $collectionBluePrintFileName,
                         ]);
@@ -652,7 +652,7 @@ class DesignerController extends Controller
                     if ($request->hasfile('color_img')) {
                         foreach ($request->file('color_img') as $file) {
                             $name = $current_time . '_' . $file->getClientOriginalName();
-                            $destinationPath = public_path() . '/uploads/collection/' . $collection->id.'/';
+                            $destinationPath = public_path() . '/uploads/collection/' . $request->collection_id.'/';
                             $file->move($destinationPath, $name);
 
                             $imgFileName = $name;
@@ -667,7 +667,7 @@ class DesignerController extends Controller
                             $color_img_value = $colorImgArr[$i];
                         }
                         CollectionColorPallettes::create([
-                            'collection_id' => $collection->id,
+                            'collection_id' => $request->collection_id,
                             'color_img' => $color_img_value,
                             'color_name' => $colorNames[$i],
                             'brand' => $colorBrand[$i],

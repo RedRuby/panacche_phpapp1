@@ -8,6 +8,8 @@
                         <option @if ($design->status == 'draft') selected @endif>Draft</option>
                         <option @if ($design->status == 'approved') selected @endif>Published</option>
                         <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
+                        <option @if ($design->status == 'submitted') selected @endif>Under Review</option>
+
                     </select>
                 </div>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
@@ -18,6 +20,9 @@
                             <i class="fas fa-times-circle newDesignClose"></i>
                         </button>
                     </a>
+                    @if ($design->status == 'draft' )
+
+                    @else
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
@@ -25,6 +30,7 @@
                     <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
                         <p class="mb-0">{{ $design->remark }}</p>
                     </div>
+                    @endif
                 </div>
             </h4>
         </div>
@@ -119,16 +125,16 @@
                             <label for="">Room Type</label>
                             <select class="custom-select selectDropdown" name="room_type" id="room_type">
                                 <option value="0">Select Room Type</option>
-                                <option  value="Family Room">Family Room</option>
-                                <option  value="Office">Office</option>
-                                <option value="Dining Room">Dining Room</option>
-                                <option  value="Foyer">Foyer</option>
-                                <option  value="Bedroom">Bedroom</option>
-                                <option  value="Mudroom">Mudroom</option>
-                                <option  value="Nursery">Nursery</option>
-                                <option value="Kids Room">Kids Room</option>
-                                <option  value="Living Room">Living Room</option>
-                                <option value="Patio">Patio</option>
+                                <option  value="Family Room" @if ($design->room_type == 'Family Room') selected="selected" @endif>Family Room</option>
+                                <option  value="Office" @if ($design->room_type == 'Office') selected="selected" @endif>Office</option>
+                                <option value="Dining Room" @if ($design->room_type == 'Dining Room') selected="selected" @endif>Dining Room</option>
+                                <option  value="Foyer" @if ($design->room_type == 'Foyer') selected="selected" @endif>Foyer</option>
+                                <option  value="Bedroom" @if ($design->room_type == 'Bedroom') selected="selected" @endif>Bedroom</option>
+                                <option  value="Mudroom" @if ($design->room_type == 'Mudroom') selected="selected" @endif>Mudroom</option>
+                                <option  value="Nursery" @if ($design->room_type == 'Nursery') selected="selected" @endif>Nursery</option>
+                                <option value="Kids Room" @if ($design->room_type == 'Kids Room') selected="selected" @endif>Kids Room</option>
+                                <option  value="Living Room" @if ($design->room_type == 'Living Room') selected="selected" @endif>Living Room</option>
+                                <option value="Patio" @if ($design->room_type == 'Patio') selected="selected" @endif>Patio</option>
                             </select>
                             <span class="validation_error"></span>
                         </div>
@@ -377,9 +383,10 @@
                                     <td><input type="text" class="form-control" placeholder="" name="application[0]"
                                             id="application.0" value="{{ $colorPallette->application }}"><span
                                             class="validation_error"></span></td>
+                                            <td><i class="fas fa-save mr-2" aria-hidden="true"></i> <i class="fas fa-trash" aria-hidden="true"></i><i class="fas fa-plus-circle addPlus hide" aria-hidden="true"></i></td>
 
-                                    <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
-                                            class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                    {{-- <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
+                                            class="fas fa-plus-circle addPlus" id="addPlus"></i></td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -426,7 +433,7 @@
                                 </td>
 
                                 <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
-                                        class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                        class="fas fa-plus-circle addPlus"></i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -454,7 +461,7 @@
                         class="btn btn-primary cancelBtn float-right">Cancel don't Save</a>
                     <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide"
                         id="save-room-details-btn">Save Room Details</button>
-                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn"
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3"
                         id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
                 </p>
             </div>

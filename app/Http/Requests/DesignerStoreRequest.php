@@ -31,8 +31,8 @@ class DesignerStoreRequest extends FormRequest
             'email' => 'required|unique:customers',
           //  'phone' => 'required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
             'phone' => 'required',
-            'password' => 'required|string',
-            'confirm_password' => 'required|same:password',
+            // 'password' => 'required|string',
+            // 'confirm_password' => 'required|same:password',
             'website_url' => array("nullable","regex:".$regex),
             'resume' => 'required',
             'portfolio' => 'required'

@@ -322,12 +322,12 @@ class DesignController extends Controller
                     Log::info("has file collection blue prints");
                     foreach ($collectionBluePrints as $collectionBluePrint) {
                         Log::info("single blue print img");
-                        $name = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
+                        $collectionBluePrintFileName = $current_time . '_' . $collectionBluePrint->getClientOriginalName();
                         //Move Uploaded File
                         $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
-                        $collectionBluePrint->move($destinationPath, $name);
+                        $collectionBluePrint->move($destinationPath, $collectionBluePrintFileName);
 
-                        $collectionBluePrintFileName = $name;
+
                         CollectionBluePrints::create([
                             'collection_id' => $collection->id,
                             'img_src' => $collectionBluePrintFileName,

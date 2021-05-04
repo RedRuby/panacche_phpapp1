@@ -153,7 +153,7 @@
 						<div class="row">
                             @if($mydesign->collectionImages->count() == 0)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView">
-                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/images/design1.jpg') }}" />
+                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('default/design.jpg') }}" />
                             </p>
                             @else
                             @foreach($mydesign->collectionImages as $collectionImage)

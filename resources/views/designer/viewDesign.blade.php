@@ -7,6 +7,31 @@
                 <h4 class="mb-4">
                     <span class="float-left mr-4 mb-4">Create New Design</span>
                 </h4>
+                <div class="form-group float-left">
+                    <select class="custom-select selectDropdown" disabled="disabled" aria-readonly="">
+                        <option @if ($design->status == 'draft') selected @endif>Draft</option>
+                        <option @if ($design->status == 'approved') selected @endif>Published</option>
+                        <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
+                        <option @if ($design->status == 'submitted') selected @endif>Under Review</option>
+
+                    </select>
+                </div>
+                <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
+                    <a href="landing_page.html">
+                        <button type="button" class="btn btn-primary cancelBtn float-right removeDesignbtn pr-5"
+                            id="remove-design-btn" data-id="{{ $design->id }}"
+                            data-designer="{{ $design->designer->id }}">Remove this design
+                            <i class="fas fa-times-circle newDesignClose"></i>
+                        </button>
+                    </a>
+                    <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
+                    </a>
+                    <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
+                        <p class="mb-0">{{ $design->remark }}</p>
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 px-3 stepsWrap float-left mb-4">
@@ -126,13 +151,13 @@
                         @if ($design->collectionImages->count() == 0)
                             <p class="col-md-3 col-sm-6 col-6 uploadedImagesView">
                                 <img alt="Cover" class="card-img cover-photo"
-                                    src="{{ asset('uploads/collection/images/design1.jpg') }}" />
+                                    src="{{ asset('uploads/collection/images/design.jpg') }}" />
                             </p>
                         @else
 
                             @foreach ($design->collectionImages as $collectionImage)
                                 <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid"
-                                        src="{{ asset('uploads/collection/images/' . $collectionImage->img_src) }}">
+                                        src="{{ asset('uploads/collection/'. $design->id.'/' . $collectionImage->img_src) }}">
                                 </p>
                             @endforeach
                         @endif
@@ -148,7 +173,7 @@
 
                             @foreach ($design->bluePrintImages as $bluePrintImage)
                                 <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid"
-                                        src="{{ asset('uploads/collection/blue_prints/' . $bluePrintImage->img_src) }}">
+                                        src="{{ asset('uploads/collection/'. $design->id. '/' . $bluePrintImage->img_src) }}">
                                 </p>
                             @endforeach
                         @endif
@@ -244,7 +269,7 @@
                                         @foreach ($product->productImages as $product)
                                             <div class="col-12 float-left viewProductImg px-0 mb-3">
                                                 <p><img
-                                                        src="{{ asset('uploads/collection/product/images/' . $product->img_src) }}">
+                                                        src="{{ asset('uploads/collection/'.$design->id. '/' . $product->img_src) }}">
                                                 </p>
                                             </div>
 
@@ -264,8 +289,24 @@
         <footer></footer>
     </div>
 
-
-
-
-
 @endforeach
+
+<div class="modal fade" tabindex="-1" id="confirm-remove-design-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remove Design</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this design?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
