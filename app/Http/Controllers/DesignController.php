@@ -527,7 +527,8 @@ class DesignController extends Controller
         $valid_extension = array("csv");
 
         // 2MB in Bytes
-        $maxFileSize = 2097152;
+        // $maxFileSize = 2097152;
+        $maxFileSize = 20000000;
 
 
         // Check file extension
