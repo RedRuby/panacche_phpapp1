@@ -45,7 +45,7 @@
                                             <span>Draft</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="179.763" height="42.804" viewBox="0 0 179.763 42.804">
                                                 <g id="Group_1816" data-name="Group 1816" transform="translate(-346.237 -231.196)">
-                                                    <path id="Path_4277" data-name="Path 4277" d="M0,0H179.763V33H0L10.445,17.236Z" transform="translate(346.237 241)" fill="#00b41c"/>
+                                                    <path id="Path_4277" data-name="Path 4277" d="M0,0H179.763V33H0L10.445,17.236Z" transform="translate(346.237 241)" fill="#FF930E"/>
                                                     <path id="Path_4276" data-name="Path 4276" d="M-125-9538.873v9.8h18Z" transform="translate(633 9770.069)" fill="#2e7038"/>
                                                 </g>
                                             </svg>
@@ -81,8 +81,10 @@
                                     <div class="card-body p-3">
                                         <div class="align-items-center mb-2">
                                             <div class="author-info">
-                                                <p class="mb-0 float-left"><i class="fas fa-check-square mr-1"></i> {{ $value->design_name }}</p>
-                                                {{--  <button type="button" class="btn btn-primary projectEditBtn float-right px-2 py-1"><i class="fas fa-pen mr-1"></i> Edit</button>  --}}
+                                                    @if($value->my_project_design_guide_type != 1)
+                                                        <p class="mb-0 float-left"><i class="fas fa-check-square mr-1"></i> {{ $value->design_name }}</p>
+                                                        {{--  <button type="button" class="btn btn-primary projectEditBtn float-right px-2 py-1"><i class="fas fa-pen mr-1"></i> Edit</button>  --}}
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>

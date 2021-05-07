@@ -8,6 +8,13 @@ class UserDesignerRating extends Model
 {
     protected $table = "user_designer_ratings";
 
+    protected $fillable = [
+        "customer_id",
+        "designer_id",
+        "my_project_collection_id",
+        "rating",
+        "review",
+    ];
 
     public function getRecommendedDesignsByRatings() {
 

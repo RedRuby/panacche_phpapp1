@@ -33,6 +33,8 @@ Route::resource('customer', 'CustomerController');
 Route::post('/customer', 'CustomerController@store');
 
 Route::get('/my-projects', 'CustomerController@myProjects');
+Route::get('/order-placed', 'OrderController@orderPlaced');
+Route::post('/rate-review-order', 'OrderController@saveRateAndReview')->name('order-rate-review');
 
 Route::post('verify_email', 'CustomerController@verifyEmail');
 //Route::post('verify_username', 'CustomerController@verifyUsername');
