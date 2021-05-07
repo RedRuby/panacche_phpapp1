@@ -8,6 +8,8 @@
                         <option @if ($design->status == 'draft') selected @endif>Draft</option>
                         <option @if ($design->status == 'approved') selected @endif>Published</option>
                         <option @if ($design->status == 'rejected') selected @endif>Inactive</option>
+                        <option @if ($design->status == 'submitted') selected @endif>Under Review</option>
+
                     </select>
                 </div>
                 <div class="float-left float-sm-right float-md-right mb-4 mb-mb-0">
@@ -18,13 +20,23 @@
                             <i class="fas fa-times-circle newDesignClose"></i>
                         </button>
                     </a>
+                    @if ($design->status == 'draft' )
+
+                    @else
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
                     </a>
                     <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
-                        <p class="mb-0">{{ $design->remark }}</p>
+                        <p class="mb-0 text-white">
+                            @if($design->remark)
+                            {{ $design->remark }}
+                            @else
+                            No Remark
+                            @endif
+                        </p>
                     </div>
+                    @endif
                 </div>
             </h4>
         </div>
@@ -119,16 +131,16 @@
                             <label for="">Room Type</label>
                             <select class="custom-select selectDropdown" name="room_type" id="room_type">
                                 <option value="0">Select Room Type</option>
-                                <option  value="Family Room">Family Room</option>
-                                <option  value="Office">Office</option>
-                                <option value="Dining Room">Dining Room</option>
-                                <option  value="Foyer">Foyer</option>
-                                <option  value="Bedroom">Bedroom</option>
-                                <option  value="Mudroom">Mudroom</option>
-                                <option  value="Nursery">Nursery</option>
-                                <option value="Kids Room">Kids Room</option>
-                                <option  value="Living Room">Living Room</option>
-                                <option value="Patio">Patio</option>
+                                <option  value="Family Room" @if ($design->room_type == 'Family Room') selected="selected" @endif>Family Room</option>
+                                <option  value="Office" @if ($design->room_type == 'Office') selected="selected" @endif>Office</option>
+                                <option value="Dining Room" @if ($design->room_type == 'Dining Room') selected="selected" @endif>Dining Room</option>
+                                <option  value="Foyer" @if ($design->room_type == 'Foyer') selected="selected" @endif>Foyer</option>
+                                <option  value="Bedroom" @if ($design->room_type == 'Bedroom') selected="selected" @endif>Bedroom</option>
+                                <option  value="Mudroom" @if ($design->room_type == 'Mudroom') selected="selected" @endif>Mudroom</option>
+                                <option  value="Nursery" @if ($design->room_type == 'Nursery') selected="selected" @endif>Nursery</option>
+                                <option value="Kids Room" @if ($design->room_type == 'Kids Room') selected="selected" @endif>Kids Room</option>
+                                <option  value="Living Room" @if ($design->room_type == 'Living Room') selected="selected" @endif>Living Room</option>
+                                <option value="Patio" @if ($design->room_type == 'Patio') selected="selected" @endif>Patio</option>
                             </select>
                             <span class="validation_error"></span>
                         </div>
@@ -175,7 +187,7 @@
                         <div class="col-12 px-0">
                             <label for="" class="w-100">Approximate Room Size </label>
                             <div class="form-group col-5 float-left px-0 mb-0">
-                                <p class="italicLabel">Width</p>
+                                <p class="italicLabel mb-2">Width</p>
                                 <p class="col-6 float-left pl-0">
                                     <input type="number" class="form-control" placeholder="Feet" name="width_in_feet"
                                         id="width_in_feet" value="{{ $design->room_width_in_feet }}">
@@ -192,7 +204,7 @@
                                 <i class="fas fa-times"></i>
                             </div>
                             <div class="form-group col-6 float-left pr-0 mb-0">
-                                <p class="italicLabel">Height</p>
+                                <p class="italicLabel mb-2">Height</p>
                                 <p class="col-6 float-left pl-0">
                                     <input type="number" class="form-control" placeholder="Feet" name="height_in_feet"
                                         id="height_in_feet" value="{{ $design->room_height_in_feet }}">
@@ -377,9 +389,10 @@
                                     <td><input type="text" class="form-control" placeholder="" name="application[0]"
                                             id="application.0" value="{{ $colorPallette->application }}"><span
                                             class="validation_error"></span></td>
+                                            <td><i class="fas fa-trash" aria-hidden="true"></i><i class="fas fa-plus-circle addPlus hide" aria-hidden="true"></i></td>
 
-                                    <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
-                                            class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                    {{-- <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
+                                            class="fas fa-plus-circle addPlus" id="addPlus"></i></td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -425,8 +438,8 @@
                                         name="application[0]" id="application.0"><span class="validation_error"></span>
                                 </td>
 
-                                <td><i class="fas fa-save hide mr-2"></i> <i class="fas fa-trash hide"></i><i
-                                        class="fas fa-plus-circle addPlus" id="addPlus"></i></td>
+                                <td> <i class="fas fa-trash hide"></i><i
+                                        class="fas fa-plus-circle addPlus"></i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -454,7 +467,7 @@
                         class="btn btn-primary cancelBtn float-right">Cancel don't Save</a>
                     <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn hide"
                         id="save-room-details-btn">Save Room Details</button>
-                    <button type="button" class="btn btn-primary loginBtn float-right mr-3 disbaleBtn"
+                    <button type="button" class="btn btn-primary loginBtn float-right mr-3"
                         id="update-room-details-btn" data="{{ $design->id }}">Update Room Details</button>
                 </p>
             </div>
@@ -549,7 +562,7 @@
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
                                 <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i
-                                            class="fas fa-times-circle"></i></span></label>
+                                            class="fas fa-times-circle close-add-product-view"></i></span></label>
                                 <div class="imageRefUpload p-3 col-12 float-left">
 
                                     <div class="col-12 float-left px-0">
@@ -567,12 +580,7 @@
 
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="mt-3" for="">Price</label>
-                                <input type="text" class="form-control" placeholder="&#36;" name="product_price" id="product_price">
-                                <span class="validation_error"></span>
-                            </div>
-                        -->
+
                         </div>
                     </form>
                 </div>
@@ -598,7 +606,7 @@
                         <label for="" class="col-12 px-0 mt-3 mb-0">{{ $key + 1 }}</label>
 
                         <div class="row addmerchBox borderradius6 mt-1 mx-0 pt-3">
-                            <div class="col-md-4 float-left">
+                            <div class="col-md-4 float-left pb-2">
                                 <p>Merchandise</p>
                                 <p>{{ $product->title }} </p>
                                 <p>Sourcing / Vendor</p>
@@ -609,13 +617,13 @@
                                     <p>{{ $product->product_quantity }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-4 float-left">
+                            <div class="col-md-4 float-left pb-2">
                                 <p>Size Specification</p>
                                 <p>{{ $product->size_specification }}</p>
                                 <p>URL</p>
                                 <p>{{ $product->product_url }}</p>
                                 <div class="col-6 px-0 float-left">
-                                    <p>Retail Price</p>
+                                    <p class="mb-1">Retail Price</p>
                                     <p>$ {{ $product->product_price }}</p>
                                 </div>
                                 <!--<div class="col-6 px-0 float-left colorVariants">
@@ -623,17 +631,26 @@
                                 <p>$ </p>
                             </div>-->
                             </div>
-                            <div class="col-md-4 float-left">
+                            <div class="col-md-4 float-left pb-2">
                                 <p>Upload Image Reference
                                     <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
                                 </p>
                                 <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
                                 <div class="row uploadedImage px-0">
                                     @foreach ($product->productImages as $productImage)
+
                                         <div class="col-12 float-left">
-                                            <p><img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
-                                                    class="img-fluid"></p>
+                                            <p>
+                                                @if($product->productImages->first()->img_src)
+                                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                    class="img-fluid">
+                                                @else
+                                                <img src="{{ asset('/default/product.jpg')}}"
+                                                class="img-fluid">
+                                                @endif
+                                                </p>
                                         </div>
+
                                     @endforeach
 
 
@@ -822,7 +839,7 @@
                     <p>Are you sure you want to delete this design?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary loginBtn" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary loginBtn" id="remove-design-yes-btn">Yes</button>
                 </div>
             </div>

@@ -35,13 +35,15 @@ class CollectionStoreRequest extends FormRequest
             'width_in_inches' => 'required|numeric|min:1|not_in:0',
             'height_in_feet' => 'required|numeric|min:1|not_in:0',
             'height_in_inches' => 'required|numeric|min:1|not_in:0',
-            'collection_images.*' => 'required',
-            'blue_print_images.*' => 'required',
-            'color_img.*' => 'required',
+            'collection_images' => 'required|array|min:1',
+            'collection_blue_prints' => 'required|array|min:1',
+          //  'color_img' => 'required|mimes:jpg,jpeg,png,bmp',
+            //'color_img' => 'required | mimes:jpeg,jpg,png | max:1000',
             'color_name.*' => 'required',
             'brand.*' => 'required',
             'finish.*' => 'required',
             'application.*' => 'required',
+            'design_implementation_guide' => 'required'
 
         ];
     }
@@ -81,6 +83,12 @@ class CollectionStoreRequest extends FormRequest
             'brand' => 'Brand field is  required!',
             'finish' => 'Finish field is required!',
             'application' => 'Application field is required!',
+            'collection_blue_prints.required' => ' The Concept board image is required!',
+            'collection_blue_prints.array' => ' The Concept board image is required!',
+            'collection_blue_prints.min' => ' The Concept board image is required!',
+            'collection_images.required' => 'The Collection images is required!',
+            'collection_images.array' => 'The Collection images is required!',
+            'collection_images.min' => 'The Collection images is required!'
         ];
     }
 }

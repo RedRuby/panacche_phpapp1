@@ -17,12 +17,13 @@
                 <div class="col-12 px-0 mb-4">
                     <div class="row px-0 designCards">
                         @foreach ($designs as $design )
+                        <a href="#" id="view-under-review-design" data="{{ $design->id }}">
                         <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-img projectImg">
-                                @if($design->collectionImages()->count() == 0)
+                                @if($design->collectionImages->count() == 0)
 
-                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('default/design1.jpg') }}" />
+                                <img alt="Cover" class="card-img cover-photo" src="{{  asset('default/design.jpg') }}" />
                                 @else
                                 <img alt="Cover" class="card-img cover-photo" src="{{  asset('uploads/collection/'.$design->id.'/'.$design->collectionImages()->first()->img_src) }}">
 
@@ -62,6 +63,8 @@
                             </div>
                         </div>
                         @endforeach
+                        </a>
+
 
 
                     </div>

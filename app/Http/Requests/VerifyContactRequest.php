@@ -26,6 +26,7 @@ class VerifyContactRequest extends FormRequest
         return [
        //        'phone' => array('required', 'regex:/^(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([0-9]{3})\s*\)|([0-9]{3}))\s*(?:[.-]\s*)?([0-9]{3})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'),
                'phone' => 'required',
+              // 'phone' => 'required|min:12|max:13',
 
             ];
     }
