@@ -35,6 +35,7 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\UpdateCollectionRequest;
 use Carbon\Carbon;
 use App\Order;
+use Illuminate\Support\Facades\Storage;
 
 class DesignerController extends Controller
 {
@@ -60,9 +61,46 @@ class DesignerController extends Controller
         return response()->json(['status'=>201, 'success' => true, 'data'=>["dataCards"=>$dataCards, "designCards"=>$designCards, "designer"=>$designer], 'message'=>'Designer Dashboard loaded successfully'])->setStatusCode(200);
     }
 
+    /**
+     * This method is used to upload the designer file resume / portfolio.
+     */
+    public function uploadFile(Request $request) {
+        $allData = $request->all();
+        Log::info("upload file method :: ".print_r($allData, true));
+
+        $file = $request->file($request->type);
+        Log::info("upload file :: ".print_r($file, true));
+
+        if(isset($request->type) && $request->type != '') {
+            if($request->type == config('constants.DESIGNER_RESUME')) {
+                $inputs['folder']       = config('constants.DESIGNER_RESUME_UPLOAD_S3_OBJECT');
+                $inputs['filePrefix']   = "resume_";
+            } else if($request->type == config('constants.DESIGNER_PORTFOLIO')) {
+                $inputs['folder']       = config('constants.DESIGNER_PORTFOLIO_UPLOAD_S3_OBJECT');
+                $inputs['filePrefix']   = "portfolio_";
+            } else {
+                $inputs['folder']       = "";
+                $inputs['filePrefix']   = "";
+            }
+            $inputs['file'] = $file;
+
+            Log::info("upload file :: before send to s3 :: inputs :: ".print_r($inputs, true));
+            $url = app('App\Http\Controllers\FileController')->store($inputs);
+            Log::info("upload file :: after sent to s3 :: url :: ".print_r($url, true));
+
+            if($url) {
+                return response()->json(['status'=> 1, 'success' => true, 'data' => [ "url" => $url], 'message' => 'file uploaded successfully.'])->setStatusCode(200);
+            } else {
+                return response()->json(['status'=> 0, 'success' => false, 'data' => [], 'message' => 'file upload failed.'])->setStatusCode(200);
+            }
+        } else {
+            return response()->json(['status'=> 0, 'success' => false, 'data' => [], 'message' => 'file upload failed.'])->setStatusCode(200);
+        }
+    }
+
     public function store(DesignerStoreRequest $request)
     {
-        Log::info("in store method");
+        Log::info("in store method :: ".print_r($request->all(), true));
 
         $shop = User::where('name', $request->shop)->first();
         $options = new Options();
@@ -96,23 +134,23 @@ class DesignerController extends Controller
             }
 
 
-            if (!empty($resume)) {
-                //Display File Name
-                $resumeFileName = $resume->getClientOriginalName();
+            // if (!empty($resume)) {
+            //     //Display File Name
+            //     $resumeFileName = $resume->getClientOriginalName();
 
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/designer/resume/';
-                $resume->move($destinationPath, $resume->getClientOriginalName());
-            }
+            //     //Move Uploaded File
+            //     $destinationPath = public_path() . '/uploads/designer/resume/';
+            //     $resume->move($destinationPath, $resume->getClientOriginalName());
+            // }
 
-            if (!empty($portfolio)) {
-                //Display File Name
-                $portfolioFileName = $portfolio->getClientOriginalName();
+            // if (!empty($portfolio)) {
+            //     //Display File Name
+            //     $portfolioFileName = $portfolio->getClientOriginalName();
 
-                //Move Uploaded File
-                $destinationPath = public_path() . '/uploads/designer/portfolio/';
-                $portfolio->move($destinationPath, $portfolio->getClientOriginalName());
-            }
+            //     //Move Uploaded File
+            //     $destinationPath = public_path() . '/uploads/designer/portfolio/';
+            //     $portfolio->move($destinationPath, $portfolio->getClientOriginalName());
+            // }
 
             $data = [
                 'customer' => [
@@ -134,13 +172,13 @@ class DesignerController extends Controller
                         ],
                         [
                             "key" => "resume",
-                            "value" => "uploads/user/resume/" . $resumeFileName,
+                            "value" => $request->resumeUrl,
                             "value_type" => "string",
                             "namespace" => "global"
 
                         ], [
                             "key" => "portfolio",
-                            "value" => "uploads/user/portfolio/" . $portfolioFileName,
+                            "value" => $request->portfolioUrl,
                             "value_type" => "string",
                             "namespace" => "global"
 

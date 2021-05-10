@@ -97,6 +97,7 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 //Route::get('/designer/users/{id}', 'DesignerController@users');
 //Route::get('/designer/designs/{id}', 'DesignerController@designs');
 //Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+Route::post('/uploadFile', 'DesignerController@uploadFile');
 Route::post('/designer', 'DesignerController@store');
 Route::get('/designer/dashboard/{id}', 'DesignerController@dashboard');
 Route::get('/designer/designs/inprogress/{id}', 'DesignerController@inProgress');
