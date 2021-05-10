@@ -33,7 +33,6 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'success' => false, 'error' => $error])->setStatusCode(200);
         }
 
-
         $products = MyProject::select('my_projects_collection_products.*', 'my_projects.customer_id', 'my_projects.id as my_project_id', 'designers.first_name', 'designers.last_name', 'designers.display_picture', 'designers.id as designerId', 'my_projects.my_project_collection_id')
         ->leftJoin('my_projects_collection_products', 'my_projects.my_project_collection_id', '=', 'my_projects_collection_products.my_project_collection_id')
         ->leftJoin('collections', 'collections.id', '=', 'my_projects.parent_design_id')
