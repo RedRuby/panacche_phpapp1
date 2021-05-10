@@ -124,3 +124,5 @@ Route::post('/order/creation', 'OrderController@orderCreation');
 
 Route::post('/forgot/password', 'PagesController@forgotPassword');
 Route::post('/reset/password', 'PagesController@resetPassword');
+Route::post('/page/uploadReferenceLinks', 'RefrenceLinkController@saveRefrence');
+Route::post('/page/saveProductToMyProduct', 'MyProjectProductsController@saveProduct');

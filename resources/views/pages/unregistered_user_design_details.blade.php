@@ -1,6 +1,6 @@
 
-            <div class="col-md-12 col-sm-12 col-xs-12 mx-auto  mt-5 designDetails">
-               <div class="leftPart col-lg-12 col-md-12 col-sm-12 col-12 float-left pl-3 pr-0 mt-4">
+            <div class="col-md-12 col-sm-12 col-xs-12 mx-auto designDetails mt-5">
+               <div class="leftPart col-lg-12 col-md-12 col-sm-12 col-12 float-left pl-3 pr-0">
                   <div class="row px-3">
                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 px-0 designCards float-left buyDesign">
                         <div class="card">
@@ -65,6 +65,7 @@
                </div>
                
             </div>
+            <div class="clear"></div>
             <div class="col-md-12 col-sm-12 col-xs-12 px-0 mx-auto mt-4">
                <div class="col-md-12">
                   <div class="row px-3 mt-2 mb-md-5">
@@ -174,7 +175,7 @@
                                   <p class="px-5 mb-0">To access the details of the design, Kindly register as a Panacche user. </p>
                                </div>
                                <div class="modal-footer text-center d-block pb-4">
-                                  <button type="button" class="btn btn-primary loginBtn"><a href="/account">Login</a></button>
+                                  <button type="button" class="btn btn-primary loginBtn"><a href="{{ env('APP_SHOPIFY_URL') }}/account/login?return_url={{ env('APP_SHOPIFY_URL') }}/pages/buy-design?id={{ $design->id }}">Login</a></button>
                                </div>
                             </div>
                          </div>

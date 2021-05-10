@@ -9,7 +9,7 @@
                                  <div class="d-flex align-items-center justify-content-between col-12 px-0 mt-3 mb-2">
                                     <div class="media align-items-center">
                                        <i class="fas fa-circle md-14 align-middle mr-2 text-success"></i>
-                                       <img src="images/person-1.jpg" class="img-fluid rounded-circle mr-3" width="45" alt="User1">
+                                       <img src="{{asset('uploads/person-1.jpg')}}" class="img-fluid rounded-circle mr-3" width="45" alt="User1">
                                        <div class="media-body lh-1">
                                           <a href="#">John Mathew</a>
                                           <div>

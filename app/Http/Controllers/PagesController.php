@@ -16,6 +16,8 @@ use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use Osiset\BasicShopifyAPI\Session;
 use App\User;
 use App\ProductVariant;
+use App\MyProjectRefrenceLink;
+use App\MyProjectsCollectionProducts;
 use App\Http\Requests\ForgotPassowrdRequest;
 
 
@@ -49,7 +51,18 @@ class PagesController extends Controller
             $design_guide_product = $all_products[array_search(1, $all_product_type)];
             $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
             $product_variant_id = $product_variants->shopify_variant_id;
-            $design = view('pages.customer_buy_design_page')->with('design', $design)->with('product_variant_id', $product_variant_id)->render();
+            $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $id)->get();
+            $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $id)->get();
+            $selected_products = [];
+            foreach($my_products as $my_product){
+                $selected_products[$my_product['produt_id']] = $my_product;
+            }
+            $design = view('pages.customer_buy_design_page')
+                        ->with('design', $design)
+                        ->with('product_variant_id', $product_variant_id)
+                        ->with('refrenceLinks', $refrenceLinks)
+                        ->with('selected_products', $selected_products)
+                        ->render();
         }
         //
             //->with('discount', $discount)
