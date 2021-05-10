@@ -60,7 +60,7 @@
                                         @endif
                                     </div>
                                     <div class="card-img projectImg">
-                                        <img src="https://panacchedev2.pagekite.me/uploads/collection/vendor_logo/altumcode-dC6Pb2JdAqs-unsplash.jpg" class="card-img cover-photo" alt="Cover">
+                                        <img src="{{ ($value->image_src != '') ? $value->image_src : 'https://panacchedev2.pagekite.me/uploads/collection/vendor_logo/altumcode-dC6Pb2JdAqs-unsplash.jpg'}}" class="card-img cover-photo" alt="Cover">
                                     </div>
                                     <div class="card-body p-3">
                                         <div class="d-flex align-items-center mb-2">
