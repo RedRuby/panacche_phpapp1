@@ -327,12 +327,12 @@
                         <div class="mb-0">
                             <form id="disclaimer-form">
                                 <input type="hidden" name="shop" value="{{ env('Shop_NAME') }}" />
-                                <textarea class="form-control textarea" rows="4" placeholder="Type here"></textarea>
+                                <textarea class="form-control textarea" name="disclaimer" rows="4" placeholder="Type here"></textarea>
                                 <p>
                                     <button type="button"
                                         class="btn btn-primary cancelBtn float-right mt-2 p-1">Cancel</button>
                                     <button type="button" class="btn btn-primary cancelBtn float-right mt-2 p-1 mr-2"
-                                        data="{{ $design->id }}" id="submit-disclaimer-btn">Submit</button>
+                                        data="{{ $design->id }}" data-customer="{{ $customer->id }}" id="submit-disclaimer-btn">Submit</button>
                                 </p>
                             </form>
 
