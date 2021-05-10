@@ -316,7 +316,7 @@ class CustomerController extends Controller
         Log::info("CustomerController :: myProjects for user id :: ".$request->id);
         Log::info("CustomerController :: myProjects ratings :: ".print_r($ratings, true));
 
-        if(empty($ratings)) {
+        if(count($ratings) == 0) {
             $ratings = (new Collection())->getRandomDesigns();
             Log::info("CustomerController :: myProjects ratings :: ".print_r($ratings, true));
         }
