@@ -125,8 +125,11 @@ class ProductBulkUpload implements ShouldQueue
                                     $location = public_path('/uploads/collection/' . $collection->id . '/'. $productImageFileName);
                                     Log::info("productImages ". $productImage);
                                     Image::make($productImage)->save($location);
+                                    $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
+
+
                                     $image = [
-                                        "src"=> $productImageFileName
+                                        "src"=> $url
                                     ];
                                     array_push($images,$image);
                                 }
@@ -141,9 +144,10 @@ class ProductBulkUpload implements ShouldQueue
                                 $path = $productImages;
                                 Log::info("productImages ". $path);
                                 Image::make($path)->save($location);
+                                $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
 
                                 $image = [
-                                    "src"=>  $productImageFileName
+                                    "src"=>  $url
                                 ];
                                 array_push($images,$image);
                             }
@@ -170,6 +174,7 @@ class ProductBulkUpload implements ShouldQueue
                         }
                     }
 
+                    Log::info("my images : ". json_encode($images));
 
                     Log::info("import Data" . json_encode($importData));
                     $data = [
@@ -188,11 +193,11 @@ class ProductBulkUpload implements ShouldQueue
                                     "inventory_quantity" => $importData[6],
                                 ],
                             ],
-                            "images" => [
-                                $images
-                            ]
+                            "images" => $images,
                         ]
                     ];
+
+
 
                     $result = $api->rest('POST', '/admin/products.json', $data)['body'];
                     Log::info('result' . json_encode($result));
@@ -241,7 +246,10 @@ class ProductBulkUpload implements ShouldQueue
                         array_push($productIds, $product->id);
                     }
                 }
+
             }
+
+
         }catch(\Exception $e) {
             Log::info($e->getMessage());
            // return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);

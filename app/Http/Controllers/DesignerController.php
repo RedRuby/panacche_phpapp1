@@ -378,6 +378,28 @@ class DesignerController extends Controller
 
             //$productImagesArr = [];
 
+            $images = [];
+            $current_time = Carbon::now()->timestamp;
+            $productImageFileName = "";
+
+            if ($request->hasfile('product_images')) {
+                Log::info("has file product_images");
+                foreach ($productImages as $productImage) {
+                    Log::info("single product img");
+                    $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
+                    //Move Uploaded File
+                    $destinationPath = public_path() . 'uploads/collection/' . $collection->id . '/';
+                    $productImage->move($destinationPath, $productImageFileName);
+                    $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
+                    $image = [
+                        "src" => $url
+                    ];
+                   array_push($images, $image);
+                }
+            }
+
+            Log::info("images : " . json_encode($images));
+
 
 
             $data = [
@@ -399,6 +421,7 @@ class DesignerController extends Controller
                           //"sku": "123"
                         ],
                     ],
+                    "images" => $images,
                 ]
             ];
 
@@ -426,12 +449,7 @@ class DesignerController extends Controller
                 if ($request->hasfile('product_images')) {
                     Log::info("has file product_images");
                     foreach ($productImages as $productImage) {
-                        Log::info("single product img");
-                        $name = $current_time . '_' . $productImage->getClientOriginalName();
-                        //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/'.$collection->id.'/';
-                        $productImage->move($destinationPath, $name);
-                        $productImageFileName = $name;
+
                         ProductImages::create([
                             'product_id' => $product->id,
                             'img_src' => $productImageFileName,
