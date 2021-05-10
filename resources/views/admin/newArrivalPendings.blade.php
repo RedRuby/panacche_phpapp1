@@ -34,7 +34,7 @@
                           <i class="fas fa-search" aria-hidden="true"></i>
                           <input type="search" class="form-control col-12 float-left pl-5 searchInput" placeholder="Search">
                        </div>
-                       <div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
+                       <!--<div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
                           <div class="form-group">
                              <select class="custom-select selectDropdown">
                                 <option selected="">Filter</option>
@@ -44,7 +44,7 @@
                                 <option value="3">4</option>
                              </select>
                           </div>
-                       </div>
+                       </div>-->
                    </div>
                    <div class="col-12 float-left mt-3 px-0">
                       <div class="row px-3 mb-3 font-weight-bold">Designers<small>({{ $designers->count() }})</small></div>
@@ -196,7 +196,7 @@
                           <i class="fas fa-search" aria-hidden="true"></i>
                           <input type="search" class="form-control col-12 float-left pl-5 searchInput" placeholder="Search">
                        </div>
-                       <div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
+                       <!--<div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
                           <div class="form-group">
                              <select class="custom-select selectDropdown">
                                 <option selected="">Filter</option>
@@ -206,7 +206,7 @@
                                 <option value="3">4</option>
                              </select>
                           </div>
-                       </div>
+                       </div>-->
                    </div>
                    <div class="col-12 float-left mt-3 px-0">
                       <div class="row px-3 mb-3 font-weight-bold">Designers<small>({{ $designers->count() }} )</small></div>
@@ -245,7 +245,7 @@
                           <i class="fas fa-search" aria-hidden="true"></i>
                           <input type="search" class="form-control col-12 float-left pl-5 searchInput" placeholder="Search">
                        </div>
-                       <div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
+                       <!--<div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
                           <div class="form-group">
                              <select class="custom-select selectDropdown">
                                 <option selected="">Filter</option>
@@ -255,7 +255,7 @@
                                 <option value="3">4</option>
                              </select>
                           </div>
-                       </div>
+                       </div>-->
                    </div>
                    <div class="col-12 float-left mt-3 px-0">
                       <div class="row px-3 mb-3 font-weight-bold">Designs<small>({{ $designs->count() }})</small></div>
@@ -309,7 +309,7 @@
                           <i class="fas fa-search" aria-hidden="true"></i>
                           <input type="search" class="form-control col-12 float-left pl-5 searchInput" placeholder="Search">
                        </div>
-                       <div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
+                       <!--<div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
                           <div class="form-group">
                              <select class="custom-select selectDropdown">
                                 <option selected="">Filter</option>
@@ -319,7 +319,7 @@
                                 <option value="3">4</option>
                              </select>
                           </div>
-                       </div>
+                       </div>-->
                    </div>
                    <div class="col-12 float-left mt-3 px-0">
                       <div class="row px-3 mb-3 font-weight-bold">Order</div>
@@ -375,7 +375,7 @@
                           <i class="fas fa-search" aria-hidden="true"></i>
                           <input type="search" class="form-control col-12 float-left pl-5 searchInput" placeholder="Search">
                        </div>
-                       <div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
+                       <!--<div class="col-lg-2 col-md-4 col-sm-6 col-6 float-left">
                           <div class="form-group">
                              <select class="custom-select selectDropdown">
                                 <option selected="">Filter</option>
@@ -385,7 +385,7 @@
                                 <option value="3">4</option>
                              </select>
                           </div>
-                       </div>
+                       </div>-->
                    </div>
                    <div class="col-12 float-left mt-3 px-0">
                       <div class="row px-3 mb-3 font-weight-bold">Sale</div>

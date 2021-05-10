@@ -2,7 +2,7 @@
 
     <div class="row align-items-center h-100">
         <div class="col-md-12 col-sm-12 col-xs-12 mx-auto pl-5 createNewForm createNewFormView pt-5">
-            <div class="col-12 px-3 landingHeading float-left">
+            <div class="col-12 px-3 landingHeading float-left mt-4">
                 <h4 class="mb-4">
                     <span class="float-left mr-4">New Design Approval</span>
                 </h4>
@@ -293,18 +293,17 @@
                                 </div>
                                 <div class="col-md-4 float-left">
                                     <p>Product Image</p>
-                                    @if ($product->productImages->count() == 0)
-
-                                    @else
-
-                                        @foreach ($product->productImages as $product)
-                                            <div class="border border-ligh">
-                                                <p><img src="{{ asset('uploads/collection/' . $design->id . '/' . $product->img_src) }}"
-                                                        class="img-fluid"></p>
-                                            </div>
-
-                                        @endforeach
-                                    @endif
+                                    <div class="col-12 float-left viewProductImg px-0 mb-3">
+                                        <p>
+                                            @if ($product->productImages->count() == 0)
+                                            <img src="{{ asset('default/product.jpg') }}">
+                                            @else
+                                            @foreach ($product->productImages as $product)
+                                                <img src="{{ asset('uploads/collection/'.$design->id. '/' . $product->img_src) }}">
+                                            @endforeach
+                                            @endif
+                                        </p>
+                                    </div>
 
 
 
