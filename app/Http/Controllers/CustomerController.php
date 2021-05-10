@@ -341,10 +341,10 @@ class CustomerController extends Controller
                 foreach($myProjects as $key => $value) {
                     $url = env('Shop_URL').'/pages/buy-design?id='.$value->designer_id;
                     Log::info("Page URL :: ".$url);
-                    $myProjects[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                    $myProjects[$key]->facebook = Share::page($url, "Check out my designs")->facebook()->getRawLinks();
                     // $myProjects[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
-                    $myProjects[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
-                    $myProjects[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+                    $myProjects[$key]->twitter = Share::page($url, "Check out my designs")->twitter()->getRawLinks();
+                    $myProjects[$key]->whatsapp = Share::page($url, "Check out my designs")->whatsapp()->getRawLinks();
                 }
                 Log::info("CustomerController :: myProjects myProjects  :: ".print_r($myProjects, true));
 
