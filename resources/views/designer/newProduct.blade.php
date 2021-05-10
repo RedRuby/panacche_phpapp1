@@ -102,23 +102,26 @@
                     <span class="validation_error"></span>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
-                <div class="form-group">
-                    <label for="">Upload Image Reference <span class="deleteUpload deleteUpload2"><i class="fas fa-times-circle" aria-hidden="true"></i></span></label>
-                    <div class="imageRefUpload p-3 col-12 float-left">
-
-                        <div class="col-12 float-left px-0">
-                            <p>Drag and Drop Image/ Browse Files</p>
-                            <p class="custom-file mb-0 addImage" style="background-image: url(&quot;blob:https://panacchebeta.myshopify.com/ccf1760d-cb18-446f-8650-fdbf0e74d25b&quot;);">
-                                <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
-                                <span class="validation_error"></span>
-                                <label class="custom-file-label2 mb-0" for="customFile"></label>
+            <div class="col-md-4 float-left pb-2">
+                <p>Upload Image Reference
+                    <span class="deleteUpload"><i class="fas fa-times-circle"></i></span>
+                </p>
+                <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
+                <div class="row uploadedImage px-0">
+                    @foreach ($product->productImages as $key=>$productImage )
+                        <div class="col-12 float-left">
+                            <p>
+                                @if($product->productImages->first()->img_src)
+                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                    class="img-fluid">
+                                @else
+                                <img src="{{ asset('/default/product.jpg')}}"
+                                class="img-fluid">
+                                @endif
                             </p>
                         </div>
-                        <div class="row uploadedImage px-0" id="uploadProductImages">
-                        </div>
+                    @endforeach
 
-                    </div>
                 </div>
 
             </div>

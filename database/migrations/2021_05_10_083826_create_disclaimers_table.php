@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDesignDisclaimersTable extends Migration
+class CreateDisclaimersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateDesignDisclaimersTable extends Migration
      */
     public function up()
     {
-        Schema::create('design_disclaimers', function (Blueprint $table) {
+        Schema::create('disclaimers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('collection_id');
-            $table->text('disclaimer');
+            $table->longText('disclaimer');
+            $table->unsignedBigInteger('created_by');
+            $table->enum('status', ['active','inactive']);
 
-            $table->foreign('collection_id')->references('id')->on('collections');
+            $table->foreign('created_by')->references('id')->on('customers');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateDesignDisclaimersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('design_disclaimers');
+        Schema::dropIfExists('disclaimers');
     }
 }
