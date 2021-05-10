@@ -180,7 +180,7 @@
                                 <div class="card">
                                     <a href="{{ env('Shop_URL') }}/pages/buy-design?id={{ $value->id }}">
                                         <div class="card-img projectImg">
-                                            <img src="{{ ($value->image_src != '') ? $value->image_src : asset('uploads/collection/vendor_logo/deginer-img.jpeg') }}" class="card-img cover-photo" alt="{{ ($value->image_alt != '') ? $value->image_alt : 'Recommended Design' }}">
+                                            <img src="{{ ($value->image_src != '') ? $value->image_src : 'https://panacchedev2.pagekite.me/uploads/collection/vendor_logo/altumcode-dC6Pb2JdAqs-unsplash.jpg' }}" class="card-img cover-photo" alt="{{ ($value->image_alt != '') ? $value->image_alt : 'Recommended Design' }}">
                                         </div>
                                         <div class="card-body p-3">
                                             <div class="d-flex align-items-center mb-2">
