@@ -416,7 +416,7 @@ class DesignController extends Controller
                     Log::info("single product img");
                     $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
                     //Move Uploaded File
-                    $destinationPath = public_path() . 'uploads/collection/' . $collection->id . '/';
+                    $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
                     $productImage->move($destinationPath, $productImageFileName);
                     $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
                     $image = [

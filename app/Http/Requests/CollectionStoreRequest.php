@@ -31,19 +31,19 @@ class CollectionStoreRequest extends FormRequest
             'room_style' => 'required|not_in:0',
             'implementation_guide_description' => 'required',
             'customer_id' => 'required',
-            'width_in_feet' => 'required|numeric|min:1|not_in:0',
-            'width_in_inches' => 'required|numeric|min:1|not_in:0',
-            'height_in_feet' => 'required|numeric|min:1|not_in:0',
-            'height_in_inches' => 'required|numeric|min:1|not_in:0',
+            // 'width_in_feet' => 'required|numeric|min:1|not_in:0',
+            // 'width_in_inches' => 'required|numeric|min:1|not_in:0',
+            // 'height_in_feet' => 'required|numeric|min:1|not_in:0',
+            // 'height_in_inches' => 'required|numeric|min:1|not_in:0',
             'collection_images' => 'required|array|min:1',
             'collection_blue_prints' => 'required|array|min:1',
           //  'color_img' => 'required|mimes:jpg,jpeg,png,bmp',
             //'color_img' => 'required | mimes:jpeg,jpg,png | max:1000',
-            'color_name.*' => 'required',
-            'brand.*' => 'required',
-            'finish.*' => 'required',
-            'application.*' => 'required',
-            'design_implementation_guide' => 'required'
+            // 'color_name.*' => 'required',
+            // 'brand.*' => 'required',
+            // 'finish.*' => 'required',
+            // 'application.*' => 'required',
+            // 'design_implementation_guide' => 'required'
 
         ];
     }

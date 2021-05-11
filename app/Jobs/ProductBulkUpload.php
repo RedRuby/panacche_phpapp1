@@ -227,7 +227,7 @@ class ProductBulkUpload implements ShouldQueue
                                     Log::info("in productImageFileName");
                                     ProductImages::create([
                                         'product_id' => $product->id,
-                                        'img_src' => $images[$key]['src'],
+                                        'img_src' => $productImageFileName,
                                         'img_alt' => $productImageFileName,
                                     ]);
                             }
@@ -236,7 +236,7 @@ class ProductBulkUpload implements ShouldQueue
                             if($productImages){
                                 ProductImages::create([
                                     'product_id' => $product->id,
-                                    'img_src' => $images[0]['src'],
+                                    'img_src' => $productImageFileName,
                                     'img_alt' => $productImageFileName,
                                 ]);
                             }

@@ -6,10 +6,13 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Designer;
 
 class FileController extends Controller
 {
-    function getResumeFile($filename){
+    function getResumeFile($id){
+        $designer = Designer::find($id);
+        $filename = $designer->resume;
         //$file=Storage::disk('public')->get($filename);
         if(strpos($filename, "http://") || strpos($filename, "http://") !== false){
             $path = $filename;
@@ -23,8 +26,9 @@ class FileController extends Controller
 
     }
 
-    function getPortfolioFile($filename){
-
+    function getPortfolioFile($id){
+        $designer = Designer::find($id);
+        $filename = $designer->resume;
         if(strpos($filename, "http://" || strpos($filename, "http://")) !== false){
             $path = $filename;
             $basename = basename($path, ".");

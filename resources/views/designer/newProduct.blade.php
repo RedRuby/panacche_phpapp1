@@ -38,7 +38,7 @@
                     <div class="col-12 float-left">
                         <p>
                             @if($product->productImages->first()->img_src)
-                            <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                            <img src="{{ asset('/uploads/collection/' . $collection->id . '/' . $product->productImages->first()->img_src) }}"
                                 class="img-fluid">
                             @else
                             <img src="{{ asset('/default/product.jpg')}}"
@@ -112,7 +112,7 @@
                         <div class="col-12 float-left">
                             <p>
                                 @if($product->productImages->first()->img_src)
-                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                <img src="{{ asset('/uploads/collection/' . $collection->id . '/' . $product->productImages->first()->img_src) }}"
                                     class="img-fluid">
                                 @else
                                 <img src="{{ asset('/default/product.jpg')}}"

@@ -115,8 +115,8 @@ Route::get('/designer/view/all/orders/{id}', 'DesignerController@viewAllOrders')
 Route::get('/designer/view/all/designs/{id}', 'DesignerController@viewAllDesigns');
 
 Route::get('view', 'FileController@view');
-Route::get('get/resume/{filename}', 'FileController@getResumeFile')->name('get_resume_file');
-Route::get('get/portfolio/{filename}', 'FileController@getPortfolioFile')->name('get_portfolio_file');
+Route::get('get/resume/{id}', 'FileController@getResumeFile')->name('get_resume_file');
+Route::get('get/portfolio/{id}', 'FileController@getPortfolioFile')->name('get_portfolio_file');
 
 
 
