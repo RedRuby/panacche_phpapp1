@@ -32,6 +32,10 @@ Route::get('/', function () {
 Route::resource('customer', 'CustomerController');
 Route::post('/customer', 'CustomerController@store');
 
+Route::get('/my-projects', 'CustomerController@myProjects');
+Route::get('/order-placed', 'OrderController@orderPlaced');
+Route::post('/rate-review-order', 'OrderController@saveRateAndReview')->name('order-rate-review');
+
 Route::post('verify_email', 'CustomerController@verifyEmail');
 //Route::post('verify_username', 'CustomerController@verifyUsername');
 Route::post('verify_phone', 'CustomerController@verifyPhone');
@@ -93,6 +97,7 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 //Route::get('/designer/users/{id}', 'DesignerController@users');
 //Route::get('/designer/designs/{id}', 'DesignerController@designs');
 //Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+Route::post('/uploadFile', 'DesignerController@uploadFile');
 Route::post('/designer', 'DesignerController@store');
 Route::get('/designer/dashboard/{id}', 'DesignerController@dashboard');
 Route::get('/designer/designs/inprogress/{id}', 'DesignerController@inProgress');
@@ -118,9 +123,11 @@ Route::get('get/portfolio/{filename}', 'FileController@getPortfolioFile')->name(
 Route::get('/pages/our/designers', 'PagesController@ourDesigners');
 Route::get('/pages/view-designer/{id}', 'PagesController@viewDesigner');
 
-Route::get('/pages/view/design/{id}/{customer}/{shop}', 'PagesController@viewDesign');
+Route::get('/pages/view/design/{id}/{shop}/{customer?}', 'PagesController@viewDesign');
 
 Route::post('/order/creation', 'OrderController@orderCreation');
 
 Route::post('/forgot/password', 'PagesController@forgotPassword');
 Route::post('/reset/password', 'PagesController@resetPassword');
+Route::post('/page/uploadReferenceLinks', 'RefrenceLinkController@saveRefrence');
+Route::post('/page/saveProductToMyProduct', 'MyProjectProductsController@saveProduct');
