@@ -575,10 +575,10 @@ class DesignController extends Controller
                 dispatch($bulkUploadJob);
                     return response()->json(['status' => 201, 'success' => true, 'message' => 'Your specifics have been started uploading in background successfully.'])->setStatusCode(201);
                 } else {
-                    return response()->json(['status' => 500, 'errors' => "Max file size exceeded"]);
+                    return response()->json(['status' => 500, 'errors' => "Max file size exceeded", "message"=>"Max file size exceeded"]);
                 }
             } else {
-                return response()->json(['status' => 500, 'errors' => "Invalid file extension"]);
+                return response()->json(['status' => 500, 'errors' => "Invalid file extension", "message"=>"Invalid file extension"]);
             }
     }
 
