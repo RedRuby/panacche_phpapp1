@@ -504,12 +504,17 @@
                                 <label class="custom-file-label mb-0" for="customFile"></label>
                             </div>
                         </form>
+
+                        <div class="col-md-10 float-left mx-0 typeUser font14">
+                            <a href="{{ asset('/uploads/product_bulk_upload.csv') }}" target="_blank">Download a Blank
+                                Sample Template CSV file for Bulk upload</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
+                {{-- <div class="col-md-7 float-left mx-0 typeUser text-right pt-4 font14">
                     <a href="{{ asset('/uploads/product_bulk_upload.csv') }}" target="_blank">Download a Blank
                         Sample Template CSV file for Bulk upload</a>
-                </div>
+                </div> --}}
             </div>
 
             <div class="row px-3 mt-3 hide" id="add-product-view">
