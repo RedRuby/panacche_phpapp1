@@ -8,6 +8,7 @@
     <div class="col-12 px-0 mb-4 float-left">
         <div class="col-md-4 px-0 float-left">
             <div class="col-12 newDesignerProfile">
+
                 @if($designer->display_picture)
                 <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/display_picture/'.$designer->display_picture) }})"></p>
                 @else
