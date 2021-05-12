@@ -107,10 +107,10 @@ class ProductBulkUpload implements ShouldQueue
                     }
                     $images =[];
                     $productImageFileName = "";
-                    if($importData[9]){
+                    if($importData[7]){
 
 
-                        $productImages  =  $importData[9];
+                        $productImages  =  $importData[7];
                         $current_time = Carbon::now()->timestamp;
                         if($productImages){
                             $productImages = explode(",", $productImages);
@@ -135,7 +135,7 @@ class ProductBulkUpload implements ShouldQueue
                                 }
                             }else{
                                 Log::info("single  product image ");
-                                $productImages  =  $importData[9];
+                                $productImages  =  $importData[7];
                                 $contents = file_get_contents($productImages);
                                 $productImageFileName = basename($productImages);
 
@@ -155,24 +155,26 @@ class ProductBulkUpload implements ShouldQueue
                         }
                     }
 
-                    $productTags = $importData[8];
-                    $product_Tags = [];
-                    array_push($product_Tags,$collection->design_name);
-                    if($productTags){
-                         if($productTags){
-                            $productTags = explode(",",$productTags);
+                    // $productTags = $importData[8];
+                    // $product_Tags = [];
+                    // array_push($product_Tags,$collection->design_name);
+                    // if($productTags){
+                    //      if($productTags){
+                    //         $productTags = explode(",",$productTags);
 
-                            if(count($productTags) > 1){
-                                foreach($productTags as $productTag){
+                    //         if(count($productTags) > 1){
+                    //             foreach($productTags as $productTag){
 
-                                    array_push($product_Tags,$productTag);
-                                }
-                            }else{
-                                $productTags = $importData[8];
-                                array_push($product_Tags,$productTags);
-                            }
-                        }
-                    }
+                    //                 array_push($product_Tags,$productTag);
+                    //             }
+                    //         }else{
+                    //             $productTags = $importData[8];
+                    //             array_push($product_Tags,$productTags);
+                    //         }
+                    //     }
+                    // }
+
+                    sleep(5);
 
                     Log::info("my images : ". json_encode($images));
 
@@ -185,7 +187,7 @@ class ProductBulkUpload implements ShouldQueue
                             "description" => $importData[1],
                             "published" => false,
                             "inventory_quantity" => $importData[6],
-                            "tags" => $product_Tags,
+                            //"tags" => $product_Tags,
                             "variants" => [
                                 [
                                     "option1" => "Default Title",
@@ -220,7 +222,7 @@ class ProductBulkUpload implements ShouldQueue
                         ]);
 
                         Log::info("productImageFileName img ". $productImageFileName);
-                        $productImages  =  $importData[9];
+                        $productImages  =  $importData[7];
                         $productImages = explode(",", $productImages);
                         if(count($productImages) > 1){
                             foreach($productImages as $key=>$productImage){
@@ -232,7 +234,7 @@ class ProductBulkUpload implements ShouldQueue
                                     ]);
                             }
                         }else{
-                            $productImages  =  $importData[9];
+                            $productImages  =  $importData[7];
                             if($productImages){
                                 ProductImages::create([
                                     'product_id' => $product->id,
