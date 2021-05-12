@@ -762,10 +762,17 @@
 
             </div>
 
-            <div class="row px-3 pt-4">
+            @if($design->products)
+            <div class="row px-3 pt-4 bottom-add-buttons">
                 <button type="submit" class="btn btn-primary loginBtn mr-2 add-product-view-btn">Add</button>
                 <button type="submit" class="btn btn-primary loginBtn upload-bulk-btn">Upload Bulk</button>
             </div>
+            @else
+            <div class="row px-3 pt-4 bottom-add-buttons hide">
+                <button type="submit" class="btn btn-primary loginBtn mr-2 add-product-view-btn">Add</button>
+                <button type="submit" class="btn btn-primary loginBtn upload-bulk-btn">Upload Bulk</button>
+            </div>
+            @endif
 
         </div>
 
