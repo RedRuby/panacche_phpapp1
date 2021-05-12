@@ -9,9 +9,9 @@
         <div class="col-md-4 px-0 float-left">
             <div class="col-12 newDesignerProfile">
                 @if($designer->display_picture)
-                <p class="mx-auto" style="background-image: url('{{  asset('uploads/designer/display_picture/'.$designer->display_picture) }}')"></p>
+                <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/display_picture/'.$designer->display_picture) }})"></p>
                 @else
-                <p class="mx-auto" style="background-image: url('{{  asset('default/user.png') }}')"></p>
+                <p class="mx-auto" style="background-image: url({{  asset('default/user.png') }})"></p>
                 @endif
             </div>
             <div class="col-12 py-3">
@@ -19,13 +19,13 @@
                     <h5 class="defaultColor font-weight-bold" for="">Designer Documents</h5>
                 </div>
                 <div class="newDesignerdownlaodDoc col-12 py-4 mt-3">
-                    <a href="{{route('get_resume_file', $designer->id)}}">
+                    <a href="{{ $designer->resume }}" target="_blank">
                         <button type="button" class="btn btn-primary loginBtn mb-3 w-100">
                             <i class="fas fa-file mr-2"></i>
                             Download Resume
                         </button>
                     </a>
-                    <a href="{{route('get_portfolio_file', $designer->id)}}">
+                    <a href="{{ $designer->portfolio }}" target="_blank">
                         <button type="button" class="btn btn-primary loginBtn w-100">
                             <i class="fas fa-file mr-2"></i>
                             Download Portfolio
