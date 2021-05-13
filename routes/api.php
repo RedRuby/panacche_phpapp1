@@ -32,6 +32,10 @@ Route::get('/', function () {
 Route::resource('customer', 'CustomerController');
 Route::post('/customer', 'CustomerController@store');
 
+Route::get('/my-projects', 'CustomerController@myProjects');
+Route::get('/order-placed', 'OrderController@orderPlaced');
+Route::post('/rate-review-order', 'OrderController@saveRateAndReview')->name('order-rate-review');
+
 Route::post('verify_email', 'CustomerController@verifyEmail');
 //Route::post('verify_username', 'CustomerController@verifyUsername');
 Route::post('verify_phone', 'CustomerController@verifyPhone');
@@ -68,14 +72,14 @@ Route::get('/admin/designer/profile/approve/{id}', 'AdminController@approveDesig
 Route::get('/admin/designer/profile/reject/{id}', 'AdminController@rejectDesigner');
 Route::get('/admin/vendor_datalist', 'AdminController@vendorDatalist');
 Route::post('/admin/add/vendor', 'AdminController@addVendor');
-Route::get('/admin/review_design/{id}', 'AdminController@reviewDesign');
+Route::get('/admin/review_design/{id}/{customerId}', 'AdminController@reviewDesign');
 Route::get('/admin/design/status/update/{id}/{status}', 'AdminController@updateDesignStatus');
 Route::post('/admin/design/add/remark', 'AdminController@addRemark');
 Route::post('/admin/design/add/disclaimer', 'AdminController@addDisclaimer');
 Route::get('/admin/settings', 'AdminController@settings');
 Route::get('/admin/vendors', 'AdminController@vendors');
 Route::get('/admin/disclaimer', 'AdminController@disclaimers');
-Route::get('/admin/add/disclaimer', 'AdminController@addDisclaimer');
+Route::post('/admin/add/disclaimer', 'AdminController@adminDisclaimer');
 Route::get('/admin/edit/disclaimer/{id}', 'AdminController@editDisclaimer');
 Route::get('/admin/delete/disclaimer/{id}', 'AdminController@deleteDisclaimer');
 Route::get('/admin/search/vendor/{text}', 'AdminController@searchVendor');
@@ -93,6 +97,7 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 //Route::get('/designer/users/{id}', 'DesignerController@users');
 //Route::get('/designer/designs/{id}', 'DesignerController@designs');
 //Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+Route::post('/uploadFile', 'DesignerController@uploadFile');
 Route::post('/designer', 'DesignerController@store');
 Route::get('/designer/dashboard/{id}', 'DesignerController@dashboard');
 Route::get('/designer/designs/inprogress/{id}', 'DesignerController@inProgress');
@@ -110,8 +115,8 @@ Route::get('/designer/view/all/orders/{id}', 'DesignerController@viewAllOrders')
 Route::get('/designer/view/all/designs/{id}', 'DesignerController@viewAllDesigns');
 
 Route::get('view', 'FileController@view');
-Route::get('get/resume/{filename}', 'FileController@getResumeFile')->name('get_resume_file');
-Route::get('get/portfolio/{filename}', 'FileController@getPortfolioFile')->name('get_portfolio_file');
+Route::get('get/resume/{id}', 'FileController@getResumeFile')->name('get_resume_file');
+Route::get('get/portfolio/{id}', 'FileController@getPortfolioFile')->name('get_portfolio_file');
 
 
 

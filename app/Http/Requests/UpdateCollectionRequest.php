@@ -31,10 +31,10 @@ class UpdateCollectionRequest extends FormRequest
             'room_style' => 'required|not_in:0',
             'implementation_guide_description' => 'required',
             'customer_id' => 'required',
-            'width_in_feet' => 'required|numeric|min:1|not_in:0',
-            'width_in_inches' => 'required|numeric|min:1|not_in:0',
-            'height_in_feet' => 'required|numeric|min:1|not_in:0',
-            'height_in_inches' => 'required|numeric|min:1|not_in:0'
+            // 'width_in_feet' => 'required|numeric|min:1|not_in:0',
+            // 'width_in_inches' => 'required|numeric|min:1|not_in:0',
+            // 'height_in_feet' => 'required|numeric|min:1|not_in:0',
+            // 'height_in_inches' => 'required|numeric|min:1|not_in:0'
         ];
     }
 

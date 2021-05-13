@@ -35,8 +35,8 @@ class DesignerStoreRequest extends FormRequest
             // 'password' => 'required|string',
             // 'confirm_password' => 'required|same:password',
             'website_url' => array("nullable","regex:".$regex),
-            'resume' => 'required',
-            'portfolio' => 'required'
+            'resumeUrl' => 'required',
+            'portfolioUrl' => 'required'
         ];
     }
 

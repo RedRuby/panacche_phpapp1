@@ -47,5 +47,7 @@ class Collection extends Model
         return $this->hasOne('App\DigitalProduct');
     }
 
-
+    public function getRandomDesigns() {
+        return Collection::all()->random(4);
+    }
 }

@@ -32,4 +32,9 @@ class Customer extends Model
         return $this->belongsToMany('App\Order');
     }
 
+    public function disclaimer()
+    {
+        return $this->belongsTo('App\Disclaimer', 'created_by', 'id');
+    }
+
 }

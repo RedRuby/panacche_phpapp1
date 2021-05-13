@@ -406,10 +406,27 @@ class DesignController extends Controller
             $api = new BasicShopifyAPI($options);
             $api->setSession(new Session($shop->name, $shop->password));
 
-            //$productImagesArr = [];
+            $images = [];
+            $current_time = Carbon::now()->timestamp;
+            $productImageFileName = "";
 
+            if ($request->hasfile('product_images')) {
+                Log::info("has file product_images");
+                foreach ($productImages as $productImage) {
+                    Log::info("single product img");
+                    $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
+                    //Move Uploaded File
+                    $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
+                    $productImage->move($destinationPath, $productImageFileName);
+                    $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
+                    $image = [
+                        "src" => $url
+                    ];
+                   array_push($images, $image);
+                }
+            }
 
-
+            Log::info("images : " . json_encode($images));
 
             $data = [
                 "product" => [
@@ -432,6 +449,7 @@ class DesignController extends Controller
                             //"sku": "123"
                         ],
                     ],
+                    "images" => $images,
                 ]
             ];
 
@@ -453,18 +471,13 @@ class DesignController extends Controller
                     'status' => "draft"
                 ]);
 
-                $current_time = Carbon::now()->timestamp;
+
 
                 Log::info("current_time" . json_encode($current_time));
 
                 if ($request->hasfile('product_images')) {
                     Log::info("has file product_images");
                     foreach ($productImages as $productImage) {
-                        Log::info("single product img");
-                        $productImageFileName = $current_time . '_' . $productImage->getClientOriginalName();
-                        //Move Uploaded File
-                        $destinationPath = public_path() . '/uploads/collection/' . $collection->id . '/';
-                        $productImage->move($destinationPath, $productImageFileName);
 
                         ProductImages::create([
                             'product_id' => $product->id,
@@ -527,7 +540,8 @@ class DesignController extends Controller
         $valid_extension = array("csv");
 
         // 2MB in Bytes
-        $maxFileSize = 2097152;
+        // $maxFileSize = 2097152;
+        $maxFileSize = 20000000;
 
 
         // Check file extension
@@ -561,10 +575,10 @@ class DesignController extends Controller
                 dispatch($bulkUploadJob);
                     return response()->json(['status' => 201, 'success' => true, 'message' => 'Your specifics have been started uploading in background successfully.'])->setStatusCode(201);
                 } else {
-                    return response()->json(['status' => 500, 'errors' => "Max file size exceeded"]);
+                    return response()->json(['status' => 500, 'errors' => "Max file size exceeded", "message"=>"Max file size exceeded"]);
                 }
             } else {
-                return response()->json(['status' => 500, 'errors' => "Invalid file extension"]);
+                return response()->json(['status' => 500, 'errors' => "Invalid file extension", "message"=>"Invalid file extension"]);
             }
     }
 

@@ -8,10 +8,11 @@
     <div class="col-12 px-0 mb-4 float-left">
         <div class="col-md-4 px-0 float-left">
             <div class="col-12 newDesignerProfile">
+
                 @if($designer->display_picture)
-                <p class="mx-auto" style="background-image: url({{  asset('uploads/designer/display_picture/'.$designer->display_picture) }})"></p>
+                <p class="mx-auto" style="background-image: url('{{  asset('uploads/designer/display_picture/'.$designer->display_picture) }}')"></p>
                 @else
-                <p class="mx-auto" style="background-image: url({{  asset('default/user.png') }})"></p>
+                <p class="mx-auto" style="background-image: url('{{  asset('default/user.png') }}')"></p>
                 @endif
             </div>
             <div class="col-12 py-3">
@@ -19,13 +20,13 @@
                     <h5 class="defaultColor font-weight-bold" for="">Designer Documents</h5>
                 </div>
                 <div class="newDesignerdownlaodDoc col-12 py-4 mt-3">
-                    <a href="{{route('get_resume_file', $designer->resume)}}">
+                    <a href="{{route('get_resume_file', $designer->id)}}">
                         <button type="button" class="btn btn-primary loginBtn mb-3 w-100">
                             <i class="fas fa-file mr-2"></i>
                             Download Resume
                         </button>
                     </a>
-                    <a href="{{route('get_portfolio_file', $designer->portfolio)}}">
+                    <a href="{{route('get_portfolio_file', $designer->id)}}">
                         <button type="button" class="btn btn-primary loginBtn w-100">
                             <i class="fas fa-file mr-2"></i>
                             Download Portfolio
@@ -73,7 +74,7 @@
         <div class="col-md-6 float-left">
             <div class="form-group">
                 <label for=""><span class="mandetory">*</span> Contact No. <em>(Example: 123-456-7890)</em> </label>
-                <p class="submitedText px-2 py-2 font14">894-030-4232</p>
+                <p class="submitedText px-2 py-2 font14">{{ $designer->phone }}</p>
             </div>
             <div class="form-group">
                 <label for="">Business Address</label>

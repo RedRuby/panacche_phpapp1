@@ -17,6 +17,7 @@ use App\DesignRemark;
 use App\DesignDisclaimer;
 use App\Order;
 use App\Discount;
+use App\Disclaimer;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -190,11 +191,13 @@ class AdminController extends Controller
         return response()->json(["status" => "success", "statusCode" => 200, 'data'=>["vendors"=>$vendors], "message" => "Vendor has been added successfully"]);
     }
 
-    public function reviewDesign($id)
+    public function reviewDesign($id, $customerId)
     {
+        $customer = Customer::find($customerId);
+
         $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor')->get();
 
-        $design = view('admin.reviewDesign')->with('design', $design)->render();
+        $design = view('admin.reviewDesign')->with('design', $design)->with('customer', $customer)->render();
 
         return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
 
@@ -227,26 +230,27 @@ class AdminController extends Controller
         }
     }
 
-    /*public function addDisclaimer(Request $request)
+    public function adminDisclaimer(Request $request)
     {
-        $collection = Collection::find($request->collection_id);
-
-        if($collection){
-            $disclaimer = DesignDisclaimer::create([
-                'disclaimer' => $request->disclaimer,
-                'collection_id' => $request->collection_id
+            $disclaimer = Disclaimer::create([
+                'disclaimer'=>$request->disclaimer,
+                'created_by'=>$request->customer_id,
+                'status' => 'active'
             ]);
 
-            return response()->json(['status'=>201, 'success' => true, 'message'=>"Disclaimer added successfully"])->setStatusCode(201);
-        }else{
-            return response()->json(['status'=>400, 'success' => false, 'message'=>'Design not found'])->setStatusCode(400);
-        }
-    }*/
+            $disclaimers = Disclaimer::with('customer')->get();
+
+       // return $disclaimers;
+        $disclaimers = view('admin.disclaimers')->with('disclaimers', $disclaimers)->render();
+        return response()->json(['status'=>201, 'success' => true, 'data'=>['disclaimers' => $disclaimers], 'message' => 'Disclaimer added successfully'])->setStatusCode(201);
+
+
+    }
 
     public function settings(Request $request)
     {
         $vendors = Vendor::count();
-        $disclaimer = DesignDisclaimer::count();
+        $disclaimer = Disclaimer::count();
 
         return response()->json(['status'=>200, 'success' => true, 'data'=>['vendors' => $vendors, "disclaimer"=>$disclaimer]])->setStatusCode(200);
     }
@@ -261,19 +265,27 @@ class AdminController extends Controller
 
     public function disclaimers()
     {
-        $disclaimer = DesignDisclaimer::all();
+        $disclaimers = Disclaimer::with('customer')->get();
+
+       // return $disclaimers;
         $disclaimers = view('admin.disclaimers')->with('disclaimers', $disclaimers)->render();
         return response()->json(['status'=>200, 'success' => true, 'data'=>['disclaimers' => $disclaimers, ]])->setStatusCode(200);
     }
 
     public function addDisclaimer(Request $request)
     {
-        $disclaimer = DesignDisclaimer::create([
-            'disclaimer'=>$request->disclaimer
+        $disclaimer = Disclaimer::create([
+            'disclaimer'=>$request->disclaimer,
+            'created_by'=>$request->customer_id,
+            'status' => 'active'
         ]);
 
-      //  $disclaimers = view('admin.disclaimers')->with('disclaimers', $disclaimers)->render();
-        return response()->json(['status'=>200, 'success' => true, 'message'=>'disclaimer added successfully'])->setStatusCode(200);
+        $designDisclaimer =  DesignDisclaimer::create([
+            'collection_id' => $request->collection_id,
+            'disclaimer_id' => $disclaimer->id,
+        ]);
+
+        return response()->json(['status'=>201, 'success' => true, 'message'=>'disclaimer added successfully'])->setStatusCode(201);
     }
 
     public function editDisclaimer(Request $request, $id)
