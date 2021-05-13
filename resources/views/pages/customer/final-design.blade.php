@@ -128,78 +128,37 @@
                                                    <div class="col-md-12 col-xs-12 float-left px-0">
                                                       <table class="table colorPaintTable buyColorPaintTable mb-0 changeRequest">
                                                          <tbody>
-                                                            <tr>
-                                                               <td>
-                                                                  <p class="mb-0">Change Type</p>
-                                                                  <p class="mb-0">Shopping List</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">Change Item</p>
-                                                                  <p class="mb-0">Comfort Chair</p>
-                                                               </td>
-                                                               <td colspan="2">
-                                                                  <p class="mb-0">Revised Item</p>
-                                                                  <p class="mb-0">Supra Chair</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">FREE</p>
-                                                               </td>
-                                                            </tr>
-                                                            <tr>
-                                                               <td>
-                                                                  <p class="mb-0">Change Type</p>
-                                                                  <p class="mb-0">Shopping List</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">Change Item</p>
-                                                                  <p class="mb-0">Fire Place</p>
-                                                               </td>
-                                                               <td colspan="2">
-                                                                  <p class="mb-0">Revised Item</p>
-                                                                  <p class="mb-0">Heater</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">FREE</p>
-                                                               </td>
-                                                            </tr>
-                              <tr>
-                                                               <td>
-                                                                  <p class="mb-0">Change Type</p>
-                                                                  <p class="mb-0">Shopping List</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">Change Item</p>
-                                                                  <p class="mb-0">Side Lamp Light</p>
-                                                               </td>
-                                                               <td colspan="2">
-                                                                  <p class="mb-0">Revised Item</p>
-                                                                  <p class="mb-0">Ferry Light</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">FREE</p>
-                                                               </td>
-                                                            </tr>
-                              <tr>
-                                                               <td>
-                                                                  <p class="mb-0">Change Type</p>
-                                                                  <p class="mb-0">Paint Palette</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">Change Item</p>
-                                                                  <p class="mb-0">Teal</p>
-                                                               </td>
-                                 <td>
-                                                                  <p class="mb-0">Finish</p>
-                                                                  <p class="mb-0">Matt</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">Application</p>
-                                                                  <p class="mb-0">Ceiling</p>
-                                                               </td>
-                                                               <td>
-                                                                  <p class="mb-0">PAID</p>
-                                                               </td>
-                                                            </tr>
+                                                            @foreach($change_requests as $key => $change_request)
+                                                              <tr>
+                                                                 <td>
+                                                                    <p class="mb-0">Change Type</p>
+                                                                    <p class="mb-0">
+                                                                      @if($change_request->type == 0)
+                                                                        Shopping List
+                                                                      @else
+                                                                        Pain Palette
+                                                                      @endif
+                                                                    </p>
+                                                                 </td>
+                                                                 <td>
+                                                                    <p class="mb-0">Change Item</p>
+                                                                    <p class="mb-0">Comfort Chair</p>
+                                                                 </td>
+                                                                 <td colspan="2">
+                                                                    <p class="mb-0">Revised Item</p>
+                                                                    <p class="mb-0">Supra Chair</p>
+                                                                 </td>
+                                                                 <td>
+                                                                    <p class="mb-0">
+                                                                      @if($key >= 3)
+                                                                        PAID
+                                                                      @else
+                                                                        FREE
+                                                                      @endif
+                                                                    </p>
+                                                                 </td>
+                                                              </tr>
+                                                            @endforeach
                                                          </tbody>
                                                       </table>
                                                    </div>

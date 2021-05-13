@@ -299,7 +299,7 @@
                                  </div>
                               </td>
                               <td>
-                                 <p class="mb-0">{{ $product->title }}</p>
+                                 <p class="mb-0 productName">{{ $product->title }}</p>
                                  <p class="mb-0">Specification: {{ $product->size_specification }} </p>
                               </td>
                               <td>{{ $product->vendor->vendor_name }}</td>
@@ -324,11 +324,11 @@
       @include('pages.customer.paint-palette',["colorPallettes" => $design->colorPallettes])
       <div  class="col-12 float-left p-4 mt-3">
          <div class="col-12 px-0 float-left">
-            <button type="button" class="btn btn-primary float-left addFreeChangebtn mr-2">
+            <button type="button" class="btn btn-primary float-left addFreeChangebtn mr-2" @if(count($change_requests) >=3) style="display:none" @endif>
               <i class="fas fa-plus-circle"></i>
               Add a Free Change Request
             </button>
-            <button type="button" class="btn btn-primary float-left addFreeChangebtn addPaidChangebtn d-none">
+            <button type="button" class="btn btn-primary float-left addFreeChangebtn addPaidChangebtn @if(count($change_requests) <3) d-none @endif ">
               <i class="fas fa-plus-circle"></i>
               Add a PAID Change Request
             </button>
@@ -338,197 +338,105 @@
                <div class="col-md-12 float-left tab2dragDropBox dragandDropWrap rounded-0 responsiveTableWrap mt-2">
                   <div class="col-md-12 col-xs-12 float-left px-0">
                      <table class="table colorPaintTable buyColorPaintTable addChangesWrap mb-0">
-                        <tbody>
-                           <tr>
-                              <td colspan="6" class="freeChangeHead">
-                                 Free change request
-                              </td>
-                           </tr>
-                           <tr class="freeChange">
-                              <td>
-                                 <div class="form-group mb-0">
-                                  <select class="custom-select selectDropdown">
-                                    <option selected>Select Change Item</option>
-                                   <option value="1">Shopping List</option>
-                                   <option value="2">Pain Palette</option>
-                                  </select>
-                               </div>
-                              </td>
-                              <td>
-                               <select class="vodiapicker">
-                                 <option value="en" class="test" data-thumbnail="images/buy_design_img.jpg">Select Item</option>
-                                 <option value="en" class="test" data-thumbnail="images/buy_design_img.jpg">Comfort Chair</option>
-                                 <option value="au" data-thumbnail="images/design1.jpg">Fire Place</option>
-                                 <option value="uk" data-thumbnail="images/buy_design_img.jpg">Couch Chair</option>
-                                 <option value="cn" data-thumbnail="images/design1.jpg">Center Table</option>
-                                 <option value="de" data-thumbnail="images/buy_design_img.jpg">Side Lamp Light</option>
-                               </select>
-                               <div class="lang-select">
-                                 <button class="btn-select" value=""></button>
-                                 <div class="b">
-                                   <ul id="a"></ul>
-                                 </div>
-                               </div>
-                              </td>
-                              <td colspan="2">
-                                  <input type="text" class="form-control" placeholder="Change Reason">
-                              </td>
-                              <td>
-                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFile" name="filename">
-                                  <i class="fas fa-paperclip"></i>
-                                  <label class="custom-file-label mb-0" for="customFile"></label>
-                               </div>
-                              </td>
-                              <td class="text-center">
-                                  <i class="fas fa-trash" aria-hidden="true"></i>
-                              </td>
-                           </tr>
+                        <tbody id="changeRequest">
 
-                           <tr class="freeChange">
-                              <td>
-                                 <div class="form-group mb-0">
+                           @foreach($change_requests as $key => $change_request)
+                              @if($key == 0)
+                                 <tr><td colspan="6" class="freeChangeHead">Free change request</td></tr>
+                              @endif
+                              <tr class="freeChange changeRequestTRElm">
+                                <td class="changereq1">
+                                   <div class="form-group mb-0">
                                     <select class="custom-select selectDropdown">
-                                       <option selected>Select Change Item</option>
-                                       <option value="1">Shopping List</option>
-                                       <option value="2">Pain Palette</option>
+                                      <option>Select Change Item</option>
+                                      <option @if($change_request->type == 0) selected @endif value="0">Shopping List</option>
+                                      <option @if($change_request->type == 1) selected @endif value="1">Pain Palette</option>
                                     </select>
                                  </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                     <select class="custom-select selectDropdown">
-                                       <option selected>Select Color</option>
-                                      <option value="1">Burgundy</option>
-                                      <option value="2">Chrome Yellow</option>
+                                </td>
+                                @if($change_request->type == 0)
+                                   <td class="changereq2">
+                                       <select class="custom-select">
+                                          <option value="">Select Change Item</option>
+                                          @foreach ($design->products as $pkey => $product)
+                                             @php
+                                                if($product->product_type == 1){
+                                                   continue;
+                                                }
+                                                $product_first_image_src = '';
+                                                if($product->productImages()->count()){
+                                                   $product_first_image = $product->productImages()->first()->toArray();
+                                                   if($product_first_image['img_src']){
+                                                      $product_first_image_src = asset('uploads/collection/product/images/'.$product_first_image['img_src']);
+                                                   }
+                                                }
+                                             @endphp
+                                             <option @if($change_request->product_id == $product->id) selected @endif value="{{ $product->id }}" data-thumbnail="{{$product_first_image_src}}">{{ $product->title }}</option>
+                                          @endforeach
+                                       </select>
+                                   </td>
+                                   <td class="changereq3" colspan="2">
+                                     <input type="text" class="form-control change_reason" placeholder="Change Reason" value="{{$change_request->change_reason}}">
+                                     <input type="hidden" name="change_request_id" class="change_request_id" value="{{$change_request->id}}">
+                                   </td>
+                                   <td class="changereq5">
+                                     <div class="custom-file">
+                                         <input type="file" class="custom-file-input" id="customFile" name="filename">
+                                         <i class="fas fa-paperclip"></i>
+                                         <label class="custom-file-label mb-0" for="customFile"></label>
+                                     </div>
+                                   </td>
+                                   <td class="changereq6 text-center">
+                                       <i class="fas fa-trash" aria-hidden="true"></i>
+                                   </td>
+                                @else
+                                   <td class="changereq2">
+                                      <select class="custom-select color_selc_cls">
+                                          <option value="">Select Color</option>
+                                          @foreach($design->colorPallettes as $colorPallette)
+                                             <option @if($change_request->color_id == $colorPallette->id) selected @endif value="{{$colorPallette->id}}">{{$colorPallette->color_name}}</option>
+                                          @endforeach
+                                      </select>
+                                   </td>
+                                   <td class="changereq3">
+                                     <select class="custom-select brand">
+                                         <option value="">Brand</option>
+                                         <option selected value="{{$colorPallette->brand}}">{{$colorPallette->brand}}</option>
                                      </select>
-                                  </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                     <select class="custom-select selectDropdown">
-                                       <option selected>Brand</option>
-                                      <option value="1">Berger</option>
-                                      <option value="2">Asian Paint</option>
+                                   </td>
+                                   <td class="changereq4">
+                                     <select class="custom-select application">
+                                         <option value="">Application</option>
+                                         <option selected value="{{$colorPallette->application}}">{{$colorPallette->application}}</option>
                                      </select>
-                                  </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                     <select class="custom-select selectDropdown">
-                                       <option selected>Application</option>
-                                      <option value="1">Living Room</option>
-                                      <option value="2">Bedroom</option>
-                                     </select>
-                                  </div>
-                              </td>
-                              <td>
-                                  <input type="text" class="form-control" placeholder="Change Reason">
-                              </td>
-                              <td class="text-center">
-                                  <i class="fas fa-trash" aria-hidden="true"></i>
-                              </td>
-                           </tr>
-                           <tr class="freeChange">
-                              <td>
-                                 <div class="form-group mb-0">
-                                     <select class="custom-select selectDropdown">
-                                       <option selected>Select Change Item</option>
-                                      <option value="1">Shopping List</option>
-                                      <option value="2">Pain Palette</option>
-                                     </select>
-                                  </div>
-                              </td>
-                              <td>
-                               <select class="vodiapicker">
-                                 <option value="en" class="test" data-thumbnail="images/buy_design_img.jpg">Select Item</option>
-                                 <option value="en" class="test" data-thumbnail="images/buy_design_img.jpg">Comfort Chair</option>
-                                 <option value="au" data-thumbnail="images/design1.jpg">Fire Place</option>
-                                 <option value="uk" data-thumbnail="images/buy_design_img.jpg">Couch Chair</option>
-                                 <option value="cn" data-thumbnail="images/design1.jpg">Center Table</option>
-                                 <option value="de" data-thumbnail="images/buy_design_img.jpg">Side Lamp Light</option>
-                               </select>
-
-                               <div class="lang-select">
-                                 <button class="btn-select" value=""></button>
-                                 <div class="b">
-                                   <ul id="a"></ul>
-                                 </div>
-                               </div>
-                              </td>
-                              <td colspan="2">
-                                  <input type="text" class="form-control" placeholder="Change Reason">
-                              </td>
-                              <td>
-                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="customFile" name="filename">
-                                  <i class="fas fa-paperclip"></i>
-                                  <label class="custom-file-label mb-0" for="customFile"></label>
-                               </div>
-                              </td>
-                              <td class="text-center">
-                                  <i class="fas fa-trash" aria-hidden="true"></i>
-                              </td>
-                           </tr>
-
-                           <tr class="paidChangeHead">
-                              <td colspan="6">
-                                  <span class="float-left">Paid change request - you paid $100 for this change</span>
-                                  <span class="float-right">Payment Done</span>
-                              </td>
-                           </tr>
-
-                           <tr class="paidChange">
-                              <td>
-                                 <div class="form-group mb-0">
-                                  <select class="custom-select selectDropdown">
-                                    <option selected>Select Change Item</option>
-                                   <option value="1">Shopping List</option>
-                                   <option value="2">Pain Palette</option>
-                                  </select>
-                               </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                  <select class="custom-select selectDropdown">
-                                    <option selected>Select Color</option>
-                                   <option value="1">Burgundy</option>
-                                   <option value="2">Chrome Yellow</option>
-                                  </select>
-                               </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                  <select class="custom-select selectDropdown">
-                                    <option selected>Brand</option>
-                                   <option value="1">Berger</option>
-                                   <option value="2">Asian Paint</option>
-                                  </select>
-                               </div>
-                              </td>
-                              <td>
-                                 <div class="form-group mb-0">
-                                  <select class="custom-select selectDropdown">
-                                    <option selected>Application</option>
-                                   <option value="1">Living Room</option>
-                                   <option value="2">Bedroom</option>
-                                  </select>
-                               </div>
-                              </td>
-                              <td>
-                                  <input type="text" class="form-control" placeholder="Change Reason">
-                              </td>
-                              <td class="text-center">
-                                  <i class="fas fa-trash" aria-hidden="true"></i>
-                              </td>
-                           </tr>
-
+                                   </td>
+                                   <td class="changereq5">
+                                     <input type="text" class="form-control change_reason" placeholder="Change Reason" value="{{$change_request->change_reason}}">
+                                     <input type="hidden" name="change_request_id" class="change_request_id" value="{{$change_request->id}}">
+                                   </td>
+                                   <td class="text-center changereq6">
+                                       <form class="changeRequestForm">
+                                       </form>
+                                       <i class="fas fa-trash" aria-hidden="true"></i>
+                                   </td>
+                                @endif
+                              </tr>
+                              @if($key == 2 || ((count($change_requests)-1) == $key && count($change_requests) <= 3))
+                                 <tr class="paidChangeHead">
+                                   <td colspan="6">
+                                       <span class="float-left">Paid change request - you paid $100 for this change</span>
+                                       <span class="float-right">Payment Done</span>
+                                   </td>
+                                 </tr>
+                              @endif
+                           @endforeach
                         </tbody>
                      </table>
                   </div>
                </div>
                <div class="col-12 float-left mt-3">
-                <button type="button" class="btn btn-primary float-sm-right float-left loginBtn" data-toggle="modal" data-target="#staticBackdrop">Submit Design Changes</button>
+                <button type="button" class="btn btn-primary float-sm-right float-left pay_now_btn" @if(count($change_requests) < 3) style="display:none" @endif>Pay Now</button>
+                <button type="button" class="btn btn-primary float-sm-right float-left submit_design_changes_btn loginBtn" data-toggle="modal" data-target="#staticBackdrop" @if(count($change_requests) >=3) style="display:none" @endif>Submit Design Changes</button>
                 <span class="float-sm-right float-left mr-4 mt-2">You like this design, with ONE change. Seek designer's advice on this design !!</span>
               </div>
             </div>
