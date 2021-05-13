@@ -1,5 +1,6 @@
 <div class="col-md-12 col-sm-12 col-xs-12 pl-5 mx-auto">
      <div class="leftPart col-lg-8 col-md-12 col-sm-12 col-12 float-left pl-3 pr-0 mt-4">
+      <input type="hidden" name="myProjectId" id="myProjectId" value="{{$my_project_id}}">
         <div class="row px-3">
            <div class="col-md-6 col-sm-12 px-0 designCards float-left buyDesign">
               <div class="card">
@@ -32,7 +33,7 @@
               </div>
               <div class="col-12 px-0 panaccheSaving float-left">
                  <p class="mb-0">Panacche Savings:</p>
-                 <p class="">You Save: $1,900.00 (76%)
+                 <p class="">You Save: ${{(($design->room_budget*$discount->discount)/100)}} ({{$discount->discount}}%)
                     <span class="ml-2 text-center ibtn">i 
                     <span class="tooltiptext p-2 text-left">Note: This does not include tax and shipping cost</span>
                     </span>
@@ -47,8 +48,10 @@
                  <p class="mb-1">Approximate Room Size : {{ $design->room_width_in_feet }} ft {{ $design->room_width_in_inches }} inches x {{ $design->room_height_in_feet }} ft {{ $design->room_height_in_inches }} inches</p>
                  <p>{{ $design->implementation_guide_description }}</p>
                  <p class="mb-0 d-inline">
-                    <span class="py-1 px-3 mr-2 mb-2">Modern</span>
-                    <span class="py-1 px-3 mr-2 mb-2">Pet Friendly</span>
+                    <span class="py-1 px-3 mr-2 mb-2">{{ $design->room_style }}</span>
+                    @if($design->pet_friendly_design == 'Yes')
+                      <span class="py-1 px-3 mr-2 mb-2">Pet Friendly</span>
+                    @endif
                     <span class="py-1 px-3 mr-2 mb-2">Fast Implementation</span>
                     <span class="py-1 px-3 mr-2 mb-2">Low cost</span>
                  </p>
@@ -166,7 +169,7 @@
                                     </button>
                                  </div>
                                  <div class="modal-body">
-                                    <img class="img-fluid w-100" src="{{  asset('uploads/collection/'.$design->id.'/concept_board_img.jpg') }}" alt="Random Image">
+                                    <img class="img-fluid w-100" src="{{  asset('uploads/collection/'.$design->id.'/'.$concept_board_image->img_src) }}" alt="{{$concept_board_image->img_alt}}">
                                  </div>
                               </div>
                            </div>

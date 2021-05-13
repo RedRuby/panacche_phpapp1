@@ -17,6 +17,7 @@ use Osiset\BasicShopifyAPI\Session;
 use App\User;
 use App\ProductVariant;
 use App\MyProjectRefrenceLink;
+use App\MyProjectChangeRequest;
 use App\MyProjectsCollectionProducts;
 use App\Http\Requests\ForgotPassowrdRequest;
 
@@ -48,24 +49,29 @@ class PagesController extends Controller
         if($customer == null){
             $design = view('pages.unregistered_user_design_details')->with('design', $design)->with('product_description', nl2br($all_products[array_search(1, $all_product_type)]['description'],true))->render();
         } else {
+            $my_project_id = 1;
             $design_guide_product = $all_products[array_search(1, $all_product_type)];
             $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
             $product_variant_id = $product_variants->shopify_variant_id;
-            $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $id)->get();
-            $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $id)->get();
+            $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $my_project_id)->get();
+            $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $my_project_id)->get();
+            $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $my_project_id)->get();
             $selected_products = [];
             foreach($my_products as $my_product){
                 $selected_products[$my_product['produt_id']] = $my_product;
             }
+            $discount = Discount::first();
             $design = view('pages.customer_buy_design_page')
                         ->with('design', $design)
                         ->with('product_variant_id', $product_variant_id)
                         ->with('refrenceLinks', $refrenceLinks)
                         ->with('selected_products', $selected_products)
+                        ->with('my_project_id',$my_project_id)
+                        ->with('change_requests',$change_requests)
+                        ->with('discount', $discount)
                         ->render();
         }
         //
-            //->with('discount', $discount)
             //->with('customer', $customer)
             //->with('variant_id', $result["variants"][0]["id"])->render();
 
