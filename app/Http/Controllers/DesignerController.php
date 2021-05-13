@@ -461,7 +461,7 @@ class DesignerController extends Controller
 
 
 
-                $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
+                $products = Product::with(['vendor','productImages'])->where('collection_id', $collection->id)->get();
 
                 Log::info('final product' . json_encode($product));
                 $vendors = Vendor::all();
