@@ -26,9 +26,20 @@
            </ul>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 col-12 float-left tab1Right">
+          @if($my_project_id)
+              <div class="col-10 mx-auto downloadZipBox mt-md-0 mt-4">
+                <p>You can now download the Design Implementation guide !</p>
+                <div class="col-12 p-3 text-center">
+                   <p class="mb-3"><i class="fas fa-file-archive"></i></p>
+                   <a href="{{  asset('uploads/collection/'.$design->id.'/'.$design->design_implementation_guide) }}"
+                   <button type="button" class="btn btn-warning warningBtn w-100">Download</button>
+                   </a>
+                </div>
+              </div>
+          @else
            <div class="col-10 mx-auto buyPriceBox mt-md-0 mt-4">
               <p class="py-4 mb-0">$434</p>
-              <p class="py-3"><a href="{{ env('APP_SHOPIFY_URL') }}/cart/{{ $product_variant_id }}:1" class="py-3">Buy the Design</a></p>
+              <p class="py-3"><a href="{{ env('Shop_URL') }}/cart/{{ $product_variant_id }}:1" class="py-3">Buy the Design</a></p>
               <p class="mb-0">What do you get with this?</p>
               <ul class="pl-3">
                  <li>Lorem ipsum dolor sit amet</li>
@@ -38,17 +49,7 @@
                  <li>Lorem ipsum dolor sit amet</li>
               </ul>
            </div>
-           @if(1==2)
-             <div class="col-10 mx-auto downloadZipBox mt-md-0 mt-4">
-                <p>You can now download the Design Implementation guide !</p>
-                <div class="col-12 p-3 text-center">
-                   <p class="mb-3"><i class="fas fa-file-archive"></i></p>
-                   <a href="{{  asset('uploads/collection/'.$design->id.'/'.$design->design_implementation_guide) }}"
-                   <button type="button" class="btn btn-warning warningBtn w-100">Download</button>
-                   </a>
-                </div>
-             </div>
-           @endif
+          @endif
         </div>
      </div>
   </div>

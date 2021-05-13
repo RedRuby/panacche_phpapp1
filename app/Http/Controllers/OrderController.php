@@ -33,12 +33,27 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'success' => false, 'error' => $error])->setStatusCode(200);
         }
 
-        $products = MyProject::select('my_projects_collection_products.*', 'my_projects.customer_id', 'my_projects.id as my_project_id', 'designers.first_name', 'designers.last_name', 'designers.display_picture', 'designers.id as designerId', 'my_projects.my_project_collection_id')
-        ->leftJoin('my_projects_collection_products', 'my_projects.my_project_collection_id', '=', 'my_projects_collection_products.my_project_collection_id')
+        $products = MyProject::select('products.*', 'my_projects.customer_id', 'my_projects.id as my_project_id', 'designers.first_name', 'designers.last_name', 'designers.display_picture', 'designers.id as designerId', 'my_projects.my_project_collection_id', 'product_images.img_src')
+        ->leftJoin('my_projects_collection_products', 'my_projects.id', '=', 'my_projects_collection_products.my_project_id')
+        ->leftJoin('products', 'products.id', '=', 'my_projects_collection_products.product_id')
+        ->leftJoin('product_images', 'products.id', '=', 'product_images.product_id')
         ->leftJoin('collections', 'collections.id', '=', 'my_projects.parent_design_id')
         ->leftJoin('designers', 'collections.designer_id', '=', 'designers.id')
-        ->where('customer_id', '=', $request->id)
+        ->where('my_projects.customer_id', '=', $request->id)
         ->where('my_projects.id', '=', $request->orderId)->get();
+
+        if(count($products) > 0) {
+            foreach ($products as $key => $value) {
+                if($value->img_src != '') {
+
+                    if(file_exists(asset('uploads/products/'.$value->id.'/'.$value->img_src))) {
+                        $products[$key]->img_src = asset('uploads/products/'.$value->id.'/'.$value->img_src);
+                    } else {
+                        $products[$key]->img_src = asset('uploads/products/deginer-img.jpeg');
+                    }
+                }
+            }
+        }
         Log::info("OrderController :: orderPlaced products :: ".print_r($products, true));
 
         $rating = UserDesignerRating::where('customer_id', '=', $request->id)->where('designer_id', '=', $products[0]->designerId)->where('my_project_collection_id', $products[0]->my_project_collection_id)->orderBy('id','desc')->first();
