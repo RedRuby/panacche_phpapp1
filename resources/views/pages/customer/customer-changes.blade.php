@@ -435,8 +435,8 @@
                   </div>
                </div>
                <div class="col-12 float-left mt-3">
-                <button type="button" class="btn btn-primary float-sm-right float-left pay_now_btn" @if(count($change_requests) < 3) style="display:none" @endif>Pay Now</button>
-                <button type="button" class="btn btn-primary float-sm-right float-left submit_design_changes_btn loginBtn" data-toggle="modal" data-target="#staticBackdrop" @if(count($change_requests) >=3) style="display:none" @endif>Submit Design Changes</button>
+                <button type="button" class="btn btn-primary float-sm-right float-left pay_now_btn" @if(count($change_requests) <= 3) style="display:none" @endif>Pay Now</button>
+                <button type="button" class="btn btn-primary float-sm-right float-left submit_design_changes_btn loginBtn" data-toggle="modal" data-target="#staticBackdrop" @if(count($change_requests) >3) style="display:none" @endif>Submit Design Changes</button>
                 <span class="float-sm-right float-left mr-4 mt-2">You like this design, with ONE change. Seek designer's advice on this design !!</span>
               </div>
             </div>

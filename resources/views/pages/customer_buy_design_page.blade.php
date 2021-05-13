@@ -20,7 +20,9 @@
                  </h4>
               </div>
               <div class="col-12 px-0 roomsDisc float-left">
-                 <p class="mb-0">Designer: <a href="{{ env('APP_SHOPIFY_URL') }}/pages/view-our-designer-profile?id={{ $design->designer->id }}">{{ $design->designer->first_name }} {{ $design->designer->last_name }}</a></p>
+                  @if($my_project_id)
+                    <p class="mb-0">Designer: <a href="{{ env('Shop_URL') }}/pages/view-our-designer-profile?id={{ $design->designer->id }}">{{ $design->designer->first_name }} {{ $design->designer->last_name }}</a></p>
+                  @endif
                 <p class="mb-0">Room Style : <span>{{ $design->room_style }}<span></p>
                 <p class="mb-0">Room Type : <span>{{ $design->room_type }}<span></p>
                 <p class="mb-0">Pet Friendly Design : <span>{{ $design->pet_friendly_design }}<span></p>
@@ -66,7 +68,9 @@
            
         </div>
      </div>
-     @include('pages.chate')
+      @if($my_project_id)
+        @include('pages.chate')
+      @endif
   </div>
   <div style="clear:both"></div>
   <div class="col-md-12 col-sm-12 col-xs-12 pl-5 mx-auto pt-2">
@@ -153,7 +157,11 @@
                            <div class="col-lg-12 col-md-12 col-xs-6 thumb float-left">
                               <a href="#" data-toggle="modal" data-target="#galleryPop">
                                  <figure>
-                                    <img class="img-fluid img-thumbnail h-100" src="{{  asset('uploads/collection/'.$design->id.'/'.$concept_board_image->img_src) }}" alt="{{$concept_board_image->img_alt}}">
+                                    @if(isset($concept_board_image->img_src))
+                                      <img class="img-fluid img-thumbnail h-100" src="{{  asset('uploads/collection/'.$design->id.'/'.$concept_board_image->img_src) }}" alt="{{$concept_board_image->img_alt}}">
+                                    @else
+                                      <img class="img-fluid img-thumbnail h-100" src="" alt="">
+                                    @endif
                                   </figure>
                               </a>
                            </div>
@@ -169,7 +177,11 @@
                                     </button>
                                  </div>
                                  <div class="modal-body">
-                                    <img class="img-fluid w-100" src="{{  asset('uploads/collection/'.$design->id.'/'.$concept_board_image->img_src) }}" alt="{{$concept_board_image->img_alt}}">
+                                    @if(isset($concept_board_image->img_src))
+                                      <img class="img-fluid w-100" src="{{  asset('uploads/collection/'.$design->id.'/'.$concept_board_image->img_src) }}" alt="{{$concept_board_image->img_alt}}">
+                                    @else
+                                      <img class="img-fluid w-100" src="" alt="">
+                                    @endif
                                  </div>
                               </div>
                            </div>
@@ -186,13 +198,13 @@
                                     <a class="nav-link py-4 active tabVisited1" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">Get Design Guide</a>
                                  </li>
                                  <li class="nav-item" role="presentation">
-                                    <a class="nav-link py-4 showActive tabVisited2" id="in_progress-tab" data-toggle="tab" href="#in_progress" role="tab" aria-controls="progress" aria-selected="false">Customer Changes</a>
+                                    <a class="nav-link py-4 showActive tabVisited2 @if(!$my_project_id) disabled @endif " id="in_progress-tab" data-toggle="tab" href="#in_progress" role="tab" aria-controls="progress" aria-selected="false">Customer Changes</a>
                                  </li>
                                  <li class="nav-item" role="presentation">
-                                    <a class="nav-link py-4 showActive tabVisited3" id="delivered_paid-tab" data-toggle="tab" href="#delivered_paid" role="tab" aria-controls="delivered_paid" aria-selected="false">Final Design</a>
+                                    <a class="nav-link py-4 showActive tabVisited3 disabled" id="delivered_paid-tab" data-toggle="tab" href="#delivered_paid" role="tab" aria-controls="delivered_paid" aria-selected="false">Final Design</a>
                                  </li>
                                  <li class="nav-item" role="presentation">
-                                    <a class="nav-link py-4 showActive tabVisited4" id="abandoned-tab" data-toggle="tab" href="#abandoned" role="tab" aria-controls="abandoned" aria-selected="false">Pannache Conceirge</a>
+                                    <a class="nav-link py-4 showActive tabVisited4 disabled" id="abandoned-tab" data-toggle="tab" href="#abandoned" role="tab" aria-controls="abandoned" aria-selected="false">Pannache Conceirge</a>
                                  </li>
                               </ul>
                               <div class="tab-content showAllContent" id="myTabContent">

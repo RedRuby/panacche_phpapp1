@@ -19,6 +19,7 @@ use App\ProductVariant;
 use App\MyProjectRefrenceLink;
 use App\MyProjectChangeRequest;
 use App\MyProjectsCollectionProducts;
+use App\MyProject;
 use App\Http\Requests\ForgotPassowrdRequest;
 
 
@@ -49,10 +50,19 @@ class PagesController extends Controller
         if($customer == null){
             $design = view('pages.unregistered_user_design_details')->with('design', $design)->with('product_description', nl2br($all_products[array_search(1, $all_product_type)]['description'],true))->render();
         } else {
-            $my_project_id = 1;
-            $design_guide_product = $all_products[array_search(1, $all_product_type)];
-            $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
-            $product_variant_id = $product_variants->shopify_variant_id;
+            $my_project_id = 0;
+            $my_project = MyProject::where('my_project_collection_id',$id)->first();
+            if(isset($my_project->id)){
+                $my_project_id = $my_project->id;
+            }
+            $design_guide_id = array_search(1, $all_product_type);
+            $product_variants = [];
+            $product_variant_id = 0;
+            if($design_guide_id){
+                $design_guide_product = $all_products[array_search(1, $all_product_type)];
+                $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
+                $product_variant_id = $product_variants->shopify_variant_id;
+            }
             $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $my_project_id)->get();
             $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $my_project_id)->get();
             $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $my_project_id)->get();
