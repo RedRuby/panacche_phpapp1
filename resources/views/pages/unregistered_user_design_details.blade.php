@@ -175,7 +175,7 @@
                                   <p class="px-5 mb-0">To access the details of the design, Kindly register as a Panacche user. </p>
                                </div>
                                <div class="modal-footer text-center d-block pb-4">
-                                  <button type="button" class="btn btn-primary loginBtn"><a href="{{ env('APP_SHOPIFY_URL') }}/account/login?return_url={{ env('APP_SHOPIFY_URL') }}/pages/buy-design?id={{ $design->id }}">Login</a></button>
+                                  <button type="button" class="btn btn-primary loginBtn"><a href="{{ env('Shop_URL') }}/account/login?return_url={{ env('Shop_URL') }}/pages/buy-design?id={{ $design->id }}">Login</a></button>
                                </div>
                             </div>
                          </div>
