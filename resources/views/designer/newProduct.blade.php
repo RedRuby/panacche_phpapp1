@@ -118,9 +118,13 @@
                                 <img src="{{ asset('/default/product.jpg')}}"
                                 class="img-fluid">
                                 @endif
+
+                                <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
+
                             </p>
                         </div>
                     @endforeach
+
 
                 </div>
 

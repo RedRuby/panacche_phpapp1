@@ -452,7 +452,7 @@ class DesignerController extends Controller
                     foreach ($productImages as $productImage) {
 
                         ProductImages::create([
-                            'product_id' => $product->id,
+                            'product_id' =>$request->product_id,
                             'img_src' => $productImageFileName,
                             'img_alt' => $productImageFileName,
                         ]);
