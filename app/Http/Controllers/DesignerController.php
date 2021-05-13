@@ -33,6 +33,7 @@ use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\DesignerStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\UpdateCollectionRequest;
+use App\Http\Requests\DesignerUpdateRequest;
 use Carbon\Carbon;
 use App\Order;
 use Illuminate\Support\Facades\Storage;
@@ -460,7 +461,7 @@ class DesignerController extends Controller
 
 
 
-                $products = Product::with('vendor,productImages')->where('collection_id', $collection->id)->get();
+                $products = Product::with(['vendor','productImages'])->where('collection_id', $collection->id)->get();
 
                 Log::info('final product' . json_encode($product));
                 $vendors = Vendor::all();
@@ -753,6 +754,140 @@ class DesignerController extends Controller
 
         return response()->json(['status'=>200, 'success' => true, 'data'=>["design"=>$design], 'message'=>'Design loaded successfully'])->setStatusCode(200);
 
+    }
+
+    public function getProfile($id){
+
+        $designer = Designer::find($id);
+        if($designer){
+            return response()->json(['status'=>200, 'success' => true, 'data'=>$designer, 'message'=>'Designer profile loaded successfully'])->setStatusCode(200);
+
+        }else{
+            return response()->json(['status'=>402, 'success' => true, 'data'=>$designer, 'message'=>'Designer record not found'])->setStatusCode(402);
+
+        }
+    }
+
+    public function updateProfile(DesignerUpdateRequest $request)
+    {
+        Log::info("in update method :: ".print_r($request->all(), true));
+
+        $shop = User::where('name', $request->shop)->first();
+        $options = new Options();
+        $options->setVersion('2021-01');
+        $api = new BasicShopifyAPI($options);
+        $api->setSession(new Session($shop->name, $shop->password));
+
+
+
+        try {
+            $communication_channel = [];
+            $displayPictureFileName = "";
+            $resumeFileName = "";
+            $portfolioFileName = "";
+            $password = "";
+            $display_picture = $request->file('display_picture');
+            $resume = $request->file('resume');
+            $portfolio = $request->file('portfolio');
+            $status = 'pending';
+            $success_message = "Designer profile updated successfully";
+            $emailTemplate = "emails.designerAccount";
+            $emailSubject = "Designer profile updated successfully!";
+            $role = "designer";
+
+            if (!empty($display_picture)) {
+                //Display File Name
+                $displayPictureFileName = $display_picture->getClientOriginalName();
+
+                //Move Uploaded File
+                $destinationPath = public_path() . '/uploads/designer/display_picture/';
+                $display_picture->move($destinationPath, $display_picture->getClientOriginalName());
+            }
+
+
+
+            $data = [
+                'customer' => [
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                ]
+            ];
+
+
+            try {
+                $result = $api->rest('PUT', '/admin/customers/'.$request->customer.'.json', $data)['body'];
+            } catch (\Exception $e) {
+                Log::info($e->getMessage());
+                return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
+            }
+
+            Log::info("result " . json_encode($result));
+
+            if (isset($result['customer'])) {
+
+               // $designer = Designer::find($request->customer);
+                $designer = Designer::where('id', $request->customer)->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'display_picture' => $displayPictureFileName,
+                    'resume' => $request->resumeUrl,
+                    'portfolio' => $request->portfolioUrl,
+                    'bio' => $request->bio,
+                    'quote' => $request->quote,
+                    'business_name' => $request->business_name,
+                    'business_address' => $request->business_address,
+                    'website_url' => $request->website_url
+                ]);
+
+                $designer = Designer::find($request->customer);
+                $temp = $designer;
+                $data = $temp->toArray();
+                $template = $emailTemplate;
+                $subject = $emailSubject;
+                $fromEmail = "panacchebeta@gmail.com";
+                $fromName = "Panacche Team";
+                $toEmail = $request->email;
+                $emailTitle = "Account Updation";
+
+                if (!empty($designer->id)) {
+                    // Model has been successfully inserted
+                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                    if (empty($myEmail)) {
+                        Log::info("mail has been sent because empty no error " . $myEmail);
+
+                        $log_message = "Account updation email has been sent to " . $role;
+
+                        Helper::log_activity($designer, $designer, $designer, $log_message);
+                    } else {
+                        $log_message = "Due to some error account updation email has not sent to " . $role;
+                        Helper::log_activity($designer, $designer, $designer, $log_message);
+                    }
+
+                    Helper::log_activity($designer, $designer, $designer, $success_message);
+
+                    return response()->json(['status' => 201, 'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
+                } else {
+                    $data = $request->all();
+                    $template = "emails.accountNotUpdated";
+                    $subject = "Record is updated in shopify but not is App due to some error";
+                    $toEmail = "admin@admin.com"; // or admin@panacche.com
+                    $emailTitle = "Record is not updated in app";
+                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                    $log_message = "Record is updated in shopify but not is App due to some error";
+                    $newCustomer = new Customer();
+                    Helper::log_activity($newCustomer, $designer, $data, $log_message);
+                }
+            } else {
+                return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
+            }
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
+        }
     }
 
 

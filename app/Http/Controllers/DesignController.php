@@ -571,7 +571,7 @@ class DesignController extends Controller
 
                 Log::info('csvBulkUpload' . json_encode($csvBulkUpload));
 
-                $bulkUploadJob = (new ProductBulkUpload())->delay(Carbon::now()->addSeconds(3));
+                $bulkUploadJob = (new ProductBulkUpload())->delay(Carbon::now()->addSeconds(1));
                 dispatch($bulkUploadJob);
                     return response()->json(['status' => 201, 'success' => true, 'message' => 'Your specifics have been started uploading in background successfully.'])->setStatusCode(201);
                 } else {

@@ -32,6 +32,10 @@ Route::get('/', function () {
 Route::resource('customer', 'CustomerController');
 Route::post('/customer', 'CustomerController@store');
 
+Route::get('/customer/edit/profile/{id}', 'CustomerController@getProfile');
+Route::post('/customer/edit/profile', 'CustomerController@updateProfile');
+
+
 Route::get('/my-projects', 'CustomerController@myProjects');
 Route::get('/order-placed', 'OrderController@orderPlaced');
 Route::post('/rate-review-order', 'OrderController@saveRateAndReview')->name('order-rate-review');
@@ -113,6 +117,8 @@ Route::post('/designer/design/update/', 'DesignerController@updateDesign');
 Route::get('/designer/view_design_under_review/{id}/', 'DesignerController@viewDesignUnderReview');
 Route::get('/designer/view/all/orders/{id}', 'DesignerController@viewAllOrders');
 Route::get('/designer/view/all/designs/{id}', 'DesignerController@viewAllDesigns');
+Route::get('/designer/edit/profile/{id}', 'DesignerController@getProfile');
+Route::post('/designer/edit/profile', 'DesignerController@updateProfile');
 
 Route::get('view', 'FileController@view');
 Route::get('get/resume/{id}', 'FileController@getResumeFile')->name('get_resume_file');
