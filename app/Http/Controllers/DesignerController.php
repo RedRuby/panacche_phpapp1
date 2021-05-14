@@ -444,6 +444,7 @@ class DesignerController extends Controller
                     'product_price' => $request->product_price,
                     'product_compare_at_price' => $request->compare_at_price,
                     'product_quantity' => $quantity,
+                    'description' => $request->description,
                 ]);
 
                // ProductImages::where('product_id', $request->product_id)->delete();
@@ -477,7 +478,7 @@ class DesignerController extends Controller
 
                 $vendors = Vendor::all();
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
-                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your specifics have been altered successfully.'])->setStatusCode(200);
+                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your merchandise details have been updated successfully.'])->setStatusCode(200);
 
               } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
@@ -745,7 +746,7 @@ class DesignerController extends Controller
                     }
                 }
 
-                return response()->json(['status' => 200, 'message' => "Your Particulars Have Been Modified Successfully.", "data" => $result])->setStatusCode(200);
+                return response()->json(['status' => 200, 'message' => "Your design details have been updated successfully.", "data" => $result])->setStatusCode(200);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }
