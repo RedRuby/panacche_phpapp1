@@ -33,78 +33,7 @@
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
                            <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                               <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 <div class="carousel-item col-md-3 active">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 1" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 3" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 4" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 5" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 6" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 7" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 8" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 2" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
+                                 
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -130,78 +59,7 @@
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
                            <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                               <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 <div class="carousel-item col-md-3 active">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 1" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 3" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 4" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 5" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 6" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 7" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 8" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="carousel-item col-md-3">
-                                    <div class="panel panel-default">
-                                       <div class="panel-thumbnail">
-                                          <a href="#" title="image 2" class="thumb">
-                                             <p class="uploadedFile"><span class="imageClose"><i class="fas fa-times-circle"></i></span></p>
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
+                                 
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -435,7 +293,7 @@
                   </div>
                </div>
                <div class="col-12 float-left mt-3">
-                <button type="button" class="btn btn-primary float-sm-right float-left pay_now_btn" @if(count($change_requests) <= 3) style="display:none" @endif>Pay Now</button>
+                <button type="button" class="btn btn-primary float-sm-right float-left pay_now_btn loginBtn" @if(count($change_requests) <= 3) style="display:none" @endif>Pay Now</button>
                 <button type="button" class="btn btn-primary float-sm-right float-left submit_design_changes_btn loginBtn" data-toggle="modal" data-target="#staticBackdrop" @if(count($change_requests) >3) style="display:none" @endif>Submit Design Changes</button>
                 <span class="float-sm-right float-left mr-4 mt-2">You like this design, with ONE change. Seek designer's advice on this design !!</span>
               </div>
