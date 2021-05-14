@@ -549,15 +549,15 @@
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
-                                <label for="">Specification</label>
+                                <label for="">Size Dimensions</label>
                                 <input type="text" class="form-control" placeholder="" name="size_specification">
                                 <span class="validation_error"></span>
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="">URL</label>
-                                <input type="text" class="form-control" placeholder="" name="product_url">
+                            <div class="form-group">
+                                <label for="">Additional Specifications</label>
+                                <input type="text" class="form-control" placeholder="" name="description">
                                 <span class="validation_error"></span>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
                                 <label for="">Retail Price</label>
                                 <input type="number" class="form-control" placeholder="&#36;" name="product_price">
@@ -625,8 +625,8 @@
                             <div class="col-md-4 float-left pb-2">
                                 <p>Size Specification</p>
                                 <p>{{ $product->size_specification }}</p>
-                                {{-- <p>URL</p>
-                                <p>{{ $product->product_url }}</p> --}}
+                                <p>Additional Specifications</p>
+                                <p>{{ $product->description }}</p>
                                 <div class="col-6 px-0 float-left">
                                     <p class="mb-1">Retail Price</p>
                                     <p>$ {{ $product->product_price }}</p>
@@ -642,12 +642,12 @@
                                 </p>
                                 <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
                                 <div class="row uploadedImage px-0">
-                                    @foreach ($product->productImages as $productImage)
+
 
                                         <div class="col-12 float-left">
                                             <p>
-                                                @if($product->productImages->first()->img_src)
-                                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                @if($product->productImages->last()->img_src)
+                                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                     class="img-fluid">
                                                 @else
                                                 <img src="{{ asset('/default/product.jpg')}}"
@@ -656,7 +656,7 @@
                                                 </p>
                                         </div>
 
-                                    @endforeach
+
 
 
                                 </div>
@@ -709,17 +709,17 @@
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                                     <div class="form-group">
-                                        <label for="">Specification</label>
+                                        <label for="">Size Dimensions</label>
                                         <input type="text" class="form-control" placeholder="" name="size_specification"
                                             value="{{ $product->size_specification }}">
                                         <span class="validation_error"></span>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label for="">URL</label>
-                                        <input type="text" class="form-control" placeholder="" name="product_url"
-                                            value="{{ $product->product_url }}">
+                                    <div class="form-group">
+                                        <label for="">Additional Specifications</label>
+                                        <input type="text" class="form-control" placeholder="" name="description"
+                                            value="{{ $product->description }}">
                                         <span class="validation_error"></span>
-                                    </div> --}}
+                                    </div>
                                     <div class="form-group">
                                         <label for="">Retail Price</label>
                                         <input type="text" class="form-control" placeholder="$" name="product_price"
@@ -735,11 +735,11 @@
                                     <div class="row uploadedImage px-0">
 
 
-                                        @foreach ($product->productImages as $key=>$productImage )
+
                                             <div class="col-12 float-left">
                                                 <p>
-                                                    @if($product->productImages->first()->img_src)
-                                                    <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                    @if($product->productImages->last()->img_src)
+                                                    <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                         class="img-fluid">
                                                     @else
                                                     <img src="{{ asset('/default/product.jpg')}}"
@@ -749,7 +749,7 @@
 
                                                 </p>
                                             </div>
-                                        @endforeach
+
                                         {{-- <div class="col-12 float-left px-0">
                                             <p>Drag and Drop Image/ Browse Files</p>
                                             <p class="custom-file mb-0 addImage">

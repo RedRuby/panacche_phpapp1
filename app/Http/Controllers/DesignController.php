@@ -372,7 +372,7 @@ class DesignController extends Controller
                 }
 
                 return response()->json(['status' => 201, 'message' => "Congratulations!!
-                Your Particulars Have Been Saved Successfully.", "data" => $result])->setStatusCode(201);
+                Your design details have been saved successfully.", "data" => $result])->setStatusCode(201);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }
@@ -476,7 +476,8 @@ class DesignController extends Controller
                     'product_url' => $request->product_url,
                     'product_price' => $request->product_price,
                     'product_compare_at_price' => $request->compare_at_price,
-                    'product_quantity' => $$quantity,
+                    'product_quantity' => $quantity,
+                    'description' => $request->description,
                     'status' => "draft"
                 ]);
 
@@ -503,7 +504,7 @@ class DesignController extends Controller
                 $vendors = Vendor::all();
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors',$vendors)->render();
 
-                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your specifics have been saved successfully.'])->setStatusCode(201);
+                return response()->json(['status' => 201, 'success' => true, 'data' => ["products" => $products], 'message' => 'Your merchandise details have been saved successfully.'])->setStatusCode(201);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
             }
