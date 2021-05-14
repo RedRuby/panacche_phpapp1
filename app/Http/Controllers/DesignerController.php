@@ -401,7 +401,11 @@ class DesignerController extends Controller
 
             Log::info("images : " . json_encode($images));
 
-
+            $quantity = 1;
+            if(!empty($request->quantity))
+            {
+                $quantity = $request->quantity;
+            }
 
             $data = [
                 "product" => [
@@ -410,7 +414,7 @@ class DesignerController extends Controller
                     "product_type" => '',
                     "description" => $request->product_description,
                     "published" => false,
-                    "inventory_quantity"=> $request->quantity,
+                    "inventory_quantity"=> $quantity,
                     "tags" => [
                         $collection->design_name,
                     ],
@@ -439,7 +443,7 @@ class DesignerController extends Controller
                     'product_url' => $request->product_url,
                     'product_price' => $request->product_price,
                     'product_compare_at_price' => $request->compare_at_price,
-                    'product_quantity' => $request->quantity,
+                    'product_quantity' => $quantity,
                 ]);
 
                 ProductImages::where('product_id', $request->product_id)->delete();
