@@ -24,7 +24,11 @@
                         <div class="dragDropBox py-2">
                            <div class="col-12 float-left px-0">
                               <p class="custom-file mt-3 mb-3">
-                                 <input type="file" class="custom-file-input" id="customFile" name="filename">
+                                 <form method="post" id="additional_furniture_file">
+                                    <input type="file" class="custom-file-input file_documents" name="file_documents">
+                                    <input type="hidden" name="file_type" value="0">
+                                    <input type="hidden" name="myProjectId" value="{{$my_project_id}}">
+                                 </form>
                                  <label class="custom-file-label2 mb-0" for="customFile"></label>
                               </p>
                            </div>
@@ -33,7 +37,7 @@
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
                            <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                               <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 
+                                 @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => 'https://panacchedev.pagekite.me/uploads/collection/product/images/design1.jpg'])
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -59,7 +63,7 @@
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
                            <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                               <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 
+                                 @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => 'https://panacchedev.pagekite.me/uploads/collection/product/images/design1.jpg'])
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -300,4 +304,7 @@
             </div>
       </div>
    </div>
+</div>
+<div id="upload_image_default_elm" class="d-none">
+   @include('pages.customer.upload-documents-image',["class" => '','image_url' => ''])
 </div>

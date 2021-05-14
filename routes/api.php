@@ -132,3 +132,4 @@ Route::post('/reset/password', 'PagesController@resetPassword');
 Route::post('/page/uploadReferenceLinks', 'RefrenceLinkController@saveRefrence');
 Route::post('/page/saveProductToMyProduct', 'MyProjectProductsController@saveProduct');
 Route::post('/page/saveChangeRequest', 'ChangeRequestController@saveChangeRequest');
+Route::post('/page/uploadDocuments', 'UploadDocumentsController@uploadDocuments');
