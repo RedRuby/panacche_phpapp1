@@ -39,7 +39,7 @@
           @else
            <div class="col-10 mx-auto buyPriceBox mt-md-0 mt-4">
               <p class="py-4 mb-0">$434</p>
-              <p class="py-3"><a href="{{ env('Shop_URL') }}/cart/{{ $product_variant_id }}:1" class="py-3">Buy the Design</a></p>
+              <p class="py-3"><a href="{{ env('Shop_URL') }}/cart/{{ $design->id }}:1" class="py-3">Buy the Design</a></p>
               <p class="mb-0">What do you get with this?</p>
               <ul class="pl-3">
                  <li>Lorem ipsum dolor sit amet</li>
