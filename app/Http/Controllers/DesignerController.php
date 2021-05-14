@@ -340,7 +340,7 @@ class DesignerController extends Controller
     public function createDesign($id){
         $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
         $vendors = Vendor::all();
-
+        //return $design;
         $design = view('designer.createDesign')->with('design', $design)->with('vendors', $vendors)->render();
 
 
@@ -446,7 +446,7 @@ class DesignerController extends Controller
                     'product_quantity' => $quantity,
                 ]);
 
-                ProductImages::where('product_id', $request->product_id)->delete();
+               // ProductImages::where('product_id', $request->product_id)->delete();
                 $current_time = Carbon::now()->timestamp;
 
                 Log::info("current_time" . json_encode($current_time));
@@ -464,10 +464,17 @@ class DesignerController extends Controller
                 }
 
 
+                $product = Product::find($request->product_id);
+                Log::info('result' . json_encode($request->product_id));
+                Log::info('result' . json_encode($result));
+                Log::info('product' . json_encode($product));
+
 
                 $products = Product::with(['vendor','productImages'])->where('collection_id', $collection->id)->get();
 
                 Log::info('final product' . json_encode($product));
+
+
                 $vendors = Vendor::all();
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
                 return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your specifics have been altered successfully.'])->setStatusCode(200);
