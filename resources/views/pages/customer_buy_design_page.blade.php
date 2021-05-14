@@ -33,14 +33,16 @@
                     <span>Design Price: $ {{ $design->design_price }} </span>
                  </h4>
               </div>
-              <div class="col-12 px-0 panaccheSaving float-left">
-                 <p class="mb-0">Panacche Savings:</p>
-                 <p class="">You Save: ${{(($design->room_budget*$discount->discount)/100)}} ({{$discount->discount}}%)
-                    <span class="ml-2 text-center ibtn">i 
-                    <span class="tooltiptext p-2 text-left">Note: This does not include tax and shipping cost</span>
-                    </span>
-                 </p>
-              </div>
+              @if(isset($discount->discount) && $discount->discount > 0)
+                <div class="col-12 px-0 panaccheSaving float-left">
+                   <p class="mb-0">Panacche Savings:</p>
+                     <p class="">You Save: ${{(($design->room_budget*$discount->discount)/100)}} ({{$discount->discount}}%)
+                        <span class="ml-2 text-center ibtn">i 
+                        <span class="tooltiptext p-2 text-left">Note: This does not include tax and shipping cost</span>
+                        </span>
+                     </p>
+                </div>
+              @endif
               <div class="col-12 px-0 landingHeading float-left">
                  <h4 class="mb-1 mt-4 col-12 float-left px-0">
                     <span>Design Description</span>
@@ -211,25 +213,25 @@
                 
                 <!------------Tab 1 Start------------>
                                  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                                    @include('pages.customer.get-design-guide',["product_variant_id" => $product_variant_id, "design" => $design])
+                                    @include('pages.customer.get-design-guide',["design" => $design])
                                  </div>
                  <!------------Tab 1 End------------>
                  
                  <!------------Tab 2 Start------------>
                                  <div class="tab-pane fade" id="in_progress" role="tabpanel" aria-labelledby="in_progress-tab">
-                                    @include('pages.customer.customer-changes',["product_variant_id" => $product_variant_id, "design" => $design,"refrenceLinks" => $refrenceLinks,"selected_products" => $selected_products])
+                                    @include('pages.customer.customer-changes',["design" => $design,"refrenceLinks" => $refrenceLinks,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 2 End------------>
                  
                  <!------------Tab 3 Start------------>
                                  <div class="tab-pane fade" id="delivered_paid" role="tabpanel" aria-labelledby="delivered_paid-tab">
-                                    @include('pages.customer.final-design',["product_variant_id" => $product_variant_id, "design" => $design,"selected_products" => $selected_products])
+                                    @include('pages.customer.final-design',["design" => $design,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 3 End------------>
                  
                  <!------------Tab 4 Start------------>
                                  <div class="tab-pane fade" id="abandoned" role="tabpanel" aria-labelledby="abandoned-tab">
-                                    @include('pages.customer.pannache-conceirge',["product_variant_id" => $product_variant_id, "design" => $design])
+                                    @include('pages.customer.pannache-conceirge',["design" => $design])
                                  </div>
                  <!------------Tab 4 End------------>
                  
