@@ -122,7 +122,11 @@ class ProductBulkUpload implements ShouldQueue
 
                                  //  chmod('uploads/collection/' . $collection->id . '/', 777);
 
-                                    $location = public_path('/uploads/collection/' . $collection->id . '/'. $productImageFileName);
+                                    $location = public_path().'uploads/collection/' . $collection->id . '/'. $productImageFileName;
+                                    // if (!file_exists($location)) {
+                                    //     mkdir($location, 0755, true);
+                                    // }
+
                                     Log::info("productImages ". $productImage);
                                     Image::make($productImage)->save($location);
                                     $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
@@ -140,9 +144,14 @@ class ProductBulkUpload implements ShouldQueue
                                 $productImageFileName = basename($productImages);
 
                                // chmod('uploads/collection/' . $collection->id . '/', 0755, true);
-                                $location = public_path('/uploads/collection/' . $collection->id . '/'. $productImageFileName);
+                                $location = public_path().'uploads/collection/' . $collection->id . '/'. $productImageFileName;
+
+                                Log::info("location " . $location);
                                 $path = $productImages;
-                                Log::info("productImages ". $path);
+                                // if (!file_exists($location)) {
+                                //     mkdir($location, 0755, true);
+                                // }
+
                                 Image::make($path)->save($location);
                                 $url = env('APP_URL') .'/uploads/collection/' . $collection->id . '/' . $productImageFileName;
 
