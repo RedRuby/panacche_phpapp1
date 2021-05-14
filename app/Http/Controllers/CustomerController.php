@@ -22,6 +22,7 @@ use Spatie\Activitylog\Models\Activity;
 use App\Http\Requests\CustomerStoreRequest;
 use Osiset\BasicShopifyAPI\BasicShopifyAPI;
 use App\Http\Requests\VerifyContactRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 use App\MyProject;
 use App\MyProjectsCollection;
 use App\UserDesignerRating;
@@ -280,7 +281,17 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $id public function getProfile($id){
+
+        $designer = Designer::find($id);
+        if($designer){
+            return response()->json(['status'=>200, 'success' => true, 'data'=>$designer, 'message'=>'Designer profile loaded successfully'])->setStatusCode(200);
+
+        }else{
+            return response()->json(['status'=>402, 'success' => true, 'data'=>$designer, 'message'=>'Designer record not found'])->setStatusCode(402);
+
+        }
+    }
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -359,6 +370,122 @@ class CustomerController extends Controller
         }
 
         return response()->json(['status' => 200, 'success' => true, 'data' => ["my_projects" => $my_projects], 'message' => 'My projects loaded successfully'])->setStatusCode(200);
+    }
+
+    public function getProfile($id){
+
+        $customer = Customer::find($id);
+        if($customer){
+            return response()->json(['status'=>200, 'success' => true, 'data'=>$customer, 'message'=>'Customer profile loaded successfully'])->setStatusCode(200);
+        }else{
+            return response()->json(['status'=>402, 'success' => true, 'data'=>$customer, 'message'=>'Customer record not found'])->setStatusCode(402);
+        }
+    }
+
+    public function updateProfile(CustomerUpdateRequest $request)
+    {
+        $shop = User::where('name', $request->shop)->first();
+        $options = new Options();
+        $options->setVersion('2021-01');
+        $api = new BasicShopifyAPI($options);
+        $api->setSession(new Session($shop->name, $shop->password));
+
+        try {
+            $imgFileName = "";
+            $status = "active";
+            $display_picture = $request->file('display_picture');
+            $success_message = "Customer profile updated successfully";
+            $emailTemplate = "emails.customerAccount";
+            $emailSubject = "Customer profile updated successfully!";
+            $role = "customer";
+
+            if (!empty($display_picture)) {
+                //Display File Name
+                $imgFileName = $display_picture->getClientOriginalName();
+
+                //Move Uploaded File
+                $destinationPath = public_path() . '/uploads/user/display_picture';
+                $display_picture->move($destinationPath, $display_picture->getClientOriginalName());
+            }
+
+
+            $data = [
+                'customer' => [
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                ]
+            ];
+
+
+            try {
+                $result = $api->rest('PUT', '/admin/customers/'.$request->customer.'.json', $data)['body'];
+            } catch (\Exception $e) {
+                Log::info($e->getMessage());
+                return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
+            }
+
+            Log::info("result " . json_encode($result));
+
+
+            if (isset($result['customer'])) {
+                $customer = Customer::where('id', $request->customer)->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'phone' => $request->phone,
+                    'display_picture' => $imgFileName,
+                    'how_did_you_hear_about_us' => $request->how_did_you_hear_about_us,
+                ]);
+
+                $customer = Customer::find($request->customer);
+
+                $temp = $customer;
+                $data = $temp->toArray();
+                $template = $emailTemplate;
+                $subject = $emailSubject;
+                $fromEmail = "panacchebeta@gmail.com";
+                $fromName = "Panacche Team";
+                $toEmail = $request->email;
+                $emailTitle = "Account Updation";
+
+                if (!empty($customer->id)) {
+                    // Model has been successfully inserted
+                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                    if (empty($myEmail)) {
+                        Log::info("mail has been sent because empty no error " . $myEmail);
+
+                        $log_message = "Account updation email has been sent to " . $role;
+
+                        Helper::log_activity($customer, $customer, $customer, $log_message);
+                    } else {
+                        $log_message = "Due to some error account updation email has not sent to " . $role;
+                        Helper::log_activity($customer, $customer, $customer, $log_message);
+                    }
+
+                    Helper::log_activity($customer, $customer, $customer, $success_message);
+
+                    return response()->json(['status' => 201, 'data' => $request->all(), 'message' => $success_message])->setStatusCode(201);
+                } else {
+                    $data = $request->all();
+                    $template = "emails.accountNotUpdated";
+                    $subject = "Record is updated in shopify but not is App due to some error";
+                    $toEmail = "admin@admin.com"; // or admin@panacche.com
+                    $emailTitle = "Record is not updated in app";
+                    $myEmail = Helper::sendmail($data, $template, $subject, $fromEmail, $fromName, $toEmail, $emailTitle);
+                    $log_message = "Record is updated in shopify but not is App due to some error";
+                    $newCustomer = new Customer();
+                    Helper::log_activity($newCustomer, $customer, $data, $log_message);
+                }
+            } else {
+                return response()->json(['status' => 422, 'errors' => $result])->setStatusCode(422);
+            }
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            return response()->json(['status' => 422, "errors" => $e->getMessage()])->setStatusCode(422);
+        }
     }
 
 

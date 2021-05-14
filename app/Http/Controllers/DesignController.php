@@ -224,7 +224,11 @@ class DesignController extends Controller
             $current_time = Carbon::now()->timestamp;
 
             Log::info("current_time" . json_encode($current_time));
-            mkdir('uploads/collection/' . $result['smart_collection']['id'], 0755, true);
+            $location = public_path('/uploads/collection/' .$result['smart_collection']['id'] . '/');
+            if (!file_exists($location)) {
+                mkdir($location, 0755, true);
+            }
+            sleep(2);
 
 
             if (isset($result['smart_collection'])) {
@@ -571,7 +575,7 @@ class DesignController extends Controller
 
                 Log::info('csvBulkUpload' . json_encode($csvBulkUpload));
 
-                $bulkUploadJob = (new ProductBulkUpload())->delay(Carbon::now()->addSeconds(3));
+                $bulkUploadJob = (new ProductBulkUpload())->delay(Carbon::now()->addSeconds(1));
                 dispatch($bulkUploadJob);
                     return response()->json(['status' => 201, 'success' => true, 'message' => 'Your specifics have been started uploading in background successfully.'])->setStatusCode(201);
                 } else {
