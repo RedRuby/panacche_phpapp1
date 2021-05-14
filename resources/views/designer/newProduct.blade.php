@@ -17,8 +17,8 @@
         <div class="col-md-4 float-left pb-2">
             <p>Size Specification</p>
             <p>{{ $product->size_specification }}</p>
-            <p>URL</p>
-            <p>{{ $product->product_url }}</p>
+            {{-- <p>URL</p>
+            <p>{{ $product->product_url }}</p> --}}
             <div class="col-6 px-0 float-left">
                 <p class="mb-1">Retail Price</p>
                 <p>$ {{ $product->product_price }}</p>
@@ -91,11 +91,11 @@
                     <input type="text" class="form-control" placeholder="" name="size_specification" value="{{ $product->size_specification }}">
                     <span class="validation_error"></span>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="">URL</label>
                     <input type="text" class="form-control" placeholder="" name="product_url" value="{{ $product->product_url }}">
                     <span class="validation_error"></span>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="">Retail Price</label>
                     <input type="number" class="form-control" placeholder="$" name="product_price" value="{{ $product->product_price }}">

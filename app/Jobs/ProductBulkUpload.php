@@ -122,7 +122,9 @@ class ProductBulkUpload implements ShouldQueue
 
                                  //  chmod('uploads/collection/' . $collection->id . '/', 777);
 
-                                    $location = public_path().'uploads/collection/' . $collection->id . '/'. $productImageFileName;
+                                 $location = public_path('/uploads/collection/' . $collection->id. '/' .$productImageFileName);
+
+                                   // chmod($location, 0777);
                                     // if (!file_exists($location)) {
                                     //     mkdir($location, 0755, true);
                                     // }
@@ -144,10 +146,11 @@ class ProductBulkUpload implements ShouldQueue
                                 $productImageFileName = basename($productImages);
 
                                // chmod('uploads/collection/' . $collection->id . '/', 0755, true);
-                                $location = public_path().'uploads/collection/' . $collection->id . '/'. $productImageFileName;
+                                $location = public_path('/uploads/collection/' . $collection->id. '/' .$productImageFileName);
 
                                 Log::info("location " . $location);
                                 $path = $productImages;
+                                //chmod($location, 0777);
                                 // if (!file_exists($location)) {
                                 //     mkdir($location, 0755, true);
                                 // }
@@ -185,6 +188,13 @@ class ProductBulkUpload implements ShouldQueue
 
                     sleep(5);
 
+                    $quantity = 1;
+                    if(!empty($importData[6]))
+                    {
+                        $quantity = $importData[6];
+                    }
+
+
                     Log::info("my images : ". json_encode($images));
 
                     Log::info("import Data" . json_encode($importData));
@@ -201,7 +211,7 @@ class ProductBulkUpload implements ShouldQueue
                                 [
                                     "option1" => "Default Title",
                                     "price" => $importData[4],
-                                    "inventory_quantity" => $importData[6],
+                                    "inventory_quantity" => $quantity,
                                 ],
                             ],
                             "images" => $images,
