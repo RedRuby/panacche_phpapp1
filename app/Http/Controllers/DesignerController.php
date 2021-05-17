@@ -21,6 +21,7 @@ use App\Product;
 use App\Vendor;
 use App\CollectionColorPallettes;
 use App\DigitalProduct;
+use App\Discount;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Osiset\BasicShopifyAPI\Options;
@@ -34,6 +35,10 @@ use App\Http\Requests\DesignerStoreRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\UpdateCollectionRequest;
 use App\Http\Requests\DesignerUpdateRequest;
+use App\MyProject;
+use App\MyProjectChangeRequest;
+use App\MyProjectRefrenceLink;
+use App\MyProjectsCollectionProducts;
 use Carbon\Carbon;
 use App\Order;
 use Illuminate\Support\Facades\Storage;
@@ -890,5 +895,52 @@ class DesignerController extends Controller
         }
     }
 
+    /**
+     * This method is used to show the detail design changes page which is submitted by the customer.
+     */
+    public function getOrderDetailsFromMyProject(Request $request, $orderId) {
 
+        $myOrderId = base64_decode(urldecode($orderId));
+
+        $my_project = MyProject::find($myOrderId);
+
+        if($my_project) {
+            $design = Collection::with('designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages', 'products.vendor', 'digitalProduct')->find($my_project->parent_design_id);
+
+            $all_products = $design->products->toArray();
+            $all_product_type = array_column($all_products, "product_type");
+
+            $design_guide_id = array_search(1, $all_product_type);
+            $product_variants = [];
+            $product_variant_id = 0;
+            if($design_guide_id){
+                $design_guide_product = $all_products[array_search(1, $all_product_type)];
+                $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
+                $product_variant_id = $product_variants->shopify_variant_id;
+            }
+            $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $myOrderId)->get();
+            $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $myOrderId)->get();
+            $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $myOrderId)->get();
+            $selected_products = [];
+            foreach($my_products as $my_product){
+                $selected_products[$my_product['product_id']] = $my_product;
+            }
+            $discount = Discount::first();
+
+            $design = view('design.view_design_order')
+                        ->with('design', $design)
+                        ->with('product_variant_id', $product_variant_id)
+                        ->with('refrenceLinks', $refrenceLinks)
+                        ->with('selected_products', $selected_products)
+                        ->with('my_project_id',$myOrderId)
+                        ->with('change_requests',$change_requests)
+                        ->with('discount', $discount)
+                        ->with('do_not_show_in_designer_panel', true)
+                        ->render();
+
+            return response()->json(['status' => 200, 'success' => true, 'data' => ["order" => $design], 'message' => 'Order details loaded successfully.'])->setStatusCode(200);
+        } else {
+            // error
+        }
+    }
 }
