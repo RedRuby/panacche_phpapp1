@@ -55,14 +55,6 @@ class PagesController extends Controller
             if(isset($my_project->id)){
                 $my_project_id = $my_project->id;
             }
-            $design_guide_id = array_search(1, $all_product_type);
-            $product_variants = [];
-            $product_variant_id = 0;
-            if($design_guide_id){
-                $design_guide_product = $all_products[array_search(1, $all_product_type)];
-                $product_variants = ProductVariant::where('product_id',$design_guide_product['id'])->first();
-                $product_variant_id = $product_variants->shopify_variant_id;
-            }
             $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $my_project_id)->get();
             $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $my_project_id)->get();
             $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $my_project_id)->get();
@@ -73,7 +65,6 @@ class PagesController extends Controller
             $discount = Discount::first();
             $design = view('pages.customer_buy_design_page')
                         ->with('design', $design)
-                        ->with('product_variant_id', $product_variant_id)
                         ->with('refrenceLinks', $refrenceLinks)
                         ->with('selected_products', $selected_products)
                         ->with('my_project_id',$my_project_id)

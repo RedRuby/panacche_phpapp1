@@ -101,7 +101,7 @@
 
             <div class="leftPart col-md-5 col-xs-12 float-left px-3">
                 <div class="registerForm col-md-12 col-xs-12 float-left px-0">
-                    <form class="mx-0">
+                    <div class="mx-0">
                         <div class="form-group">
                             <label for="">Design Name</label>
                             <input type="text" class="form-control" placeholder="" name="design_name" id="design_name"
@@ -225,7 +225,7 @@
                                 id="implementation_guide_description">{{ $design->implementation_guide_description }}</textarea>
                             <span class="validation_error"></span>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
             </div>
@@ -438,8 +438,8 @@
                                         name="application[0]" id="application.0"><span class="validation_error"></span>
                                 </td>
 
-                                <td> <i class="fas fa-trash hide"></i><i
-                                        class="fas fa-plus-circle addPlus"></i></td>
+                                <td class="d-flex"><i class="fas fa-trash mr-2 pt-3"></i><i class="fas fa-plus-circle addPlus pt-2" id="addPlus"></i></td>
+
                             </tr>
                         </tbody>
                     </table>
@@ -506,7 +506,7 @@
                         </form>
 
                         <div class="col-md-10 float-left mx-0 typeUser font14">
-                            <a href="{{ asset('/uploads/product_bulk_upload.csv') }}" target="_blank">Download a Blank
+                            <a href="{{ asset('/uploads/product_bulk_upload.csv') }}">Download a Blank
                                 Sample Template CSV file for Bulk upload</a>
                         </div>
                     </div>
@@ -543,19 +543,19 @@
 
                             <div class="form-group">
                                 <label for="">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" step="3">
+                                <input type="number" class="form-control" name="quantity" step="3" value="1">
                                 <span class="validation_error"></span>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                             <div class="form-group">
-                                <label for="">Specification</label>
+                                <label for="">Size Dimensions</label>
                                 <input type="text" class="form-control" placeholder="" name="size_specification">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="">URL</label>
-                                <input type="text" class="form-control" placeholder="" name="product_url">
+                                <label for="">Additional Specifications</label>
+                                <input type="text" class="form-control" placeholder="" name="description">
                                 <span class="validation_error"></span>
                             </div>
                             <div class="form-group">
@@ -625,8 +625,8 @@
                             <div class="col-md-4 float-left pb-2">
                                 <p>Size Specification</p>
                                 <p>{{ $product->size_specification }}</p>
-                                <p>URL</p>
-                                <p>{{ $product->product_url }}</p>
+                                <p>Additional Specifications</p>
+                                <p>{{ $product->description }}</p>
                                 <div class="col-6 px-0 float-left">
                                     <p class="mb-1">Retail Price</p>
                                     <p>$ {{ $product->product_price }}</p>
@@ -642,12 +642,12 @@
                                 </p>
                                 <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
                                 <div class="row uploadedImage px-0">
-                                    @foreach ($product->productImages as $productImage)
+
 
                                         <div class="col-12 float-left">
                                             <p>
-                                                @if($product->productImages->first()->img_src)
-                                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                @if($product->productImages->last()->img_src)
+                                                <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                     class="img-fluid">
                                                 @else
                                                 <img src="{{ asset('/default/product.jpg')}}"
@@ -656,7 +656,7 @@
                                                 </p>
                                         </div>
 
-                                    @endforeach
+
 
 
                                 </div>
@@ -709,15 +709,15 @@
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 float-left">
                                     <div class="form-group">
-                                        <label for="">Specification</label>
+                                        <label for="">Size Dimensions</label>
                                         <input type="text" class="form-control" placeholder="" name="size_specification"
                                             value="{{ $product->size_specification }}">
                                         <span class="validation_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">URL</label>
-                                        <input type="text" class="form-control" placeholder="" name="product_url"
-                                            value="{{ $product->product_url }}">
+                                        <label for="">Additional Specifications</label>
+                                        <input type="text" class="form-control" placeholder="" name="description"
+                                            value="{{ $product->description }}">
                                         <span class="validation_error"></span>
                                     </div>
                                     <div class="form-group">
@@ -733,19 +733,32 @@
                                     </p>
                                     <!--<p class="border border-light"><img src="images/upload_mearch_Img1.jpg" class="img-fluid"></p>-->
                                     <div class="row uploadedImage px-0">
-                                        @foreach ($product->productImages as $key=>$productImage )
+
+
+
                                             <div class="col-12 float-left">
                                                 <p>
-                                                    @if($product->productImages->first()->img_src)
-                                                    <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->first()->img_src) }}"
+                                                    @if($product->productImages->last()->img_src)
+                                                    <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                         class="img-fluid">
                                                     @else
                                                     <img src="{{ asset('/default/product.jpg')}}"
                                                     class="img-fluid">
                                                     @endif
+                                                    <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
+
                                                 </p>
                                             </div>
-                                        @endforeach
+
+                                        {{-- <div class="col-12 float-left px-0">
+                                            <p>Drag and Drop Image/ Browse Files</p>
+                                            <p class="custom-file mb-0 addImage">
+                                                <input type="file" class="custom-file-input" id="product_images" name="product_images[]" accept="image/x-png,image/gif,image/jpeg">
+                                                <span class="validation_error"></span>
+                                                <label class="custom-file-label2 mb-0" for="customFile"></label>
+                                            </p>
+                                        </div> --}}
+
 
                                     </div>
 

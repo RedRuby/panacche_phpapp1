@@ -345,7 +345,7 @@ class DesignerController extends Controller
     public function createDesign($id){
         $design = Collection::with(['designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor'])->find($id);
         $vendors = Vendor::all();
-
+        //return $design;
         $design = view('designer.createDesign')->with('design', $design)->with('vendors', $vendors)->render();
 
 
@@ -406,7 +406,11 @@ class DesignerController extends Controller
 
             Log::info("images : " . json_encode($images));
 
-
+            $quantity = 1;
+            if(!empty($request->quantity))
+            {
+                $quantity = $request->quantity;
+            }
 
             $data = [
                 "product" => [
@@ -415,7 +419,7 @@ class DesignerController extends Controller
                     "product_type" => '',
                     "description" => $request->product_description,
                     "published" => false,
-                    "inventory_quantity"=> $request->quantity,
+                    "inventory_quantity"=> $quantity,
                     "tags" => [
                         $collection->design_name,
                     ],
@@ -444,10 +448,11 @@ class DesignerController extends Controller
                     'product_url' => $request->product_url,
                     'product_price' => $request->product_price,
                     'product_compare_at_price' => $request->compare_at_price,
-                    'product_quantity' => $request->quantity,
+                    'product_quantity' => $quantity,
+                    'description' => $request->description,
                 ]);
 
-                ProductImages::where('product_id', $request->product_id)->delete();
+               // ProductImages::where('product_id', $request->product_id)->delete();
                 $current_time = Carbon::now()->timestamp;
 
                 Log::info("current_time" . json_encode($current_time));
@@ -457,7 +462,7 @@ class DesignerController extends Controller
                     foreach ($productImages as $productImage) {
 
                         ProductImages::create([
-                            'product_id' => $product->id,
+                            'product_id' =>$request->product_id,
                             'img_src' => $productImageFileName,
                             'img_alt' => $productImageFileName,
                         ]);
@@ -465,13 +470,20 @@ class DesignerController extends Controller
                 }
 
 
+                $product = Product::find($request->product_id);
+                Log::info('result' . json_encode($request->product_id));
+                Log::info('result' . json_encode($result));
+                Log::info('product' . json_encode($product));
+
 
                 $products = Product::with(['vendor','productImages'])->where('collection_id', $collection->id)->get();
 
                 Log::info('final product' . json_encode($product));
+
+
                 $vendors = Vendor::all();
                 $products = view('designer.newProduct')->with('products', $products)->with('customer', $customer)->with('collection', $collection)->with('vendors', $vendors)->render();
-                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your specifics have been altered successfully.'])->setStatusCode(200);
+                return response()->json(['status'=>200, 'success' => true, 'data'=>["products"=>$products], 'message'=>'Your merchandise details have been updated successfully.'])->setStatusCode(200);
 
               } else {
                 return response()->json(['status' => 500, 'errors' => $result]);
@@ -739,7 +751,7 @@ class DesignerController extends Controller
                     }
                 }
 
-                return response()->json(['status' => 200, 'message' => "Your Particulars Have Been Modified Successfully.", "data" => $result])->setStatusCode(200);
+                return response()->json(['status' => 200, 'message' => "Your design details have been updated successfully.", "data" => $result])->setStatusCode(200);
             } else {
                 return response()->json(['status' => 500, 'errors' => $result])->setStatusCode(422);
             }

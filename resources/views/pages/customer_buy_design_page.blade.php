@@ -146,25 +146,25 @@
 
                 <!------------Tab 1 Start------------>
                                  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                                    @include('pages.customer.get-design-guide',["product_variant_id" => $product_variant_id, "design" => $design])
+                                    @include('pages.customer.get-design-guide',["design" => $design])
                                  </div>
                  <!------------Tab 1 End------------>
 
                  <!------------Tab 2 Start------------>
                                  <div class="tab-pane fade" id="in_progress" role="tabpanel" aria-labelledby="in_progress-tab">
-                                    @include('pages.customer.customer-changes',["product_variant_id" => $product_variant_id, "design" => $design,"refrenceLinks" => $refrenceLinks,"selected_products" => $selected_products])
+                                    @include('pages.customer.customer-changes',["design" => $design,"refrenceLinks" => $refrenceLinks,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 2 End------------>
 
                  <!------------Tab 3 Start------------>
                                  <div class="tab-pane fade" id="delivered_paid" role="tabpanel" aria-labelledby="delivered_paid-tab">
-                                    @include('pages.customer.final-design',["product_variant_id" => $product_variant_id, "design" => $design,"selected_products" => $selected_products])
+                                    @include('pages.customer.final-design',["design" => $design,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 3 End------------>
 
                  <!------------Tab 4 Start------------>
                                  <div class="tab-pane fade" id="abandoned" role="tabpanel" aria-labelledby="abandoned-tab">
-                                    @include('pages.customer.pannache-conceirge',["product_variant_id" => $product_variant_id, "design" => $design])
+                                    @include('pages.customer.pannache-conceirge',["design" => $design])
                                  </div>
                  <!------------Tab 4 End------------>
 
