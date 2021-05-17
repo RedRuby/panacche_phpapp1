@@ -5,8 +5,8 @@ return [
     "DESIGNER_RESUME_UPLOAD_S3_OBJECT" => "resume",
     "DESIGNER_PORTFOLIO" => "portfolio",
     "DESIGNER_PORTFOLIO_UPLOAD_S3_OBJECT" => "portfolio",
-    "DESIGN_STEP2_FLOOR_PLAN" => "floor_plan",
+    "DESIGN_STEP2_FLOOR_PLAN" => "0",
     "DESIGN_STEP2_FLOOR_PLAN_UPLOAD_S3_OBJECT" => "floor_plan",
-    "DESIGN_STEP2_FURNITURE_PLAN" => "furniture",
+    "DESIGN_STEP2_FURNITURE_PLAN" => "1",
     "DESIGN_STEP2_FURNITURE_PLAN_UPLOAD_S3_OBJECT" => "furniture",
 ];

@@ -17,8 +17,14 @@ class ChangeRequestController extends Controller
         $delete_change_request = $request->input('delete_change_request');
         $product_id = '';
         $color_id = '';
+        $file_url = '';
         if($type == 0){
             $product_id = $request->input('change_item');
+            $file = $request->file('product_file');
+            $inputs['folder']       = 'change_request';
+            $inputs['filePrefix']   = "product_file_";
+            $inputs['file'] = $file;
+            $file_url = app('App\Http\Controllers\FileController')->store($inputs);
         } else {
             $color_id = $request->input('change_item');
         }
@@ -31,7 +37,7 @@ class ChangeRequestController extends Controller
                 $post->delete();
                 $change_request_id = '';
             } else {
-                $data_arry = ['type' => $type, 'my_project_id' => $my_project_id, 'change_reason' => $change_reason, 'file' => ''];
+                $data_arry = ['type' => $type, 'my_project_id' => $my_project_id, 'change_reason' => $change_reason, 'file' => $file_url];
                 if($product_id != '')
                     $data_arry['product_id'] = $product_id;
                 if($color_id != '')
@@ -52,7 +58,7 @@ class ChangeRequestController extends Controller
                 $data->color_id = $color_id;
             $data->brand = ($brand)?$brand:'';
             $data->application = ($application)?$application:'';
-            $data->file = '';
+            $data->file = $file_url;
             if ($data->save()) {
                 return Response::json(array('success' => true, 'id' => $data->id), 200);
             }
