@@ -11,7 +11,7 @@
                                                     <p>Designer — has provided an updated floor plan, as per the change request from you. </p>
                                                     <p>Please review and save !!</p>
                                                 </div>
-                        
+
                                                 <div class="col-xl-5 col-lg-6 col-md-8 col-sm-12 col-12 float-left floorPlanImgWrap">
                                                    <div class="col-md-12 float-left mb-3 pb-2">
                                                       <div class="col-4 float-left floorPlanImg">
@@ -24,14 +24,14 @@
                             <p data-toggle="modal" data-target="#finalDesignFloorPlan"><img src="{{ asset('uploads/buy_design_img.jpg') }}?v" class="img-fluid"></p>
                                                       </div>
                                                    </div>
-                           
+
                            <div class="col-12 float-left text-center">
                             <a href="#">
                               <button type="button" class="btn btn-primary col-11 warningBtn">Download Documents</button>
                             </a>
                            </div>
                                                 </div>
-                        
+
                         <!-- Final Design Floor Plan Modal -->
                         <div class="modal fade" id="finalDesignFloorPlan" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                            <div class="modal-dialog modal-dialog-centered">
@@ -47,7 +47,7 @@
                             </div>
                            </div>
                         </div>
-                        
+
                                              </div>
                                           </div>
                                           <div  class="col-12 float-left p-4 shoppingList mt-3">

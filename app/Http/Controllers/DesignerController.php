@@ -939,6 +939,13 @@ class DesignerController extends Controller
             }
             $discount = Discount::first();
 
+            Log::info("DesignerController :: view order details design :: ".print_r($design, true));
+            Log::info("DesignerController :: view order details product_variant_id :: ".print_r($product_variant_id, true));
+            Log::info("DesignerController :: view order details refrenceLinks :: ".print_r($refrenceLinks, true));
+            Log::info("DesignerController :: view order details selected_products :: ".print_r($selected_products, true));
+            Log::info("DesignerController :: view order details change_requests :: ".print_r($change_requests, true));
+            Log::info("DesignerController :: view order details discount :: ".print_r($discount, true));
+
             $design = view('design.view_design_order')
                         ->with('design', $design)
                         ->with('product_variant_id', $product_variant_id)
