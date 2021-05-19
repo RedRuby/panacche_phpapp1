@@ -171,7 +171,13 @@
                               </td>
                               <td>{{ $product->vendor->vendor_name }}</td>
                               <td>${{ $product->product_price }}</td>
-                              <td>${{ $product->product_compare_at_price }}</td>
+                              <td>
+                                 @if(isset($discount->discount) && $discount->discount > 0)
+                                    ${{ $product->product_price -(($product->product_price * $discount->discount) / 100) }}
+                                 @else
+                                    ${{ $product->product_price }}
+                                 @endif
+                              </td>
                               <td>
                                  <input type="number" class="form-control productSelectionQty" name="points" step="1" value="{{$qty}}">
                               </td>

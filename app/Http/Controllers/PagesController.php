@@ -55,6 +55,8 @@ class PagesController extends Controller
             $refrenceLinks = [];
             $change_requests = [];
             $selected_products = [];
+            $floor_plans = [];
+            $additional_furnitures = [];
             $my_project = MyProject::where('my_project_collection_id',$id)->first();
             if(isset($my_project->id)){
                 $my_project_id = $my_project->id;
@@ -65,8 +67,6 @@ class PagesController extends Controller
                 foreach($my_products as $my_product){
                     $selected_products[$my_product['produt_id']] = $my_product;
                 }
-                $floor_plans = [];
-                $additional_furnitures = [];
                 $upload_docs = MyProjectsUploadDocuments::where('my_project_id', '=', $my_project_id)->get();
                 foreach ($upload_docs as $key => $upload_doc) {
                     if($upload_doc->type == 0){

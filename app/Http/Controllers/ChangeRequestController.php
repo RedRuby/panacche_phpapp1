@@ -18,7 +18,7 @@ class ChangeRequestController extends Controller
         $product_id = '';
         $color_id = '';
         $file_url = '';
-        if($type == 0){
+        if($type == 0 && $delete_change_request != '1'){
             $product_id = $request->input('change_item');
             $file = $request->file('product_file');
             $inputs['folder']       = 'change_request';
