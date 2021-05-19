@@ -122,18 +122,22 @@ class DesignController extends Controller
 
             }
         })->orderBy('created_at', $sort)->get();
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$value->id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
+
+
         $grouped = $designs->groupBy('room_style');
         Log::info("grouped :: ".print_r($grouped, true));
 
-        if(count($grouped) > 0) {
-            foreach($grouped as $key => $value) {
-                $url = env('Shop_URL').'/pages/buy-design?id='.$value->id;
-                Log::info("grouped :: Page URL :: ".$url);
-                $grouped[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
-                $grouped[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
-                $grouped[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
-            }
-        }
+
 
         $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
