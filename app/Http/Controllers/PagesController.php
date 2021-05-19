@@ -19,6 +19,7 @@ use App\ProductVariant;
 use App\MyProjectRefrenceLink;
 use App\MyProjectChangeRequest;
 use App\MyProjectsCollectionProducts;
+use App\MyProjectsUploadDocuments;
 use App\MyProject;
 use App\Http\Requests\ForgotPassowrdRequest;
 
@@ -51,16 +52,29 @@ class PagesController extends Controller
             $design = view('pages.unregistered_user_design_details')->with('design', $design)->with('product_description', nl2br($all_products[array_search(1, $all_product_type)]['description'],true))->render();
         } else {
             $my_project_id = 0;
+            $refrenceLinks = [];
+            $change_requests = [];
+            $selected_products = [];
+            $floor_plans = [];
+            $additional_furnitures = [];
             $my_project = MyProject::where('my_project_collection_id',$id)->first();
             if(isset($my_project->id)){
                 $my_project_id = $my_project->id;
-            }
-            $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $my_project_id)->get();
-            $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $my_project_id)->get();
-            $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $my_project_id)->get();
-            $selected_products = [];
-            foreach($my_products as $my_product){
-                $selected_products[$my_product['produt_id']] = $my_product;
+                $refrenceLinks = MyProjectRefrenceLink::where('my_project_id', '=', $my_project_id)->get();
+                $my_products = MyProjectsCollectionProducts::where('my_project_id', '=', $my_project_id)->get();
+                $change_requests = MyProjectChangeRequest::where('my_project_id', '=', $my_project_id)->get();
+
+                foreach($my_products as $my_product){
+                    $selected_products[$my_product['produt_id']] = $my_product;
+                }
+                $upload_docs = MyProjectsUploadDocuments::where('my_project_id', '=', $my_project_id)->get();
+                foreach ($upload_docs as $key => $upload_doc) {
+                    if($upload_doc->type == 0){
+                        $floor_plans[] = $upload_doc;
+                    } else {
+                        $additional_furnitures[] = $upload_doc;
+                    }
+                }
             }
             $discount = Discount::first();
             $design = view('pages.customer_buy_design_page')
@@ -70,6 +84,8 @@ class PagesController extends Controller
                         ->with('my_project_id',$my_project_id)
                         ->with('change_requests',$change_requests)
                         ->with('discount', $discount)
+                        ->with('floor_plans', $floor_plans)
+                        ->with('additional_furnitures', $additional_furnitures)
                         ->render();
         }
         //

@@ -7,12 +7,69 @@ use App\UserDesignerRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Collection;
+use App\CollectionBluePrints;
+use App\CollectionColorPallettes;
+use App\CollectionImages;
+use App\CollectionRule;
+use App\MyProject;
+use App\MyProjectsCollection;
 
 class OrderController extends Controller
 {
     public function orderCreation(Request $request)
     {
-        Log::info('order creation: ' . json_encode($request->all()));
+        $request_data = $request->all();
+        $collection_id = '265820930245';//$request_data['line_items'][0]['product_id'];
+        $collection_data = Collection::find($collection_id)->toArray();
+        $designer_id = $collection_data['designer_id'];
+        $customer_id = $request_data['customer']['id'];
+        unset($collection_data['id']);
+        unset($collection_data['created_at']);
+        unset($collection_data['updated_at']);
+        $collection_id_new = MyProjectsCollection::insertGetId($collection_data);
+        MyProject::insertGetId([
+                        'parent_design_id' => $collection_id,
+                        'my_project_collection_id' => $collection_id_new,
+                        'customer_id'   => $customer_id
+                    ]);
+        $collection_blue_prints = CollectionBluePrints::where('collection_id',$collection_id)->get()->toArray();
+        foreach ($collection_blue_prints as $key=>$collection_blue_print) {
+                $collection_blue_prints[$key]['collection_id'] = $collection_id_new;
+                unset($collection_blue_prints[$key]['created_at']);
+                unset($collection_blue_prints[$key]['updated_at']);
+        }
+        //::insert($collection_blue_prints);
+        $collection_color_pallettes = CollectionColorPallettes::where('collection_id',$collection_id)->get()->toArray();
+        foreach ($collection_color_pallettes as $key=>$collection_color_pallette) {
+                $collection_color_pallettes[$key]['collection_id'] = $collection_id_new;
+                unset($collection_color_pallettes[$key]['created_at']);
+                unset($collection_color_pallettes[$key]['updated_at']);
+        }
+        $collection_images = CollectionImages::where('collection_id',$collection_id)->get()->toArray();
+        foreach ($collection_images as $key=>$collection_image) {
+                $collection_images[$key]['collection_id'] = $collection_id_new;
+                unset($collection_images[$key]['created_at']);
+                unset($collection_images[$key]['updated_at']);
+        }
+
+        $collection_rules = CollectionRule::where('collection_id',$collection_id)->get()->toArray();
+        foreach ($collection_rules as $key=>$collection_rule) {
+                $collection_rules[$key]['collection_id'] = $collection_id_new;
+                unset($collection_rules[$key]['created_at']);
+                unset($collection_rules[$key]['updated_at']);
+        }
+        echo "<pre>";print_r($collection_rules);die;
+        $status = 'In Progress';
+        $amount = $request_data['total_price'];
+        $order_type = 'design_guid';
+        $tag = $request_data['tags'].", OT:DesignGuide";
+        $created_at = $request_data['created_at'];
+        $updated_at = $request_data['updated_at'];
+        fulfillment_status: empty($request_data['fulfillments']['status']) ? 'unfulfilled':$request_data['fulfillments']['status'];
+        $financial_status = $request_data['financial_status'];
+        $shopify_order_data = json_encode($request_data);
+        $name = $request_data['name'];
 
     }
 

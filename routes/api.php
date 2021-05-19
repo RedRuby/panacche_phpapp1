@@ -133,6 +133,7 @@ Route::get('/pages/view-designer/{id}', 'PagesController@viewDesigner');
 Route::get('/pages/view/design/{id}/{shop}/{customer?}', 'PagesController@viewDesign');
 
 Route::post('/order/creation', 'OrderController@orderCreation');
+Route::get('/order/creation', 'OrderController@orderCreation');
 
 Route::post('/forgot/password', 'PagesController@forgotPassword');
 Route::post('/reset/password', 'PagesController@resetPassword');
