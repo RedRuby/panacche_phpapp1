@@ -30,6 +30,7 @@ use Carbon\Carbon;
 use App\DigitalProduct;
 use App\Vendor;
 use App\Jobs\ProductBulkUpload;
+use Share;
 
 class DesignController extends Controller
 {
@@ -47,7 +48,15 @@ class DesignController extends Controller
         //       $designers = Designer::where('status','approved')->get();
         $designers = Designer::all();
 
-
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$value->id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
@@ -65,6 +74,15 @@ class DesignController extends Controller
             ->where('status', 'active')
             ->get();
 
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$value->id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         return View::make('design.view_all')->with("designs", $designs)
             ->with("designers", $designers);
@@ -105,6 +123,17 @@ class DesignController extends Controller
             }
         })->orderBy('created_at', $sort)->get();
         $grouped = $designs->groupBy('room_style');
+        Log::info("grouped :: ".print_r($grouped, true));
+
+        if(count($grouped) > 0) {
+            foreach($grouped as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$value->id;
+                Log::info("grouped :: Page URL :: ".$url);
+                $grouped[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $grouped[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $grouped[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         $designs = view('design.gallery')->with('designGroups', $grouped)->render();
 
@@ -602,10 +631,10 @@ class DesignController extends Controller
     {
         //return "show design". $id;
         Log::info('collection id' . $id);
-        $design = Collection::where('id', $id)->with('customer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages')->get();
+        $designs = Collection::where('id', $id)->with('customer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages')->get();
 
         //return  $design;
-        return View::make('designer.viewDesign')->with("design", $design);
+        return View::make('designer.viewDesign')->with("design", $designs);
     }
 
     /**
