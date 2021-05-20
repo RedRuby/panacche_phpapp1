@@ -26,6 +26,8 @@
                                                 <div class="badge badge-secondary">Inactive</div>
                                                 @elseif($design->status == 'draft')
                                                 <div class="badge badge-primary">Draft Design</div>
+                                                @else
+                                                    <div class="badge badge-secondary">Inactive</div>
                                                 @endif
                                             </td>
                                             <td>
@@ -56,7 +58,7 @@
                                           </tr>
                                        </thead>
                                        <tbody>
-                                        @foreach ($designs->where('status', 'rejected') as $design)
+                                        @foreach ($designs->where('status', 'rejected', 'approved') as $design)
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($design->created_at)->format('d/m/Y')}}</td>
                                             <td>{{ \Carbon\Carbon::parse($design->approved_on)->format('d/m/Y')}}</td>
@@ -68,6 +70,8 @@
                                                 <div class="badge badge-secondary">Inactive</div>
                                                 @elseif($design->status == 'draft')
                                                 <div class="badge badge-primary">Draft Design</div>
+                                                @else
+                                                    <div class="badge badge-secondary">Inactive</div>
                                                 @endif
                                             </td>
                                             <td>
@@ -110,6 +114,8 @@
                                                 <div class="badge badge-secondary">Inactive</div>
                                                 @elseif($design->status == 'draft')
                                                 <div class="badge badge-primary">Draft Design</div>
+                                                @else
+                                                    <div class="badge badge-secondary">Inactive</div>
                                                 @endif
                                             </td>
                                             <td>
@@ -152,6 +158,8 @@
                                                 <div class="badge badge-secondary">Inactive</div>
                                                 @elseif($design->status == 'draft')
                                                 <div class="badge badge-primary">Draft Design</div>
+                                                @else
+                                                    <div class="badge badge-secondary">Inactive</div>
                                                 @endif
                                             </td>
                                             <td>

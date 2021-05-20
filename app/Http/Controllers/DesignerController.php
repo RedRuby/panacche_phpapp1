@@ -42,6 +42,7 @@ use App\MyProjectsCollectionProducts;
 use Carbon\Carbon;
 use App\Order;
 use Illuminate\Support\Facades\Storage;
+use Share;
 
 class DesignerController extends Controller
 {
@@ -50,15 +51,36 @@ class DesignerController extends Controller
     {
 
         $inprogressDesigns = Collection::where('designer_id', $id)->where('status', 'disabled')->count();
+        Log::info("DesignerController :: dashboard :: inprogressDesigns :: ".print_r($inprogressDesigns, true));
 
         //return $inprogressDesigns;
-        $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
+        $draftDesigns = Collection::where('designer_id', $id)->whereIn('status', ['draft', 'rejected'])->count();
+        Log::info("DesignerController :: dashboard :: draftDesigns :: ".print_r($draftDesigns, true));
+
         $publishedDesigns = Collection::where('designer_id', $id)->where('published', false)->where('status', 'approved')->count();
+        Log::info("DesignerController :: dashboard :: publishedDesigns :: ".print_r($publishedDesigns, true));
+
         $underReviewDesigns = Collection::where('designer_id', $id)->where('published', false)->where('status', 'submitted')->count();
+        Log::info("DesignerController :: dashboard :: underReviewDesigns :: ".print_r($underReviewDesigns, true));
+
         $reassignedDesigns = Collection::where('designer_id', $id)->where('status', 'reassign')->count();
+        Log::info("DesignerController :: dashboard :: reassignedDesigns :: ".print_r($reassignedDesigns, true));
+
         $designs = Collection::where('designer_id', $id)->with('designer')->with('collectionImages')->where('status', 'approved')->get();
+        Log::info("DesignerController :: dashboard :: designs :: ".print_r($designs, true));
 
         $designer = Designer::find($id);
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/designer-view-design?id='.$value->id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                // $designs[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         $dataCards = view('designer.dashboardStatistics')->with('inprogressDesigns', $inprogressDesigns)->with("draftDesigns", $draftDesigns)->with("publishedDesigns", $publishedDesigns)->with("underReviewDesigns", $underReviewDesigns)->with('reassignedDesigns',$reassignedDesigns)->render();
 
@@ -284,14 +306,34 @@ class DesignerController extends Controller
 
     public function inProgress($id){
         $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'disabled')->with('collectionImages')->get();
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
         $designCards = view('designer.inprogress')->with('designs', $designs)->render();
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Inprogress designs loaded successfully'])->setStatusCode(200);
     }
 
     public function draft($id){
-        $designs  = Collection::with(['designer','collectionImages'])->with('designer')->where('designer_id', $id)->where('status', 'draft')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->with('designer')->where('designer_id', $id)->whereIn('status', ['draft', 'rejected'])->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Draft designs loaded successfully'])->setStatusCode(200);
     }
@@ -299,6 +341,16 @@ class DesignerController extends Controller
     public function reassign($id){
         $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'reassign')->get();
         $designCards = view('designer.reassign')->with('designs', $designs)->render();
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Reassign designs loaded successfully'])->setStatusCode(200);
     }
@@ -309,6 +361,16 @@ class DesignerController extends Controller
         $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'approved')->get();
         $designCards = view('designer.published')->with('designs', $designs)->render();
 
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
+
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'published designs loaded successfully'])->setStatusCode(200);
     }
 
@@ -316,12 +378,32 @@ class DesignerController extends Controller
         $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->where('status', 'submitted')->get();
         $designCards = view('designer.under_review')->with('designs', $designs)->render();
 
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
+
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'Designs under review loaded successfully'])->setStatusCode(200);
     }
 
     public function allDesigns($id){
         $designs  = Collection::with(['designer','collectionImages'])->where('designer_id', $id)->get();
         $designCards = view('designer.allDesigns')->with('designs', $designs)->render();
+
+        if(count($designs) > 0) {
+            foreach($designs as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("designs :: Page URL :: ".$url);
+                $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
 
         return response()->json(['status'=>201, 'success' => true, 'data'=>["designCards"=>$designCards], 'message'=>'All designs loaded successfully'])->setStatusCode(200);
     }
@@ -766,6 +848,17 @@ class DesignerController extends Controller
         $design = Collection::where('id', $id)->with('designer', 'collectionImages','bluePrintImages','colorPallettes','products', 'products.productImages', 'products.vendor')->get();
 
         Log::info('collection id'. json_encode($design));
+
+        if(count($design) > 0) {
+            foreach($design as $key => $value) {
+                $url = env('Shop_URL').'/pages/buy-design?id='.$id;
+                Log::info("design :: Page URL :: ".$url);
+                $design[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+                $design[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+                $design[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+            }
+        }
+
         //return $design->products;
         $design = view('designer.viewDesign')->with('design', $design)->render();
 

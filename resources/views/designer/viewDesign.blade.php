@@ -24,19 +24,21 @@
                                 <i class="fas fa-times-circle newDesignClose"></i>
                             </button>
                         </a>
-                        <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
-                        </a>
-                        <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
-                            <p class="mb-0 text-white">
-                                @if($design->remark)
-                                {{ $design->remark }}
-                                @else
-                                No Remark
-                                @endif
-                            </p>
-                        </div>
+                        @if ($design->status == 'rejected')
+                            <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
+                            </a>
+                            <div class="dropdown-menu viewRemarkdrop p-2" aria-labelledby="remerkDropdown">
+                                <p class="mb-0 text-white">
+                                    @if($design->remark)
+                                    {{ $design->remark }}
+                                    @else
+                                    No Remark
+                                    @endif
+                                </p>
+                            </div>
+                        @endif
                     </div>
                 </h4>
 
@@ -160,10 +162,37 @@
                             </p>
                         @else
 
+                        <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
+                            <div class="carousel-inner row w-100 mx-auto designCards">
+                                @php
+                                    $i = 0;
+                                    $concept_board_image = [];
+                                @endphp
                             @foreach ($design->collectionImages as $collectionImage)
-                                <p class="col-md-3 col-sm-6 col-6 uploadedImagesView"><img class="img-fluid"
-                                        src="{{ asset('uploads/collection/'. $design->id.'/' . $collectionImage->img_src) }}">
-                                </p>
+                                @php
+                                    if($collectionImage->concept_board == 1){
+                                        $concept_board_image = $collectionImage;
+                                        continue;
+                                    }
+                                @endphp
+
+                                <div class="carousel-item col-md-3
+                                    @if($i == 0)
+                                    active
+                                    @endif
+                                    @php
+                                    $i++
+                                    @endphp
+                                    ">
+                                    <div class="card">
+                                        <div class="card-img projectImg">
+                                            <a href="#" data-toggle="modal" class="uploadedImagesView" data-target="#designGalleryPop">
+                                                <img src="{{ asset('uploads/collection/'. $design->id.'/' . $collectionImage->img_src) }}" class="card-img cover-photo" alt="{{$collectionImage->img_alt}}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             @endforeach
                         @endif
                     </div>
