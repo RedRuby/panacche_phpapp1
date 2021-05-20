@@ -49,7 +49,7 @@ class DesignerController extends Controller
         Log::info("DesignerController :: dashboard :: inprogressDesigns :: ".print_r($inprogressDesigns, true));
 
         //return $inprogressDesigns;
-        $draftDesigns = Collection::where('designer_id', $id)->where('status', 'draft')->count();
+        $draftDesigns = Collection::where('designer_id', $id)->whereIn('status', ['draft', 'rejected'])->count();
         Log::info("DesignerController :: dashboard :: draftDesigns :: ".print_r($draftDesigns, true));
 
         $publishedDesigns = Collection::where('designer_id', $id)->where('published', false)->where('status', 'approved')->count();
@@ -317,7 +317,7 @@ class DesignerController extends Controller
     }
 
     public function draft($id){
-        $designs  = Collection::with(['designer','collectionImages'])->with('designer')->where('designer_id', $id)->where('status', 'draft')->get();
+        $designs  = Collection::with(['designer','collectionImages'])->with('designer')->where('designer_id', $id)->whereIn('status', ['draft', 'rejected'])->get();
         $designCards = view('designer.draft')->with('designs', $designs)->render();
 
         if(count($designs) > 0) {

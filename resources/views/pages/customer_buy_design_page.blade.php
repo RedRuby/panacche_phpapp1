@@ -37,7 +37,7 @@
                 <div class="col-12 px-0 panaccheSaving float-left">
                    <p class="mb-0">Panacche Savings:</p>
                      <p class="">You Save: ${{(($design->room_budget*$discount->discount)/100)}} ({{$discount->discount}}%)
-                        <span class="ml-2 text-center ibtn">i 
+                        <span class="ml-2 text-center ibtn">i
                         <span class="tooltiptext p-2 text-left">Note: This does not include tax and shipping cost</span>
                         </span>
                      </p>
@@ -67,7 +67,7 @@
                  </p>
               </div>
            </div>
-           
+
         </div>
      </div>
       @if($my_project_id)
@@ -99,7 +99,7 @@
                                       continue;
                                     }
                                    @endphp
-                                   <div class="carousel-item col-md-3 
+                                   <div class="carousel-item col-md-3
                                       @if($i == 0)
                                       active
                                       @endif
@@ -168,7 +168,7 @@
                               </a>
                            </div>
                         </div>
-            
+
                         <!-- Media Modal -->
                         <div class="modal fade" id="galleryPop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                            <div class="modal-dialog modal-dialog-centered">
@@ -188,12 +188,12 @@
                               </div>
                            </div>
                         </div>
-            
+
                      </div>
                      <hr/>
                      <div class="col-12 px-0 float-left mt-3">
                         <div class="row px-3 customerBuytabs">
-            
+
                            <div class="col-md-12 col-xs-12 float-left px-0 mb-3 tabHorizontal">
                               <ul class="nav nav-tabs showAllTabs row nav-pills nav-justified px-3" id="myTab" role="tablist">
                                  <li class="nav-item" role="presentation">
@@ -210,31 +210,31 @@
                                  </li>
                               </ul>
                               <div class="tab-content showAllContent" id="myTabContent">
-                
+
                 <!------------Tab 1 Start------------>
                                  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
                                     @include('pages.customer.get-design-guide',["design" => $design])
                                  </div>
                  <!------------Tab 1 End------------>
-                 
+
                  <!------------Tab 2 Start------------>
                                  <div class="tab-pane fade" id="in_progress" role="tabpanel" aria-labelledby="in_progress-tab">
                                     @include('pages.customer.customer-changes',["design" => $design,"refrenceLinks" => $refrenceLinks,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 2 End------------>
-                 
+
                  <!------------Tab 3 Start------------>
                                  <div class="tab-pane fade" id="delivered_paid" role="tabpanel" aria-labelledby="delivered_paid-tab">
                                     @include('pages.customer.final-design',["design" => $design,"selected_products" => $selected_products])
                                  </div>
                  <!------------Tab 3 End------------>
-                 
+
                  <!------------Tab 4 Start------------>
                                  <div class="tab-pane fade" id="abandoned" role="tabpanel" aria-labelledby="abandoned-tab">
                                     @include('pages.customer.pannache-conceirge',["design" => $design])
                                  </div>
                  <!------------Tab 4 End------------>
-                 
+
                               </div>
                            </div>
                         </div>
