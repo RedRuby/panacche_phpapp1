@@ -119,6 +119,7 @@ class ProductBulkUpload implements ShouldQueue
                                 foreach($productImages as $productImage){
                                     $contents = file_get_contents($productImage);
                                     $productImageFileName = basename($productImage);
+                                    Log::info("FILE UPLOAD :: productImageFileName :: ".print_r($productImageFileName, true));
 
                                  //  chmod('uploads/collection/' . $collection->id . '/', 777);
 
@@ -144,6 +145,26 @@ class ProductBulkUpload implements ShouldQueue
                                 $productImages  =  $importData[7];
                                 $contents = file_get_contents($productImages);
                                 $productImageFileName = basename($productImages);
+
+                                $productImageFileName = str_replace("%20", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%21", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%22", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%23", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%24", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%25", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%26", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%27", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%28", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%29", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2a", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2b", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2b", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2c", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2d", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2e", "_", $productImageFileName);
+                                $productImageFileName = str_replace("%2f", "_", $productImageFileName);
+                                Log::info("SINGLE FILE UPLOAD :: productImageFileName :: ".print_r($productImageFileName, true));
+
 
                                // chmod('uploads/collection/' . $collection->id . '/', 0755, true);
                                 $location = public_path('/uploads/collection/' . $collection->id. '/' .$productImageFileName);
