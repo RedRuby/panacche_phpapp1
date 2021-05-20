@@ -12,22 +12,56 @@ use App\CollectionBluePrints;
 use App\CollectionColorPallettes;
 use App\CollectionImages;
 use App\CollectionRule;
-use App\MyProject;
 use App\MyProjectsCollection;
+use App\Product;
+use App\MyProjectsCollectionBluePrints;
+use App\MyProjectsCollectionColorPallettes;
+use App\MyProjectsCollectionImages;
+use App\MyProjectsCollectionRules;
+use App\Order;
 
 class OrderController extends Controller
 {
     public function orderCreation(Request $request)
     {
         $request_data = $request->all();
-        $collection_id = '265820930245';//$request_data['line_items'][0]['product_id'];
+        Log::info("checkout :: inputs :: ".json_encode($request_data));
+        $product_id = $request_data['line_items'][0]['product_id'];
+        $customer_id = $request_data['customer']['id'];
+        $status = 'In Progress';
+        $amount = $request_data['total_price'];
+        $order_type = 'design_guid';
+        $tag = $request_data['tags'].", OT:DesignGuide";
+        $created_at = $request_data['created_at'];
+        $updated_at = $request_data['updated_at'];
+        $fulfillment_status = (!empty($request_data['fulfillments']) && !empty($request_data['fulfillments']['status'])) ? $request_data['fulfillments']['status'] : 'unfulfilled';
+        $financial_status = $request_data['financial_status'];
+        $shopify_order_data = json_encode($request_data);
+        $name = $request_data['name'];
+        $product_data = Product::find($product_id)->toArray();
+        $collection_id = $product_data['collection_id'];
         $collection_data = Collection::find($collection_id)->toArray();
         $designer_id = $collection_data['designer_id'];
-        $customer_id = $request_data['customer']['id'];
         unset($collection_data['id']);
         unset($collection_data['created_at']);
         unset($collection_data['updated_at']);
         $collection_id_new = MyProjectsCollection::insertGetId($collection_data);
+        $order_data = [
+            'collection_id' => $collection_id,
+            'designer_id' => $designer_id,
+            'customer_id' => $customer_id,
+            'status' => $status,
+            'amount' => $amount,
+            'order_type' => $order_type,
+            'tag' => $tag,
+            'fulfillment_status' => $fulfillment_status,
+            'financial_status' => $financial_status,
+            'shopify_order_data' => $shopify_order_data,
+            'name' => $name,
+            'created_at' => $created_at,
+            'updated_at' => $updated_at
+        ];
+        $order_placed = Order::insert($order_data);
         MyProject::insertGetId([
                         'parent_design_id' => $collection_id,
                         'my_project_collection_id' => $collection_id_new,
@@ -36,22 +70,30 @@ class OrderController extends Controller
         $collection_blue_prints = CollectionBluePrints::where('collection_id',$collection_id)->get()->toArray();
         foreach ($collection_blue_prints as $key=>$collection_blue_print) {
                 $collection_blue_prints[$key]['collection_id'] = $collection_id_new;
+                unset($collection_blue_prints[$key]['id']);
                 unset($collection_blue_prints[$key]['created_at']);
                 unset($collection_blue_prints[$key]['updated_at']);
         }
-        //::insert($collection_blue_prints);
+        MyProjectsCollectionBluePrints::insert($collection_blue_prints);
+
         $collection_color_pallettes = CollectionColorPallettes::where('collection_id',$collection_id)->get()->toArray();
         foreach ($collection_color_pallettes as $key=>$collection_color_pallette) {
                 $collection_color_pallettes[$key]['collection_id'] = $collection_id_new;
+                unset($collection_color_pallettes[$key]['id']);
                 unset($collection_color_pallettes[$key]['created_at']);
                 unset($collection_color_pallettes[$key]['updated_at']);
         }
+        MyProjectsCollectionColorPallettes::insert($collection_color_pallettes);
+
         $collection_images = CollectionImages::where('collection_id',$collection_id)->get()->toArray();
         foreach ($collection_images as $key=>$collection_image) {
-                $collection_images[$key]['collection_id'] = $collection_id_new;
+                $collection_images[$key]['my_projects_collection_id'] = $collection_id_new;
+                unset($collection_images[$key]['id']);
                 unset($collection_images[$key]['created_at']);
                 unset($collection_images[$key]['updated_at']);
+                unset($collection_images[$key]['collection_id']);
         }
+        MyProjectsCollectionImages::insert($collection_images);
 
         $collection_rules = CollectionRule::where('collection_id',$collection_id)->get()->toArray();
         foreach ($collection_rules as $key=>$collection_rule) {
@@ -59,18 +101,7 @@ class OrderController extends Controller
                 unset($collection_rules[$key]['created_at']);
                 unset($collection_rules[$key]['updated_at']);
         }
-        echo "<pre>";print_r($collection_rules);die;
-        $status = 'In Progress';
-        $amount = $request_data['total_price'];
-        $order_type = 'design_guid';
-        $tag = $request_data['tags'].", OT:DesignGuide";
-        $created_at = $request_data['created_at'];
-        $updated_at = $request_data['updated_at'];
-        fulfillment_status: empty($request_data['fulfillments']['status']) ? 'unfulfilled':$request_data['fulfillments']['status'];
-        $financial_status = $request_data['financial_status'];
-        $shopify_order_data = json_encode($request_data);
-        $name = $request_data['name'];
-
+        MyProjectsCollectionRules::insert($collection_rules);
     }
 
     public function orderPlaced(Request $request) {
