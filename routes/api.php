@@ -101,6 +101,7 @@ Route::post('login', 'ShopifyController@authAttempt'); //->middleware(['auth.sho
 //Route::get('/designer/users/{id}', 'DesignerController@users');
 //Route::get('/designer/designs/{id}', 'DesignerController@designs');
 //Route::get('/designer/statistics/{id}', 'DesignerController@statistics');
+Route::get('/designer/view_order/{my_project_id}', 'DesignerController@getOrderDetailsFromMyProject')->name('designer-order-details');
 Route::post('/uploadFile', 'DesignerController@uploadFile');
 Route::post('/designer', 'DesignerController@store');
 Route::get('/designer/dashboard/{id}', 'DesignerController@dashboard');
@@ -132,6 +133,7 @@ Route::get('/pages/view-designer/{id}', 'PagesController@viewDesigner');
 Route::get('/pages/view/design/{id}/{shop}/{customer?}', 'PagesController@viewDesign');
 
 Route::post('/order/creation', 'OrderController@orderCreation');
+Route::get('/order/creation', 'OrderController@orderCreation');
 
 Route::post('/forgot/password', 'PagesController@forgotPassword');
 Route::post('/reset/password', 'PagesController@resetPassword');

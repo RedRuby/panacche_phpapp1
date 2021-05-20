@@ -26,8 +26,9 @@
                               <p class="custom-file mt-3 mb-3">
                                  <form method="post" id="additional_furniture_file">
                                     <input type="file" class="custom-file-input file_documents" name="file_documents">
-                                    <input type="hidden" name="file_type" value="0">
+                                    <input type="hidden" name="type" value="0">
                                     <input type="hidden" name="myProjectId" value="{{$my_project_id}}">
+                                    <input type="hidden" name="id" class="id" value="">
                                  </form>
                                  <label class="custom-file-label2 mb-0" for="customFile"></label>
                               </p>
@@ -35,9 +36,11 @@
                            <p class="text-center mb-2">Upload / drop files here <span>Browse Files</span></p>
                         </div>
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
-                           <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
-                              <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => 'https://panacchedev.pagekite.me/uploads/collection/product/images/design1.jpg'])
+                           <div id="carouselFloorPlan" class="carousel slide row" data-ride="carousel" data-interval="9000">
+                              <div class="carousel-inner row w-100 mx-auto" role="listbox" id="floorPlanCarousel">
+                                 @foreach($floor_plans as $key => $floor_plan)
+                                    @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => $floor_plan->file_url,'image_id' => $floor_plan->id])
+                                 @endforeach
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -63,7 +66,9 @@
                         <div class="uploadedImages py-2 mt-2 overflow-hidden">
                            <div id="carouselExample" class="carousel slide row" data-ride="carousel" data-interval="9000">
                               <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                                 @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => 'https://panacchedev.pagekite.me/uploads/collection/product/images/design1.jpg'])
+                                 @foreach($additional_furnitures as $key => $additional_furniture)
+                                    @include('pages.customer.upload-documents-image',["class" => 'active','image_url' => $additional_furniture->file_url,'image_id' => $additional_furniture->id])
+                                 @endforeach
                               </div>
                               <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -90,7 +95,7 @@
                   </ul>
                   <div class="tab-content showAllContent mt-1">
                      <div id="referenceLinkContent">
-                        @foreach ($refrenceLinks as $key => $refrenceLink)
+                        @foreach($refrenceLinks as $key => $refrenceLink)
                            <p class="linkInputs position-relative">
                               <input type="text" class="form-control pr-5 referenceLinkInput" placeholder="Copy reference links here" value="{{$refrenceLink->refrence_link}}">
                               <input type="hidden" name="referenceLinkId" class="referenceLinkId"value="{{$refrenceLink->id}}">
@@ -166,7 +171,13 @@
                               </td>
                               <td>{{ $product->vendor->vendor_name }}</td>
                               <td>${{ $product->product_price }}</td>
-                              <td>${{ $product->product_compare_at_price }}</td>
+                              <td>
+                                 @if(isset($discount->discount) && $discount->discount > 0)
+                                    ${{ $product->product_price -(($product->product_price * $discount->discount) / 100) }}
+                                 @else
+                                    ${{ $product->product_price }}
+                                 @endif
+                              </td>
                               <td>
                                  <input type="number" class="form-control productSelectionQty" name="points" step="1" value="{{$qty}}">
                               </td>
@@ -243,7 +254,7 @@
                                    </td>
                                    <td class="changereq5">
                                      <div class="custom-file">
-                                         <input type="file" class="custom-file-input" id="customFile" name="filename">
+                                         <input type="file" class="custom-file-input product_change_req_file" name="filename">
                                          <i class="fas fa-paperclip"></i>
                                          <label class="custom-file-label mb-0" for="customFile"></label>
                                      </div>
@@ -306,5 +317,5 @@
    </div>
 </div>
 <div id="upload_image_default_elm" class="d-none">
-   @include('pages.customer.upload-documents-image',["class" => '','image_url' => ''])
+   @include('pages.customer.upload-documents-image',["class" => '','image_url' => '','image_id' => ''])
 </div>
