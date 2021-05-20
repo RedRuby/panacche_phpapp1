@@ -27,6 +27,7 @@
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 col-12 float-left tab1Right">
           @if($my_project_id)
+            @if(!empty($design->design_implementation_guide))
               <div class="col-10 mx-auto downloadZipBox mt-md-0 mt-4">
                 <p>You can now download the Design Implementation guide !</p>
                 <div class="col-12 p-3 text-center">
@@ -36,9 +37,10 @@
                    </a>
                 </div>
               </div>
+            @endif
           @else
            <div class="col-10 mx-auto buyPriceBox mt-md-0 mt-4">
-              <p class="py-4 mb-0">$434</p>
+              <p class="py-4 mb-0">${{ $design->design_price }}</p>
               <p class="py-3"><a href="{{ env('Shop_URL') }}/cart/{{ $design->id }}:1" class="py-3">Buy the Design</a></p>
               <p class="mb-0">What do you get with this?</p>
               <ul class="pl-3">

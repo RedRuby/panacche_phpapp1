@@ -45,7 +45,13 @@ class PagesController extends Controller
     public function viewDesign($id, $shop, $customer = null)
     {
         //$customer = Customer::find($customer);
-        $design = Collection::with('designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages', 'products.vendor', 'digitalProduct')->find($id);
+        $my_project = MyProject::where('my_project_collection_id',$id)->first();
+        if(isset($my_project->id)){
+            $collection_id = $my_project->parent_design_id;
+        } else {
+            $collection_id = $id;
+        }
+        $design = Collection::with('designer', 'collectionImages', 'bluePrintImages', 'colorPallettes', 'products', 'products.productImages', 'products.vendor', 'digitalProduct')->find($collection_id);
         $all_products = $design->products->toArray();
         $all_product_type = array_column($all_products, "product_type");
         if($customer == null){
