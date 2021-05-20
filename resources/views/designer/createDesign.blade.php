@@ -22,7 +22,7 @@
                     </a>
                     @if ($design->status == 'draft' )
 
-                    @else
+                    @elseif ($design->status == 'rejected')
                     <a class="" href="#" id="remerkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <button type="button" class="btn btn-primary cancelBtn float-right mr-3">View Remarks</button>
@@ -36,6 +36,7 @@
                             @endif
                         </p>
                     </div>
+                    @else
                     @endif
                 </div>
             </h4>
@@ -646,7 +647,7 @@
 
                                         <div class="col-12 float-left">
                                             <p>
-                                                @if($product->productImages->last()->img_src)
+                                                @if(isset($product->productImages->last()->img_src))
                                                 <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                     class="img-fluid">
                                                 @else
@@ -738,7 +739,7 @@
 
                                             <div class="col-12 float-left">
                                                 <p>
-                                                    @if($product->productImages->last()->img_src)
+                                                    @if(isset($product->productImages->last()->img_src))
                                                     <img src="{{ asset('/uploads/collection/' . $design->id . '/' . $product->productImages->last()->img_src) }}"
                                                         class="img-fluid">
                                                     @else

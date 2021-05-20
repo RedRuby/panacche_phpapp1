@@ -19,6 +19,7 @@ use App\Order;
 use App\Discount;
 use App\Disclaimer;
 use Carbon\Carbon;
+use Share;
 
 class AdminController extends Controller
 {
@@ -66,6 +67,15 @@ class AdminController extends Controller
 
         $designs = Collection::where('published', false)->where('status', 'submitted')->with('designer')->with('collectionImages')->get();
 
+        foreach($designs as $key => $value) {
+            $url = env('Shop_URL').'/pages/buy-design?id='.$value->designer_id;
+            Log::info("designs :: Page URL :: ".$url);
+            $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+            // $designs[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
+            $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+            $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+        }
+
             $returnHTML = view('admin.newArrivalPendings')->with('designers', $designers)->with('designs', $designs)->render();
 
             return response()->json(['status'=>200, 'success' => true, 'data'=>$returnHTML, 'message'=>'New Arrival Pendings'])->setStatusCode(201);
@@ -76,7 +86,14 @@ class AdminController extends Controller
     public function designs()
     {
         $designs = Collection::where('published', false)->where('status', 'active')->with('customer')->with('collectionImages')->get();
-
+        foreach($designs as $key => $value) {
+            $url = env('Shop_URL').'/pages/buy-design?id='.$value->designer_id;
+            Log::info("designs :: Page URL :: ".$url);
+            $designs[$key]->facebook = Share::page($url)->facebook()->getRawLinks();
+            // $designs[$key]->instagram = Share::page($url)->instagram()->getRawLinks();
+            $designs[$key]->twitter = Share::page($url)->twitter()->getRawLinks();
+            $designs[$key]->whatsapp = Share::page($url)->whatsapp()->getRawLinks();
+        }
         //return $designs;
 
         return View::make("admin.newDesigns")->with("designs", $designs);

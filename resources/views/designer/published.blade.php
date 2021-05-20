@@ -30,9 +30,9 @@
                 <p class="card-text">$ {{ $design->room_budget }}</p>
             </div>
             <div class="card-footer d-flex">
-                <a href="#" class="social social-instagram mr-3"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social social-twitter mr-3"><i class="fab fa-twitter"></i></a>
+                <a href="{{ $design->twitter }}" class="social social-twitter mr-3"><i class="fab fa-twitter"></i></a>
+                <a href="{{ $design->facebook }}" class="social social-facebook text-facebook mr-3"><i class="fab fa-facebook"></i></a>
+                <a href="{{ $design->whatsapp }}" class="social social-whatsapp mr-3"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
